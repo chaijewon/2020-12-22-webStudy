@@ -21,11 +21,16 @@ public class MovieDetailServlet extends HttpServlet {
 		MovieDAO dao=new MovieDAO();
 		MovieVO vo=dao.movieDetailData(Integer.parseInt(mno));
 		out.write("<html>");
+		out.write("<head>");
+		out.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">");
+		out.write("</head>");
 		out.write("<body>");
+		out.write("<div class=container>");
+		out.write("<div class=row>");
 		out.write("<center>");
 		out.write("<h1>영화 상세보기</h1>");
 		out.write("<hr width=600>");
-		out.write("<table width=600>");
+		out.write("<table width=600 class=table>");
 		out.write("<tr>");
 		out.write("<td width=30% align=center rowspan=6>");
 		out.write("<img src="+vo.getPoster()+" width=200 height=280>");
@@ -60,7 +65,7 @@ public class MovieDetailServlet extends HttpServlet {
 		
 		out.write("</table>");
 		out.write("<hr width=600>");
-		out.write("<table width=600>");
+		out.write("<table width=600 class=table>");
 		out.write("<tr>");
 		out.write("<td align=right>");
 		out.write("<a href=#>예매</a>&nbsp;");// &nbsp; => 공백 
@@ -69,6 +74,8 @@ public class MovieDetailServlet extends HttpServlet {
 		out.write("</tr>");
 		out.write("</table>");
 		out.write("<center>");
+		out.write("</div>");
+		out.write("</div>");
 		out.write("</body>");
 		out.write("</html>");
 	}

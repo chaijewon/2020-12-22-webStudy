@@ -23,19 +23,27 @@ public class MovieListServlet extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		// 서버에 요청한 유저의 메모리 위치
 		// http://211.238.142.181/
+		String page=request.getParameter("page");
+		if(page==null)
+			page="1";
 		// 1. 현재 페이지 
-		int curpage=1;
+		int curpage=Integer.parseInt(page);
 		MovieDAO dao=new MovieDAO();
 		// 2. 총페이지 
 		int totalpage=dao.movieTotalPage();
 		// 3. 영화정보 20개 => ArrayList
 		ArrayList<MovieVO> list=dao.movieListData(curpage);
 		out.write("<html>");
+		out.write("<head>");
+		out.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">");
+		out.write("</head>");
 		out.write("<body>");
+		out.write("<div class=container>");
+		out.write("<div class=row style=\"margin:0px auto;width:800px\">");
 		out.write("<center>");
 		out.write("<h1>영화 목록</h1>");
-		out.write("<table border=1 bordercolor=black width=800>");
-		out.write("<tr bgcolor=#ccffcc>");
+		out.write("<table class=\"table table-hover\">");// class , id => css
+		out.write("<tr class=danger>");
 		out.write("<th>순위</th>");
 		out.write("<th></th>");
 		out.write("<th>영화명</th>");
@@ -55,7 +63,16 @@ public class MovieListServlet extends HttpServlet {
 			out.write("<td>"+vo.getDirector()+"</td>");
 			out.write("</tr>");
 		}
+		out.write("<tr>");
+		out.write("<td colspan=4 align=center>");
+		out.write("<a href=MovieListServlet?page="+(curpage>1?curpage-1:curpage)+" class=\"btn btn-sm btn-primary\">이전</a>&nbsp;");
+		out.write(curpage+" page / "+totalpage+" pages&nbsp;");
+		out.write("<a href=MovieListServlet?page="+(curpage<totalpage?curpage+1:curpage)+" class=\"btn btn-sm btn-primary\">다음</a>");
+		out.write("</td>");
+		out.write("</tr>");
 		out.write("</table>");
+		out.write("</div>");
+		out.write("</div>");
 		out.write("</center>");
 		out.write("</body>");
 		out.write("</html>");
