@@ -120,6 +120,52 @@ public class BoardDAO {
    // 3-3. 수정 => UPDATE => SQL (2개) 1.비밀번호 확인 , 2. 수정 => 어디로 갈까? 흐름
    // 3-4. 삭제 => DELETE => 비밀번호 확인 
    // 3-5. 내용보기 => SQL(2개)
+   public BoardVO boardDetailData(int no)
+   {
+	   BoardVO vo=new BoardVO();
+	   try
+	   {
+		   // 1. 연결
+		   getConnection();
+		   // 2. SQL문장 제작
+		   // 조회수 증가 
+		   String sql="UPDATE webBoard SET "
+				     +"hit=hit+1 "
+				     +"WHERE no=?";
+		   ps=conn.prepareStatement(sql);
+		   // ?에 값을 채운다 
+		   ps.setInt(1, no);
+		   // UPDATE를 실행 
+		   ps.executeUpdate(); // COMMIT
+		   
+		   // 증가된 조회수를 포함해서 데이터 읽기
+		   sql="SELECT no,name,subject,content,regdate,hit "
+			  +"FROM webBoard "
+			  +"WHERE no=?";
+		   
+		   ps=conn.prepareStatement(sql);
+		   ps.setInt(1, no);
+		   ResultSet rs=ps.executeQuery();
+		   rs.next();
+		   vo.setNo(rs.getInt(1));
+		   vo.setName(rs.getString(2));
+		   vo.setSubject(rs.getString(3));
+		   vo.setContent(rs.getString(4));
+		   vo.setRegdate(rs.getDate(5));
+		   vo.setHit(rs.getInt(6));
+		   
+		   rs.close();
+		   
+	   }catch(Exception ex)
+	   {
+		   System.out.println(ex.getMessage());
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+	   return vo;
+   }
    // 3-6. 찾기 => LIKE
    
    

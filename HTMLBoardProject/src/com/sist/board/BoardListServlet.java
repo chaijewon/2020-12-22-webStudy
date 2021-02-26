@@ -22,6 +22,7 @@ public class BoardListServlet extends HttpServlet {
 		PrintWriter out=response.getWriter();// 해당 클라이언트에 HTML을 전송
 		/*
 		 *   데이터 받기 
+		 *   http://211.238.142.181/HTMLBoardProject/BoardListServlet
 		 */
 		//1. 데이터 => 사용자 요청한 페이지 받기 
 		String page=request.getParameter("page");
@@ -68,7 +69,7 @@ public class BoardListServlet extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");
 		out.println("<center>");
-		
+		out.println("IP:"+request.getRemoteAddr());
 		out.println("<h1>게시판</h1>");
 		out.println("<table border=0 width=700>");
 		out.println("<tr>");
