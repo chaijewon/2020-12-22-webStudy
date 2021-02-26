@@ -126,7 +126,7 @@ public class BoardListServlet extends HttpServlet {
 		out.println("</tr>");
 		out.println("</table>");
 		out.println("</center>");
-		out.println("</bosy>");
+		out.println("</body>");
 		out.println("</html>");
 		
 	}
