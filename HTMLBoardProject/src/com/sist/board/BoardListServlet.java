@@ -40,8 +40,30 @@ public class BoardListServlet extends HttpServlet {
 		out.println("<html>");
 		out.println("<head>");
 		out.println("<style type=text/css>");
-		out.println("td,th{font-family:맑은 고딕;font-size:9pt}");
-		out.println("table{border-collapse:collapse}");
+		out.println("td,th{font-family:맑은 고딕;font-size:9pt;height:35px}");
+		out.println(".table_main{border-collapse:collapse;");
+		out.println("border-top-width: 2px;"
+				+ "border-bottom-width: 1px;"
+				+ "border-top-style: solid;"
+				+ "border-bottom-style: solid;"
+				+ "border-top-color: #333;"
+				+ "border-bottom-color: #333;}");
+		out.println(".table_main th{");
+		out.println("background-color: #999;"
+				+ "color: #fff;"
+				+ "border-bottom-width: 1px;"
+				+ "border-bottom-color: #333;}");
+		out.println(".table_main td{");
+		out.println("border-bottom-width: 1px;"
+				+ "border-bottom-color: #666;"
+				+ "border-bottom-style: dotted;}");
+		out.println("a{color:black;text-decoration:none}");
+		out.println("a:hover{color:green;text-decoration:underline}");
+		out.println(".dataTr:HOVER {"
+				+ "background-color: #FC6;"
+				+ "cursor: pointer;"
+				+ "cursor: hand;"
+				+ "}");
 		out.println("</style>");
 		out.println("</head>");
 		out.println("<body>");
@@ -54,8 +76,8 @@ public class BoardListServlet extends HttpServlet {
 		out.println("</tr>");
 		out.println("</table>");
 		
-		out.println("<table border=1 bordercolor=black width=700>");
-		out.println("<tr>");
+		out.println("<table width=700 class=table_main>");
+		out.println("<tr id=head>");
 		out.println("<th width=10%>번호</th>");
 		out.println("<th width=45%>제목</th>");
 		out.println("<th width=15%>이름</th>");
@@ -65,12 +87,12 @@ public class BoardListServlet extends HttpServlet {
 		// 데이터를 출력하는 위치 
 		for(BoardVO vo:list)
 		{
-			out.println("<tr>");
+			out.println("<tr class=dataTr>");
 			out.println("<td width=10% align=center>"+vo.getNo()+"</td>");
 			String today=new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 			String dbday=vo.getRegdate().toString();
 			// YY/MM/DD => java => yyyy-MM-dd
-			out.println("<td width=45%>"+vo.getSubject());
+			out.println("<td width=45%><a href=BoardDetailServlet?no="+vo.getNo()+">"+vo.getSubject()+"</a>");
 			if(today.equals(dbday))
 			{
 				out.println("<sup><font color=red>new</font></sup>");
