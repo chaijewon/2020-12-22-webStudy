@@ -69,14 +69,13 @@ public class BoardListServlet extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");
 		out.println("<center>");
-		out.println("IP:"+request.getRemoteAddr());
 		out.println("<h1>게시판</h1>");
 		out.println("<table border=0 width=700>");
 		out.println("<tr>");
-		out.println("<td><a href=#>새글</a></td>");
+		out.println("<td><a href=BoardInsertServlet>새글</a></td>");
 		out.println("</tr>");
 		out.println("</table>");
-		
+		out.println("<div style=\"height:400px\">");
 		out.println("<table width=700 class=table_main>");
 		out.println("<tr id=head>");
 		out.println("<th width=10%>번호</th>");
@@ -105,6 +104,7 @@ public class BoardListServlet extends HttpServlet {
 			out.println("</tr>");
 		}
 		out.println("</table>");
+		out.println("</div>");
 		// 하단
 		out.println("<table width=700>");
 		out.println("<tr>");

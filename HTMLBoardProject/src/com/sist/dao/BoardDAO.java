@@ -117,6 +117,33 @@ public class BoardDAO {
    }
    
    // 3-2. 추가 => INSERT => 시퀀스
+   public void boardInsert(BoardVO vo)
+   {
+	   try
+	   {
+		   // 1. 연결
+		   getConnection();
+		   // 2. SQL문장 
+		   String sql="INSERT INTO webBoard VALUES("
+				     +"wb_no_seq.nextval,?,?,?,?,SYSDATE,0)";
+		   ps=conn.prepareStatement(sql);
+		   // 3. ?에 값을 채운다 
+		   ps.setString(1, vo.getName());
+		   ps.setString(2, vo.getSubject());
+		   ps.setString(3, vo.getContent());
+		   ps.setString(4, vo.getPwd());
+		   
+		   // 4. 실행 요청 => Commit포함 
+		   ps.executeUpdate();
+	   }catch(Exception ex)
+	   {
+		   System.out.println(ex.getMessage());
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+   }
    // 3-3. 수정 => UPDATE => SQL (2개) 1.비밀번호 확인 , 2. 수정 => 어디로 갈까? 흐름
    // 3-4. 삭제 => DELETE => 비밀번호 확인 
    // 3-5. 내용보기 => SQL(2개)

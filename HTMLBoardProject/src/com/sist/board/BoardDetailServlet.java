@@ -55,7 +55,7 @@ public class BoardDetailServlet extends HttpServlet {
 		out.println("<center>");
 		
 		out.println("<h1>내용보기</h1>");
-		out.println("<table class=table_main width=600>");
+		out.println("<table class=table_main width=700>");
 		out.println("<tr>");
 		out.println("<th width=20%>번호</th>");
 		out.println("<td width=30% align=center>"+vo.getNo()+"</td>");
