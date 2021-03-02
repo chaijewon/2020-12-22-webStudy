@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import com.sist.dao.*;
 @WebServlet("/BoardListServlet")
+// BoardListServlet a=new BoardListServlet();
+// 웹 => main(X) , 서블릿,JSP=> 메모리 할당 (톰캣) 서블릿?변수=값
 public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

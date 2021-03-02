@@ -146,6 +146,43 @@ public class BoardDAO {
    }
    // 3-3. 수정 => UPDATE => SQL (2개) 1.비밀번호 확인 , 2. 수정 => 어디로 갈까? 흐름
    // 3-4. 삭제 => DELETE => 비밀번호 확인 
+   public boolean boardDelete(int no,String pwd)
+   {
+	   boolean bCheck=false;
+	   try
+	   {
+		   //1.연결
+		   getConnection();
+		   //2.SQL문장 
+		   String sql="SELECT pwd FROM webBoard "
+				     +"WHERE no=?";
+		   ps=conn.prepareStatement(sql);
+		   ps.setInt(1, no);
+		   ResultSet rs=ps.executeQuery();
+		   rs.next();
+		   String db_pwd=rs.getString(1);
+		   rs.close();
+		   
+		   if(db_pwd.equals(pwd))
+		   {
+			   bCheck=true;
+			   // 실제 데이터 삭제
+			   sql="DELETE FROM webBoard "
+				  +"WHERE no=?";
+			   ps=conn.prepareStatement(sql);
+			   ps.setInt(1, no);
+			   ps.executeUpdate();
+		   }
+	   }catch(Exception ex)
+	   {
+		   System.out.println(ex.getMessage());
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+	   return bCheck;
+   }
    // 3-5. 내용보기 => SQL(2개)
    public BoardVO boardDetailData(int no)
    {
