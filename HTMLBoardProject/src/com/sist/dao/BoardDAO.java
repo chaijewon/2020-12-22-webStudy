@@ -145,6 +145,87 @@ public class BoardDAO {
 	   }
    }
    // 3-3. 수정 => UPDATE => SQL (2개) 1.비밀번호 확인 , 2. 수정 => 어디로 갈까? 흐름
+   // 3-3-1 데이터 읽기
+   // web 화면 ==> DAO ==> web화면에 데이터 출력 
+   public BoardVO boardUpdateData(int no)
+   {
+	   BoardVO vo=new BoardVO();
+	   try
+	   {
+		   // 1. 연결
+		   getConnection();
+		   // 2. SQL문장 
+		   String sql="SELECT name,subject,content "
+				     +"FROM webBoard "
+				     +"WHERE no=?";
+		   ps=conn.prepareStatement(sql);
+		   ps.setInt(1, no);
+		   // 3. 실행요청
+		   ResultSet rs=ps.executeQuery();
+		   rs.next();
+		   // 4. 결과값을 VO에 채운다
+		   vo.setName(rs.getString(1));
+		   vo.setSubject(rs.getString(2));
+		   vo.setContent(rs.getString(3));
+		   
+		   rs.close();
+	   }catch(Exception ex)
+	   {
+		   System.out.println(ex.getMessage());
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+	   return vo;
+   }
+   // 3-3-2 실제 수정 
+   public boolean boardUpdate(BoardVO vo)
+   {
+	   boolean bCheck=false;
+	   try
+	   {
+		   // 1. 연결
+		   getConnection();
+		   // 2. SQL문장
+		   String sql="SELECT pwd FROM webBoard "
+				     +"WHERE no=?";
+		   ps=conn.prepareStatement(sql);
+		   ps.setInt(1, vo.getNo());
+		   ResultSet rs=ps.executeQuery();
+		   rs.next();
+		   String db_pwd=rs.getString(1);
+		   rs.close();
+		   
+		   if(db_pwd.equals(vo.getPwd()))
+		   {
+			   bCheck=true;
+			   // 실제 수정 
+			   sql="UPDATE webBoard SET "
+				  +"name=?,subject=?,content=? "
+				  +"WHERE no=?";
+			   ps=conn.prepareStatement(sql);
+			   // ?에 값을 채운다 
+			   ps.setString(1, vo.getName());
+			   ps.setString(2, vo.getSubject());
+			   ps.setString(3, vo.getContent());
+			   ps.setInt(4, vo.getNo());
+			   
+			   // 실행
+			   ps.executeUpdate();
+		   }
+		   
+	   }catch(Exception ex)
+	   {
+		   System.out.println(ex.getMessage());
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+	   
+	   return bCheck;
+   }
    // 3-4. 삭제 => DELETE => 비밀번호 확인 
    public boolean boardDelete(int no,String pwd)
    {
