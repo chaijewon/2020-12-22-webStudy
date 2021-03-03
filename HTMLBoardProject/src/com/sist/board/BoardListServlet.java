@@ -13,37 +13,37 @@ import java.util.*;
 import com.sist.dao.*;
 @WebServlet("/BoardListServlet")
 // BoardListServlet a=new BoardListServlet();
-// À¥ => main(X) , ¼­ºí¸´,JSP=> ¸Þ¸ð¸® ÇÒ´ç (ÅèÄ¹) ¼­ºí¸´?º¯¼ö=°ª
+// ï¿½ï¿½ => main(X) , ï¿½ï¿½ï¿½ï¿½,JSP=> ï¿½Þ¸ï¿½ ï¿½Ò´ï¿½ (ï¿½ï¿½Ä¹) ï¿½ï¿½ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½=ï¿½ï¿½
 public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1. ¼­ºí¸´ => ºê¶ó¿ìÀú·Î Àü¼Û (HTML,XML)
+		//1. ï¿½ï¿½ï¿½ï¿½ => ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (HTML,XML)
 		response.setContentType("text/html;charset=EUC-KR");// text/xml;charset=EUC-KR
-		//2. ¾î´À ÄÄÇ»ÅÍ·Î Àü¼Û ÇÒÁö ¼³Á¤ 
-		PrintWriter out=response.getWriter();// ÇØ´ç Å¬¶óÀÌ¾ðÆ®¿¡ HTMLÀ» Àü¼Û
+		//2. ï¿½ï¿½ï¿½ ï¿½ï¿½Ç»ï¿½Í·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
+		PrintWriter out=response.getWriter();// ï¿½Ø´ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ HTMLï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		/*
-		 *   µ¥ÀÌÅÍ ¹Þ±â 
+		 *   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ 
 		 *   http://211.238.142.181/HTMLBoardProject/BoardListServlet
 		 */
-		//1. µ¥ÀÌÅÍ => »ç¿ëÀÚ ¿äÃ»ÇÑ ÆäÀÌÁö ¹Þ±â 
+		//1. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ => ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ±ï¿½ 
 		String page=request.getParameter("page");
-		// 2. Ã³À½¿¡´Â ÆäÀÌÁö ¼³Á¤ (X) => µðÆúÆ®
+		// 2. Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (X) => ï¿½ï¿½ï¿½ï¿½Æ®
 		if(page==null)
 			page="1";
-		// ÇöÀç ÆäÀÌÁö ÀúÀå 
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 		int curpage=Integer.parseInt(page);
-		// ÃÑÆäÀÌÁö ÀúÀå 
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 		BoardDAO dao=new BoardDAO();
-		int count=dao.boardRowCount();// ¹øÈ£¼ø¼­·Î Ãâ·Â 
+		int count=dao.boardRowCount();// ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 
 		int totalpage=(int)(Math.ceil(count/10.0));
-		// ÆäÀÌÁöº° µ¥ÀÌÅÍ ÀÐ±â
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±ï¿½
 		ArrayList<BoardVO> list=dao.boardListData(curpage);
-		//3. ¾î¶² HTML ¼³Á¤ 
+		//3. ï¿½î¶² HTML ï¿½ï¿½ï¿½ï¿½ 
 		out.println("<html>");
 		out.println("<head>");
 		out.println("<style type=text/css>");
-		out.println("td,th{font-family:¸¼Àº °íµñ;font-size:9pt;height:35px}");
+		out.println("td,th{font-family:ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½;font-size:9pt;height:35px}");
 		out.println(".table_main{border-collapse:collapse;");
 		out.println("border-top-width: 2px;"
 				+ "border-bottom-width: 1px;"
@@ -71,22 +71,22 @@ public class BoardListServlet extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");
 		out.println("<center>");
-		out.println("<h1>°Ô½ÃÆÇ</h1>");
+		out.println("<h1>ï¿½Ô½ï¿½ï¿½ï¿½</h1>");
 		out.println("<table border=0 width=700>");
 		out.println("<tr>");
-		out.println("<td><a href=BoardInsertServlet>»õ±Û</a></td>");
+		out.println("<td><a href=BoardInsertServlet>ï¿½ï¿½ï¿½ï¿½</a></td>");
 		out.println("</tr>");
 		out.println("</table>");
 		out.println("<div style=\"height:400px\">");
 		out.println("<table width=700 class=table_main>");
 		out.println("<tr id=head>");
-		out.println("<th width=10%>¹øÈ£</th>");
-		out.println("<th width=45%>Á¦¸ñ</th>");
-		out.println("<th width=15%>ÀÌ¸§</th>");
-		out.println("<th width=20%>ÀÛ¼ºÀÏ</th>");
-		out.println("<th width=10%>Á¶È¸¼ö</th>");
+		out.println("<th width=10%>ï¿½ï¿½È£</th>");
+		out.println("<th width=45%>ï¿½ï¿½ï¿½ï¿½</th>");
+		out.println("<th width=15%>ï¿½Ì¸ï¿½</th>");
+		out.println("<th width=20%>ï¿½Û¼ï¿½ï¿½ï¿½</th>");
+		out.println("<th width=10%>ï¿½ï¿½È¸ï¿½ï¿½</th>");
 		out.println("</tr>");
-		// µ¥ÀÌÅÍ¸¦ Ãâ·ÂÇÏ´Â À§Ä¡ 
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ä¡ 
 		for(BoardVO vo:list)
 		{
 			out.println("<tr class=dataTr>");
@@ -107,23 +107,23 @@ public class BoardListServlet extends HttpServlet {
 		}
 		out.println("</table>");
 		out.println("</div>");
-		// ÇÏ´Ü
+		// ï¿½Ï´ï¿½
 		out.println("<table width=700>");
 		out.println("<tr>");
 		out.println("<td align=left>");
 		out.println("Search:");
 		out.println("<select name=fs>");
-		out.println("<option value=name>ÀÌ¸§</option>");
-		out.println("<option value=subject>Á¦¸ñ</option>");
-		out.println("<option value=content>³»¿ë</option>");
+		out.println("<option value=name>ï¿½Ì¸ï¿½</option>");
+		out.println("<option value=subject>ï¿½ï¿½ï¿½ï¿½</option>");
+		out.println("<option value=content>ï¿½ï¿½ï¿½ï¿½</option>");
 		out.println("</select>");
 		out.println("<input type=text name=ss size=10>");
-		out.println("<input type=submit value=°Ë»ö>");
+		out.println("<input type=submit value=ï¿½Ë»ï¿½>");
 		out.println("</td>");
 		out.println("<td align=right>");
-		out.println("<a href=BoardListServlet?page="+(curpage>1?curpage-1:curpage)+">ÀÌÀü</a>&nbsp;");
+		out.println("<a href=BoardListServlet?page="+(curpage>1?curpage-1:curpage)+">ï¿½ï¿½ï¿½ï¿½</a>&nbsp;");
 		out.println(curpage+" page / "+totalpage+" pages&nbsp;");
-		out.println("<a href=BoardListServlet?page="+(curpage<totalpage?curpage+1:curpage)+">´ÙÀ½</a>");
+		out.println("<a href=BoardListServlet?page="+(curpage<totalpage?curpage+1:curpage)+">ï¿½ï¿½ï¿½ï¿½</a>");
 		out.println("</td>");
 		out.println("</tr>");
 		out.println("</table>");
