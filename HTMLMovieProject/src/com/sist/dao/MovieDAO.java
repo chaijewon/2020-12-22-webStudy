@@ -259,8 +259,78 @@ public class MovieDAO {
 	   return list;
    }
    // 4) 댓글 쓰기
+   public void replyInsert(ReplyVO vo)
+   {
+	   try
+	   {
+		   // 1. 연결
+		   getConnection();
+		   // 2. SQL문장
+		   String sql="UPDATE movie SET "
+				     +"hit=hit+1 "
+				     +"WHERE mno=?";
+		   ps=conn.prepareStatement(sql);
+		   ps.setInt(1, vo.getMno());
+		   ps.executeUpdate();
+		   
+		   sql="INSERT INTO webReply VALUES("
+				     +"wr_no_seq.nextval,?,?,?,?,SYSDATE)";
+		   ps=conn.prepareStatement(sql);
+		   // 2-2.?에 값을 채운다 
+		   ps.setInt(1, vo.getMno());
+		   ps.setString(2, vo.getId());
+		   ps.setString(3, vo.getName());
+		   ps.setString(4, vo.getMsg());
+		   // 3. 실행 
+		   ps.executeUpdate();
+	   }catch(Exception ex)
+	   {
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+   }
    // 5) 댓글 삭제 
    // 6) 댓글 수정 
+   // 7) 댓글 읽기
+   public ArrayList<ReplyVO> replyListData(int mno)
+   {
+	   ArrayList<ReplyVO> list=new ArrayList<ReplyVO>();
+	   try
+	   {
+		   getConnection();
+		   String sql="SELECT no,id,name,msg,TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS') "
+				     +"FROM webReply "
+				     +"WHERE mno=? "
+				     +"ORDER BY no DESC";//최신 댓글
+		   ps=conn.prepareStatement(sql);
+		   ps.setInt(1, mno);
+		   
+		   ResultSet rs=ps.executeQuery();
+		   while(rs.next())
+		   {
+			   ReplyVO vo=new ReplyVO();
+			   vo.setNo(rs.getInt(1));
+			   vo.setId(rs.getString(2));
+			   vo.setName(rs.getString(3));
+			   vo.setMsg(rs.getString(4));
+			   vo.setDbday(rs.getString(5));
+			   list.add(vo);
+		   }
+		   rs.close();
+	   }catch(Exception ex)
+	   {
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+	   return list;
+   }
+   // 8) 댓글 몇개인지 확인 
 }
 
 

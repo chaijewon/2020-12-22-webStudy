@@ -116,14 +116,47 @@ public class MovieDetailServlet extends HttpServlet {
         
         HttpSession session=request.getSession();
         String id=(String)session.getAttribute("id");
+        ArrayList<ReplyVO> rlist=dao.replyListData(Integer.parseInt(mno));
 		out.println("<div class=col-sm-9>");
+		// 댓글 출력 위치 
+		out.println("<table class=table>");
+		out.println("<tr>");
+		out.println("<td>");
+		for(ReplyVO rvo:rlist)
+		{
+			out.println("<table class=table>");
+			out.println("<tr>");
+			out.println("<td class=text-left>");
+			out.println("<span style=\"color:blue\">"+rvo.getName()+"</span>("+rvo.getDbday()+")");
+			out.println("</td>");
+			out.println("<td class=text-right>");
+			if(rvo.getId().equals(id))
+			{
+				out.println("<a href=# class=\"btn btn-xs btn-danger\">수정</a>");
+				out.println("<a href=# class=\"btn btn-xs btn-warning\">삭제</a>");
+			}
+			out.println("</td>");
+			out.println("</tr>");
+			out.println("<tr>");
+			out.println("<td colspan=2 valign=top class=text-left>");
+			out.println("<pre style=\"background:white;white-space:pre-wrap;\">"+rvo.getMsg()+"</pre>");
+			out.println("</td>");
+			out.println("</tr>");
+			out.println("</table>");
+		}
+		out.println("</td>");
+		out.println("</tr>");
+		out.println("</table>");
 		if(id!=null) // 로그인이 성공했을때만 
 		{
 			out.println("<table class=table>");
 			out.println("<tr>");
 			out.println("<td>");
-			out.println("<textarea rows=3 cols=90 style=\"float:left\"></textarea>");
+			out.println("<form method=post action=ReplyInsertServlet>");
+			out.println("<input type=hidden name=mno value="+vo.getMno()+">");
+			out.println("<textarea rows=3 cols=90 style=\"float:left\" name=msg></textarea>");
 			out.println("<input type=submit value=댓글쓰기 class=\"btn btn-sm btn-primary\" style=\"height:68px;float:left\">");
+			out.println("</form>");
 			out.println("</td>");
 			out.println("</tr>");
 			out.println("</table>");
