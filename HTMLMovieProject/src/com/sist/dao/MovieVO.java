@@ -24,4 +24,5 @@ public class MovieVO {
    private String regdate;
    private String grade;
    private String director;
+   private int hit;
 }

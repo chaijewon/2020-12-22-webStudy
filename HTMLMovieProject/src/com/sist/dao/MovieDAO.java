@@ -223,6 +223,41 @@ public class MovieDAO {
 	   }
 	   return vo;//vo에 값을 채워서 넘겨준다 
    }
+   // 3-1) 댓글이 많은 영화 
+   public ArrayList<MovieVO> replyTop10()
+   {
+	   ArrayList<MovieVO> list=new ArrayList<MovieVO>();
+	   try
+	   {
+		   // 1. 연결
+		   getConnection();
+		   // 2. SQL문장 => 공지사항 , 이벤트 , 인기순위 .... rownum
+		   String sql="SELECT title,poster,hit,rownum "
+				     +"FROM (SELECT title,poster,hit "
+				     +"FROM movie ORDER BY hit DESC) "
+				     +"WHERE rownum<=10";
+		   ps=conn.prepareStatement(sql);
+		   // 실행 요청 
+		   ResultSet rs=ps.executeQuery();
+		   while(rs.next())
+		   {
+			   MovieVO vo=new MovieVO();
+			   vo.setTitle(rs.getString(1));
+			   vo.setPoster(rs.getString(2));
+			   vo.setHit(rs.getInt(3));
+			   list.add(vo);
+		   }
+		   rs.close();
+	   }catch(Exception ex)
+	   {
+		   System.out.println(ex.getMessage());
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+	   return list;
+   }
    // 4) 댓글 쓰기
    // 5) 댓글 삭제 
    // 6) 댓글 수정 
