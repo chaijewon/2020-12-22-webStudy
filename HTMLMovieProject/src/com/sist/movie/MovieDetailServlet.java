@@ -116,37 +116,58 @@ public class MovieDetailServlet extends HttpServlet {
         
         HttpSession session=request.getSession();
         String id=(String)session.getAttribute("id");
-        ArrayList<ReplyVO> rlist=dao.replyListData(Integer.parseInt(mno));
+        // 데이터 읽기
+        // 갯수(댓글)
+        int count=dao.replyCount(Integer.parseInt(mno));
+        ArrayList<ReplyVO> rList=dao.replyListData(Integer.parseInt(mno));
 		out.println("<div class=col-sm-9>");
 		// 댓글 출력 위치 
-		out.println("<table class=table>");
-		out.println("<tr>");
-		out.println("<td>");
-		for(ReplyVO rvo:rlist)
+		if(count==0) // 댓글이 없는 상태
 		{
 			out.println("<table class=table>");
 			out.println("<tr>");
-			out.println("<td class=text-left>");
-			out.println("<span style=\"color:blue\">"+rvo.getName()+"</span>("+rvo.getDbday()+")");
-			out.println("</td>");
-			out.println("<td class=text-right>");
-			if(rvo.getId().equals(id))
-			{
-				out.println("<a href=# class=\"btn btn-xs btn-danger\">수정</a>");
-				out.println("<a href=# class=\"btn btn-xs btn-warning\">삭제</a>");
-			}
+			out.println("<td class=text-center style=\"color:red\">");
+			out.println("<h3>댓글이 없습니다</h3>");
 			out.println("</td>");
 			out.println("</tr>");
+			out.println("</table>");
+			
+		}
+		else // 댓글이 존재하는 상태
+		{
+			out.println("<table class=table>");
 			out.println("<tr>");
-			out.println("<td colspan=2 valign=top class=text-left>");
-			out.println("<pre style=\"background:white;white-space:pre-wrap;\">"+rvo.getMsg()+"</pre>");
+			out.println("<td>");
+			for(ReplyVO rvo:rList)
+			{
+				out.println("<table class=table>");
+				
+				out.println("<tr>");
+				out.println("<td class=text-left>");
+				out.println("<span style=\"color:blue;font-weight:bold\">"+rvo.getName()+"</span>");
+				out.println("("+rvo.getDbday()+")");
+				out.println("</td>");
+				out.println("<td class=text-right>");
+				if(rvo.getId().equals(id))
+				{
+					out.println("<a href=# class=\"btn btn-xs btn-success\">수정</a>");
+					out.println("<a href=ReplyDeleteServlet?no="+rvo.getNo()+" class=\"btn btn-xs btn-info\">삭제</a>");
+				}
+				out.println("</td>");
+				out.println("</tr>");
+				
+				out.println("<tr>");
+				out.println("<td colspan=2 valign=top class=text-left>");
+				out.println("<pre style=\"white-space:pre-wrap;background:white\">");
+				out.println(rvo.getMsg()+"</pre>");
+				out.println("</td>");
+				out.println("</tr>");
+				out.println("</table>");
+			}
 			out.println("</td>");
 			out.println("</tr>");
 			out.println("</table>");
 		}
-		out.println("</td>");
-		out.println("</tr>");
-		out.println("</table>");
 		if(id!=null) // 로그인이 성공했을때만 
 		{
 			out.println("<table class=table>");

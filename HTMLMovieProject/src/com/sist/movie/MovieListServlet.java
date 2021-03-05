@@ -12,7 +12,11 @@ import javax.servlet.http.HttpSession;
 
 import com.sist.dao.MovieDAO;
 import com.sist.dao.MovieVO;
-
+/*
+ *    init() ==> doGet()|doPost() ==> destory()
+ *                                    ========= GC()
+ *                                    새로고침 , 페이지 이동 
+ */
 @WebServlet("/MovieListServlet")
 public class MovieListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -331,6 +331,36 @@ public class MovieDAO {
 	   return list;
    }
    // 8) 댓글 몇개인지 확인 
+   public int replyCount(int mno)
+   {
+	   int count=0;
+	   try
+	   {
+		   // 1. 연결
+		   getConnection();
+		   // 2. SQL문장 작성 
+		   String sql="SELECT COUNT(*) "
+				     +"FROM webReply "
+				     +"WHERE mno=?";
+		   // 전송 객체 생성
+		   ps=conn.prepareStatement(sql);
+		   // ?에 값을 채운자
+		   ps.setInt(1, mno);
+		   // 실행 요청 
+		   ResultSet rs=ps.executeQuery();
+		   rs.next();
+		   count=rs.getInt(1);
+		   rs.close();
+	   }catch(Exception ex)
+	   {
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   disConnection();//연결 해제
+	   }
+	   return count;
+   }
 }
 
 
