@@ -40,6 +40,26 @@ public class MovieDetailServlet extends HttpServlet {
 		//out.println(".col-sm-4{border:1px solid blue;height:450px}");
 		out.println("h3{text-align:center}");
 		out.println("</style>");
+		out.println("<script src=\"http://code.jquery.com/jquery.js\"></script>");
+		out.println("<script type=text/javascript>");
+		out.println("var i=0;");
+		out.println("$(function(){");
+		out.println("$('.aaa').click(function(){");
+		out.println("$('.update').hide();");
+		out.println("var no=$(this).attr('value');");
+		out.println("if(i==0){");
+		out.println("$(this).text('취소');");
+		out.println("$('#m'+no).show();");
+		out.println("i=1;");
+		out.println("}");
+		out.println("else{");
+		out.println("$(this).text('수정');");
+		out.println("$('#m'+no).hide();");
+		out.println("i=0;");
+		out.println("}");
+		out.println("});");
+		out.println("})");
+		out.println("</script>");
 		out.println("</head>");
 		out.println("<body>");
 		// 화면 출력 부분  ==> <html><head><body> => 생략할 수 있다
@@ -150,8 +170,8 @@ public class MovieDetailServlet extends HttpServlet {
 				out.println("<td class=text-right>");
 				if(rvo.getId().equals(id))
 				{
-					out.println("<a href=# class=\"btn btn-xs btn-success\">수정</a>");
-					out.println("<a href=ReplyDeleteServlet?no="+rvo.getNo()+" class=\"btn btn-xs btn-info\">삭제</a>");
+					out.println("<span value="+rvo.getNo()+" class=\"btn btn-xs btn-success aaa\">수정</span>");
+					out.println("<a href=ReplyDeleteServlet?no="+rvo.getNo()+"&mno="+mno+" class=\"btn btn-xs btn-info\">삭제</a>");
 				}
 				out.println("</td>");
 				out.println("</tr>");
@@ -160,6 +180,17 @@ public class MovieDetailServlet extends HttpServlet {
 				out.println("<td colspan=2 valign=top class=text-left>");
 				out.println("<pre style=\"white-space:pre-wrap;background:white\">");
 				out.println(rvo.getMsg()+"</pre>");
+				out.println("</td>");
+				out.println("</tr>");
+				// display:none => tr를 감춘다 
+				out.println("<tr class=update id=m"+rvo.getNo()+" style=\"display:none\">");
+				out.println("<td colspan=2>");
+				out.println("<form method=post action=ReplyUpdateServlet>");
+				out.println("<input type=hidden name=mno value="+vo.getMno()+">");// 이동
+				out.println("<input type=hidden name=no value="+rvo.getNo()+">");// 수정할 번호
+				out.println("<textarea rows=3 cols=90 style=\"float:left\" name=msg>"+rvo.getMsg()+"</textarea>");
+				out.println("<input type=submit value=댓글수정 class=\"btn btn-sm btn-primary\" style=\"height:68px;float:left\">");
+				out.println("</form>");
 				out.println("</td>");
 				out.println("</tr>");
 				out.println("</table>");

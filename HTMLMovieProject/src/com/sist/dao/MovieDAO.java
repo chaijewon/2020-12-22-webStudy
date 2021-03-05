@@ -292,7 +292,30 @@ public class MovieDAO {
 		   disConnection();
 	   }
    }
-   // 5) 댓글 삭제 
+   // 5) 댓글 삭제  reply_no  movie_no
+   public void replyDelete(int no)
+   {
+	   try
+	   {
+		   // 1. 연결
+		   getConnection();
+		   // SQL
+		   String sql="DELETE FROM webReply "
+				     +"WHERE no=?";
+		   ps=conn.prepareStatement(sql);
+		   // 3. ?에값을 채운다
+		   ps.setInt(1, no);
+		   // 4. 삭제 실행 요청 
+		   ps.executeUpdate();
+	   }catch(Exception ex)
+	   {
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+   }
    // 6) 댓글 수정 
    // 7) 댓글 읽기
    public ArrayList<ReplyVO> replyListData(int mno)
