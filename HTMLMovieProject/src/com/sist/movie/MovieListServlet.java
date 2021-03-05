@@ -74,7 +74,7 @@ public class MovieListServlet extends HttpServlet {
 	    {
 	    	out.println("<div class=\"col-md-3\">");// 12가 되면 => 자동으로 밑으로 내려간다
 	    	out.println("<div class=\"thumbnail\">");
-	    	out.println("<a href=MovieDetailServlet?mno="+vo.getMno()+">");
+	    	out.println("<a href=MovieDetailServlet?mno="+vo.getMno()+"&page="+curpage+">");
 	    	out.println("<img src=\""+vo.getPoster()+"\" class=img-rounded style=\"width:220;height:300px\">");
 	    	out.println("<div class=\"caption\">");
 	    	out.println("<p style=\"font-size:8pt;font-weight:bold;font-family:맑은 고딕\">"+vo.getTitle()+"</p>");

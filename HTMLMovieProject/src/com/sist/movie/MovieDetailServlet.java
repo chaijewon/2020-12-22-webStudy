@@ -21,6 +21,7 @@ public class MovieDetailServlet extends HttpServlet {
 		// MovieDetailServlet?mno=5
 		// 사용자로 부터 영화 번호를 받는다 
 		String mno=request.getParameter("mno");
+		String page=request.getParameter("page");
 		// 영화번호 => DAO => 상세내용을 리턴(VO) 
 		MovieDAO dao=new MovieDAO();
 		MovieVO vo=dao.movieDetailData(Integer.parseInt(mno));
@@ -107,7 +108,7 @@ public class MovieDetailServlet extends HttpServlet {
 		out.println("<td colspan=3 class=text-right>");
 		out.println("<a href=# class=\"btn btn-xs btn-danger\">예매하기</a>");
 		out.println("<a href=# class=\"btn btn-xs btn-warning\">찜하기</a>");
-		out.println("<a href=MovieListServlet class=\"btn btn-xs btn-info\">목록</a>");
+		out.println("<a href=MovieListServlet?page="+page+" class=\"btn btn-xs btn-info\">목록</a>");
 		out.println("</td>");
 		out.println("</tr>");
 		out.println("</table>");
