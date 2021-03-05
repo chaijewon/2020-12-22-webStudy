@@ -317,6 +317,29 @@ public class MovieDAO {
 	   }
    }
    // 6) 댓글 수정 
+   public void replyUpdate(int no,String msg)
+   {
+	   try
+	   {
+		   getConnection();
+		   String sql="UPDATE webReply SET "
+				     +"msg=? "
+				     +"WHERE no=?";
+		   ps=conn.prepareStatement(sql);
+		   ps.setString(1, msg);
+		   ps.setInt(2, no);
+		   
+		   // 실행 
+		   ps.executeUpdate();
+	   }catch(Exception ex)
+	   {
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+   }
    // 7) 댓글 읽기
    public ArrayList<ReplyVO> replyListData(int mno)
    {
