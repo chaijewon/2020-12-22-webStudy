@@ -1,0 +1,130 @@
+<!-- 
+     1) DAO (자바=오라클),VO ***
+     2) HTML 태그 
+     3) JavaScript
+     4) CSS
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../../main_css/table.css"> 
+<style type="text/css">
+td {
+  text-align: center;
+}
+#find{
+  text-align: left;
+}
+
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#keyword').val('검색어 입력');
+	$('#keyword').keyup(function(){
+		let k=$(this).val();
+		$('#user-table > tbody > tr').hide();
+		let temp=$('#user-table>tbody>tr>td:nth-child(5n+1):contains("'+k+'")');
+		$(temp).parent().show("slow");
+	});
+});
+</script>
+</head>
+<body>
+   <center>
+     <div style="height:50px"></div>
+     <table class="table_main" width=500>
+       <tr>
+        <td id="find">
+         Search:<input type=text id="keyword" size=20>
+        </td>
+       </tr>
+     </table>
+     <table class="table_main" width=500 id="user-table">
+     <thead>
+      <tr>
+       <th>이름</th>
+       <th>국어</th>
+       <th>영어</th>
+       <th>수학</th>
+       <th>물리</th>
+      </tr>
+     </thead> 
+     <tbody>
+      <tr>
+       <td>홍길동</td>
+       <td>90+10</td>
+       <td>90</td>
+       <td>80</td>
+       <td>100</td>
+      </tr>
+      <tr>
+       <td>심청이</td>
+       <td>80</td>
+       <td>80</td>
+       <td>90</td>
+       <td>70</td>
+      </tr>
+      <tr>
+       <td>춘향이</td>
+       <td>80</td>
+       <td>80</td>
+       <td>90</td>
+       <td>60</td>
+      </tr>
+      <tr>
+       <td>이순신</td>
+       <td>90</td>
+       <td>80</td>
+       <td>70</td>
+       <td>80</td>
+      </tr>
+      <tr>
+       <td>강감찬</td>
+       <td>70</td>
+       <td>89</td>
+       <td>90</td>
+       <td>76</td>
+      </tr>
+      <tr>
+       <td>을지문덕</td>
+       <td>90</td>
+       <td>90</td>
+       <td>90</td>
+       <td>80</td>
+      </tr>
+      <tr>
+       <td>소서노</td>
+       <td>90</td>
+       <td>90</td>
+       <td>80</td>
+       <td>70</td>
+      </tr>
+      <tr>
+       <td>김두한</td>
+       <td>70</td>
+       <td>90</td>
+       <td>70</td>
+       <td>90</td>
+      </tr>
+      <tr>
+       <td>박문수</td>
+       <td>80</td>
+       <td>80</td>
+       <td>80</td>
+       <td>70</td>
+      </tr>
+      <tr>
+       <td>전봉준</td>
+       <td>87</td>
+       <td>90</td>
+       <td>90</td>
+       <td>67</td>
+      </tr>
+      </tbody>
+     </table>
+   </center>
+</body>
+</html>
