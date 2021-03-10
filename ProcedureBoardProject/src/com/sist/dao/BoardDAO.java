@@ -286,7 +286,7 @@ public class BoardDAO {
 		 {
 			 getConnection();
 			 // SQL문장
-			 String sql="{CALL board_uodateData(?,?)}";
+			 String sql="{CALL board_updateData(?,?)}";
 			 cs=conn.prepareCall(sql);
 			 // ?에 값을 채운다 
 			 cs.setInt(1, no);
@@ -309,6 +309,50 @@ public class BoardDAO {
 			 disConnection();
 		 }
 		 return vo;
+	 }
+	 // 7-5-1. 실제 수정
+	 /*
+	  *  CREATE OR REPLACE PROCEDURE board_update(
+		   pNo freeboard.no%TYPE,
+		   pName freeboard.name%TYPE,
+		   pSubject freeboard.subject%TYPE,
+		   pContent freeboard.content%TYPE,
+		   pPwd freeboard.pwd%TYPE,
+		   pResult OUT freeboard.name%TYPE --비밀번호 확인
+		)
+	  */
+	 public boolean board_update(BoardVO vo)
+	 {
+		 boolean bCheck=false;
+		 try
+		 {
+			 getConnection();
+			 String sql="{CALL board_update(?,?,?,?,?,?)}";
+			 cs=conn.prepareCall(sql);
+			 // ?에 값을 채운다 
+			 cs.setInt(1,vo.getNo());
+			 cs.setString(2, vo.getName());
+			 cs.setString(3, vo.getSubject());
+			 cs.setString(4, vo.getContent());
+			 cs.setString(5, vo.getPwd());
+			 /// ==================== 오라클에서 읽어 가는 데이터 
+			 cs.registerOutParameter(6, OracleTypes.VARCHAR);
+			
+			 // 실행 
+			 cs.executeUpdate();
+			 
+			 String result=cs.getString(6);
+			 bCheck=Boolean.parseBoolean(result);
+			 
+		 }catch(Exception ex)
+		 {
+			 ex.printStackTrace();
+		 }
+		 finally
+		 {
+			 disConnection();
+		 }
+		 return bCheck;
 	 }
 	 // 7-6. 찾기 
 	
