@@ -234,7 +234,82 @@ public class BoardDAO {
 		 return vo;
 	 }
 	 // 7-4. 삭제하기
+	 /*
+	  * CREATE OR REPLACE PROCEDURE board_delete(
+		   pNo freeboard.no%TYPE,
+		   pPwd freeboard.pwd%TYPE,
+		   pResult OUT freeboard.name%TYPE
+		)
+	  */
+	 public boolean board_delete(int no,String pwd)
+	 {
+		 boolean bCheck=false;
+		 try
+		 {
+			 // 1. 연결
+			 getConnection();
+			 // 2. SQL
+			 String sql="{CALL board_delete(?,?,?)}";
+			 cs=conn.prepareCall(sql);
+			 // 3. ?에 값을 채운다
+			 cs.setInt(1, no);
+			 cs.setString(2, pwd);
+			 cs.registerOutParameter(3, OracleTypes.VARCHAR);
+			 
+			 // 4. 실행요청
+			 cs.executeUpdate();
+			 // 5. 저장된 데이터값을 받는다 
+			 String result=cs.getString(3);
+			 
+			 bCheck=Boolean.parseBoolean(result); // String => boolean으로 변경
+		 }catch(Exception ex)
+		 {
+			 ex.printStackTrace();
+		 }
+		 finally
+		 {
+			 disConnection();
+		 }
+		 return bCheck;
+	 }
 	 // 7-5. 수정하기
+	 /*
+	  *   CREATE OR REPLACE PROCEDURE board_updateData(
+			   pNo freeboard.no%TYPE,
+			   pResult OUT SYS_REFCURSOR
+			)
+	  */
+	 public BoardVO board_updateData(int no)
+	 {
+		 BoardVO vo=new BoardVO();
+		 try
+		 {
+			 getConnection();
+			 // SQL문장
+			 String sql="{CALL board_uodateData(?,?)}";
+			 cs=conn.prepareCall(sql);
+			 // ?에 값을 채운다 
+			 cs.setInt(1, no);
+			 cs.registerOutParameter(2, OracleTypes.CURSOR);
+			 // no,name,subject,content
+			 cs.executeUpdate();
+			 ResultSet rs=(ResultSet)cs.getObject(2);
+			 rs.next();
+			 vo.setNo(rs.getInt(1));
+			 vo.setName(rs.getString(2));
+			 vo.setSubject(rs.getString(3));
+			 vo.setContent(rs.getString(4));
+			 rs.close();
+		 }catch(Exception ex)
+		 {
+			 ex.printStackTrace();
+		 }
+		 finally
+		 {
+			 disConnection();
+		 }
+		 return vo;
+	 }
 	 // 7-6. 찾기 
 	
 }
