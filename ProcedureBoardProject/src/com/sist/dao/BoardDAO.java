@@ -140,6 +140,102 @@ public class BoardDAO {
 		  }
 		  return total;
 	 }
+	 // 7-2. 게시물 올리기
+	 /*
+	  *     CREATE OR REPLACE PROCEDURE board_insert(
+			   pName freeboard.name%TYPE,
+			   pSubject freeboard.subject%TYPE,
+			   pContent freeboard.content%TYPE,
+			   pPwd freeboard.pwd%TYPE
+			)
+	  */
+	 // 자바에서 오라클에 만들어진 함수(프로시저)를 호출 : 자바에서 호출 (제어)
+	 // DAO,VO => 웹 프로그램의 핵심 
+	 // DAO => 원시소스 => 라이브러리 (ORM:MyBatis(O),Hibernate,JPA)
+	 public void board_insert(BoardVO vo)
+	 {
+		 try
+		 {
+			 // 연결
+			 getConnection();
+			 // SQL문장 
+			 String sql="{CALL board_insert(?,?,?,?)}";
+			 // 함수 호출 
+			 cs=conn.prepareCall(sql);
+			 // ?=>값을 채운다 
+			 cs.setString(1, vo.getName());
+			 cs.setString(2, vo.getSubject());
+			 cs.setString(3, vo.getContent());
+			 cs.setString(4, vo.getPwd());
+			 // 실행한다 
+			 cs.executeUpdate();
+		 }catch(Exception ex)
+		 {
+			 // 오류 처리
+			 ex.printStackTrace();
+			 // 프로시저,함수 => ERP (취업:85%) = 학교,은행,공기업(관리)
+			 // 차세대 개발 => AL, 5G (속도) => Front (VueJS,ReactJS)
+			 // 모바일 : 안드로이드,아이폰 => 통합(플래터) 
+			 
+		 }
+		 finally
+		 {
+			 // 닫기
+			 disConnection();
+			 /*
+			  *   자바메소드 , 오라클에서 프로시저 
+			  *   1) 메소드,프로시저: 한가지 기능 수행 (구조화)
+			  *   2) 반복이 많은 경우에 제작(재사용)
+			  */
+		 }
+	 }
+	 // 7-3. 상세보기 
+	 /*
+	  *     CREATE OR REPLACE PROCEDURE board_detail(
+			   pNo freeboard.no%TYPE,
+			   pResult OUT SYS_REFCURSOR
+			)
+	  */
+	 // 화면 출력 : 서블릿 , JSP 
+	 public BoardVO board_detail(int no)
+	 {
+		 BoardVO vo=new BoardVO();
+		 try
+		 {
+			 getConnection();
+			 String sql="{CALL board_detail(?,?)}";
+			 cs=conn.prepareCall(sql);
+			 // 실행전 => ?에 값을 채운다 
+			 cs.setInt(1, no);
+			 // 읽어올 위치를 설정 
+			 cs.registerOutParameter(2, OracleTypes.CURSOR);
+			 // 실행 요청
+			 cs.executeUpdate();
+			 // no,name,subject,content,regdate,hit,like1
+			 ResultSet rs=(ResultSet)cs.getObject(2);
+			 rs.next();
+			 vo.setNo(rs.getInt(1));
+			 vo.setName(rs.getString(2));
+			 vo.setSubject(rs.getString(3));
+			 vo.setContent(rs.getString(4));
+			 vo.setRegdate(rs.getDate(5));
+			 vo.setHit(rs.getInt(6));
+			 vo.setLike1(rs.getInt(7));
+			 rs.close();
+		 }catch(Exception ex)
+		 {
+			 ex.printStackTrace();
+		 }
+		 finally
+		 {
+			 disConnection();
+		 }
+		 // Object selectOne()
+		 return vo;
+	 }
+	 // 7-4. 삭제하기
+	 // 7-5. 수정하기
+	 // 7-6. 찾기 
 	
 }
 

@@ -15,7 +15,7 @@ public class BoardInsertServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// doGet => 화면 출력 
 				// 1. HTML을 브라우저로 전송 (웹 => INSERT,UPDATE,DELETE,SELECT)
-				response.setContentType("text/html;charset=EUC-KR");
+				response.setContentType("text/html;charset=UTF-8");
 				// 2. 해당 클라이언트로 전송 
 				PrintWriter out=response.getWriter();
 				// doGet , doPost => Thread
@@ -77,7 +77,7 @@ public class BoardInsertServlet extends HttpServlet {
 				out.println("</body>");
 				out.println("</html>");
 	}
-
+    //void doGet(BoardVO vo)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         /*
          *   입력값이 넘어올 경우 => 브라우저 (바이트 스트림: 1byte) => 문자 스트림으로 변환 
@@ -92,6 +92,24 @@ public class BoardInsertServlet extends HttpServlet {
 			 *     request.setCharacterEncoding("UTF-8") => 한글 전송을 받는 경우 
 			 */
 		}catch(Exception ex) {}
+		// 전송된 값을 받는다 
+		String name=request.getParameter("name");
+		String subject=request.getParameter("subject");
+		String content=request.getParameter("content");
+		String pwd=request.getParameter("pwd");
+		// DAO => 오라클을 연결후 => 데이터 추가 
+		BoardVO vo=new BoardVO();
+		vo.setName(name);
+		vo.setSubject(subject);
+		vo.setContent(content);
+		vo.setPwd(pwd);
+		
+		BoardDAO dao=new BoardDAO();
+		dao.board_insert(vo);
+		
+		// 화면을 이동한다 (목록) => 흐름 
+		response.sendRedirect("BoardListServlet");
+		
 	}
 
 }

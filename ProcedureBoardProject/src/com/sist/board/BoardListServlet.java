@@ -112,7 +112,7 @@ public class BoardListServlet extends HttpServlet {
 			String dbday=vo.getRegdate().toString();
 			out.println("<tr class=dataTr height=35>");
 			out.println("<td width=10% align=center>"+vo.getNo()+"</td>");
-			out.println("<td width=45%>"+vo.getSubject()+"&nbsp;");
+			out.println("<td width=45%><a href=BoardDetailServlet?no="+vo.getNo()+">"+vo.getSubject()+"</a>&nbsp;");
 			if(today.equals(dbday))
 			{
 				out.println("<sup style=\"color:red\">new</sup>");
