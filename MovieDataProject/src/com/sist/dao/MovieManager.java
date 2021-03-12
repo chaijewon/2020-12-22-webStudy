@@ -2,6 +2,7 @@ package com.sist.dao;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 // 다음에서 데이터 읽어 오기 => MovieDAO => 데이터 저장 
@@ -52,18 +53,89 @@ public class MovieManager {
                  </a>
 		    */
 		   Elements story=doc.select("div.poster_info a.link_story");
+		   /*
+		    *   MNO       NOT NULL NUMBER  (O)       
+				CNO                NUMBER  (O)    
+				POSTER    NOT NULL VARCHAR2(260) (O)  
+				TITLE     NOT NULL VARCHAR2(200) (O)
+				DIRECTOR  NOT NULL VARCHAR2(100)  
+				ACTOR              VARCHAR2(1000) 
+				REGDATE   NOT NULL VARCHAR2(200)  (O)
+				GENRE     NOT NULL VARCHAR2(100)  
+				NATION    NOT NULL VARCHAR2(50)   
+				GRADE     NOT NULL VARCHAR2(50)   (O)
+				TIME      NOT NULL VARCHAR2(50)   
+				SCORE              NUMBER(2,1)    (O)
+				SHOWUSER           VARCHAR2(30)   
+				BOXOFFICE          VARCHAR2(10)   
+				STORY              CLOB           (O)
+				KEY                VARCHAR2(30)
+		    */
 		   for(int i=0;i<link.size();i++)
 		   {
-			   // HTML => 태그와 태그사이 <a>(값)</a> => text()
-			   // <a 속성="값"> => attr(속성) ==> img , a 
-			   System.out.println("제목:"+link.get(i).text());
-			   System.out.println("링크:"+link.get(i).attr("href"));
-			   System.out.println("개봉일:"+regdate.get(i).text());
-			   System.out.println("등급:"+grade.get(i).text());
-			   System.out.println("평점:"+score.get(i).text());
-			   System.out.println("포스터:"+poster.get(i).attr("src"));
-			   System.out.println("줄거리:"+story.get(i).text());
-			   System.out.println("========================================================");
+			   try
+			   {
+				   // HTML => 태그와 태그사이 <a>(값)</a> => text()
+				   // <a 속성="값"> => attr(속성) ==> img , a 
+				   MovieVO vo=new MovieVO();
+				   
+				   if(link.get(i).text().equals("타락천사"))
+					    continue;
+				   System.out.println("제목:"+link.get(i).text());
+				   System.out.println("링크:"+link.get(i).attr("href"));
+				   System.out.println("개봉일:"+regdate.get(i).text());
+				   System.out.println("등급:"+grade.get(i).text());
+				   System.out.println("평점:"+score.get(i).text());
+				   System.out.println("포스터:"+poster.get(i).attr("src"));
+				   System.out.println("줄거리:"+story.get(i).text());
+				   vo.setCno(cno);
+				   vo.setTitle(link.get(i).text());
+				   vo.setRegdate(regdate.get(i).text());
+				   vo.setGrade(grade.get(i).text());
+				   vo.setScore(Double.parseDouble(score.get(i).text()));
+				   vo.setPoster(poster.get(i).attr("src"));
+				   vo.setStory(story.get(i).text());
+				   // https://movie.daum.net/moviedb/main?movieId=137317
+				   Document doc2=Jsoup.connect("https://movie.daum.net"
+				            +link.get(i).attr("href")).get();
+				   Elements info1=doc2.select("div.inner_cont dl.list_cont dt");
+				   Elements info2=doc2.select("div.inner_cont dl.list_cont dd");
+				   for(int j=0;j<info1.size();j++)
+				   {
+					   try 
+					   {
+						   String str=info1.get(j).text();
+						   if(str.equals("장르"))
+						   {
+							   System.out.println("장르:"+info2.get(j).text());
+							   vo.setGenre(info2.get(j).text());
+						   }
+						   else if(str.equals("국가"))
+						   {
+							   System.out.println("국가:"+info2.get(j).text());
+							   vo.setNation(info2.get(j).text());
+						   }
+						   else if(str.equals("러닝타임"))
+						   {
+							   System.out.println("러닝타임:"+info2.get(j).text());
+							   vo.setTime(info2.get(j).text());
+						   }
+						   else if(str.equals("누적관객"))
+						   {
+							   System.out.println("누적관객:"+info2.get(j).text());
+							   vo.setShowUser(info2.get(j).text());
+						   }
+						   else if(str.equals("박스오피스"))
+						   {
+							   System.out.println("박스오피스:"+info2.get(j).text());
+							   vo.setBoxoffice(info2.get(j).text());
+						   }
+					   }catch(Exception ex) {}
+						   
+				   }
+				   System.out.println("========================================================");
+		   
+			   }catch(Exception ex) {}
 		   }
 	   }catch(Exception ex){}
    }
