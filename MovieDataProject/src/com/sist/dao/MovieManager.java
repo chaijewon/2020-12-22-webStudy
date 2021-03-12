@@ -1,5 +1,8 @@
 package com.sist.dao;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -133,13 +136,37 @@ public class MovieManager {
 					   }catch(Exception ex) {}
 						   
 				   }
+				   System.out.println("동영상:"+youtubeGetKey(vo.getTitle()));
 				   System.out.println("========================================================");
 		   
 			   }catch(Exception ex) {}
 		   }
 	   }catch(Exception ex){}
    }
-   
+   // https://www.youtube.com/results?search_query=
+   public String youtubeGetKey(String title)
+   {
+	   String key="";
+	   try
+	   {
+		   String url="https://www.youtube.com/results?search_query="+title;
+		   Document doc=Jsoup.connect(url).get();
+		   // /watch?v=bdcIC8d4nW0
+		   Pattern p=Pattern.compile("/watch\\?v=[^가-힣]+");
+		   /*
+		    *  /watch?v=bdcIC8d4nW0","webPageType":"WEB_PAGE_TYPE_WATCH","rootVe":3832}
+		    */
+		   Matcher m=p.matcher(doc.toString());
+		   while(m.find())
+		   {
+			   String str=m.group();// 찾은 문자열을 읽어 온다 
+			   str=str.substring(str.indexOf("=")+1,str.indexOf("\""));
+			   key=str;
+			   break;
+		   }
+	   }catch(Exception ex){}
+	   return key;
+   }
    public static void main(String[] args) {
 	    MovieManager m=new MovieManager();
 	    m.movieData();
