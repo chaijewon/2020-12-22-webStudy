@@ -15,9 +15,11 @@ public class MovieManager {
 	   MovieDAO dao=new MovieDAO();
 	   try
 	   {
-		   String url="https://movie.daum.net/ranking/boxoffice/weekly";
-		   int cno=2;
+		   System.out.println("Start...");
+		   String url="https://movie.daum.net/premovie/kakaopage?flag=Y";
+		   int cno=11;
 		   Document doc=Jsoup.connect(url).get();
+		   System.out.println(doc);
 		   /*
 		    *  <div class="thumb_cont">
                                 <strong class="tit_item">
@@ -118,7 +120,7 @@ public class MovieManager {
 				    */
 				   Element story=doc2.selectFirst("div.info_desc div.desc_cont");
 				   String s=story.text();
-				   s=s.substring(0,s.indexOf("["));
+				   //s=s.substring(0,s.indexOf("["));
 				   vo.setStory(story.text());
 				   System.out.println("줄거리:"+s);
 				   
@@ -201,9 +203,9 @@ public class MovieManager {
 				   // P / S
 				   System.out.println("========================================================");
 		   
-			   }catch(Exception ex) {}
+			   }catch(Exception ex) {ex.printStackTrace();}
 		   }
-	   }catch(Exception ex){}
+	   }catch(Exception ex){ex.printStackTrace();}
    }
    // https://www.youtube.com/results?search_query=
    public String youtubeGetKey(String title)
@@ -226,7 +228,7 @@ public class MovieManager {
 			   key=str;
 			   break;
 		   }
-	   }catch(Exception ex){}
+	   }catch(Exception ex){ex.printStackTrace();}
 	   return key;
    }
    public static void main(String[] args) {
