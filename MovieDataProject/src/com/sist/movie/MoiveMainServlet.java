@@ -26,6 +26,10 @@ public class MoiveMainServlet extends HttpServlet {
 		case 0: view="MovieHomeServlet"; break;
 		case 1: view="MovieReserveServlet"; break;
 		case 2: view="MovieBoxofficeServlet"; break;
+		case 3: view="MovieOTTServlet"; break;
+		case 4: view="MovieNetServlet"; break;
+		case 5: view="MovieWatchaServlet"; break;
+		case 6: view="MovieKakaoServlet"; break;
 		}
 		out.println("<html>");
 		out.println("<head>");
