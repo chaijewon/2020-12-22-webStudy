@@ -30,6 +30,8 @@ public class MoiveMainServlet extends HttpServlet {
 		case 4: view="MovieNetServlet"; break;
 		case 5: view="MovieWatchaServlet"; break;
 		case 6: view="MovieKakaoServlet"; break;
+		case 7: view="MovieNewsServlet";break;
+		case 8: view="MovieDetailServlet";break;
 		}
 		out.println("<html>");
 		out.println("<head>");
@@ -67,7 +69,7 @@ public class MoiveMainServlet extends HttpServlet {
 				+ "          <li><a href=\"MovieMainServlet?mode=6\">카카오페이지</a></li>\r\n"
 				+ "        </ul>\r\n"
 				+ "      </li>\r\n"
-				+ "      <li><a href=\"#\">영화뉴스</a></li>\r\n"
+				+ "      <li><a href=\"MovieMainServlet?mode=7\">영화뉴스</a></li>\r\n"
 				+ "    </ul>\r\n"
 				+ "  </div>\r\n"
 				+ "</nav>");

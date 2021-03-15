@@ -24,15 +24,15 @@ public class MovieNewsServlet extends HttpServlet {
 		NewsManager nm=new NewsManager();
 		List<Item> list=nm.newsListData();//네이버에서 읽어온 뉴스 (50개)
 		// 브라우저에 출력 
-		out.println("<html>");
+		/*out.println("<html>");
 		out.println("<head>");
 		out.println("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css\">");
 		out.println("<style>");
-		out.println(".row{width:800px;margen:0px auto}");
+		out.println(".row{width:800px;margin:0px auto}");
 		out.println("h3{text-align:center}");
 		out.println("</style>");
 		out.println("</head>");
-		out.println("<body>");
+		out.println("<body>");*/
 		out.println("<div class=container>");
 		out.println("<h3>영화 뉴스</h3>");
 		out.println("<div class=row>");
@@ -43,7 +43,7 @@ public class MovieNewsServlet extends HttpServlet {
 		{
 			out.println("<table class=\"table table-striped\">");
 			out.println("<tr>");
-			out.println("<td style=\"color:orange;font-size:12pt\">"+item.getTitle()+"</td>");
+			out.println("<td style=\"color:orange;font-size:12pt\"><a href="+item.getLink()+">"+item.getTitle()+"</a></td>");
 			out.println("</tr>");
 			out.println("<tr>");
 			out.println("<td>"+item.getDescription()+"</td>");
@@ -58,8 +58,8 @@ public class MovieNewsServlet extends HttpServlet {
 		out.println("</table>");
 		out.println("</div>");
 		out.println("</div>");
-		out.println("</body>");
-		out.println("</html>");
+		/*out.println("</body>");
+		out.println("</html>");*/
 	}
 
 }
