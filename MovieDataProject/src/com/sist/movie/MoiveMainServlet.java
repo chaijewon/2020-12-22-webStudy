@@ -75,6 +75,10 @@ public class MoiveMainServlet extends HttpServlet {
 				+ "</nav>");
 		out.println("<div style=\"height:50px\"></div>");
 		RequestDispatcher rd=request.getRequestDispatcher(view);
+		// MovieMainServlet?mode=1 => view=MovieReserveServlet
+		/*
+		 *   include => 모든 서블릿,JSP는 request를 공유한다 
+		 */
 		rd.include(request, response);
 		out.println("</body>");
 		out.println("</html>");

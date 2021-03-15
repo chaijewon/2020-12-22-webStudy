@@ -34,7 +34,7 @@ public class MovieNewsServlet extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");*/
 		out.println("<div class=container>");
-		out.println("<h3>영화 뉴스</h3>");
+		out.println("<h1 class=text-center>영화 뉴스</h1>");
 		out.println("<div class=row>");
 		out.println("<table class=table>");
 		out.println("<tr>");
