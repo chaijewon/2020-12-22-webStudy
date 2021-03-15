@@ -35,6 +35,28 @@ public class MovieNewsServlet extends HttpServlet {
 		out.println("<body>");
 		out.println("<div class=container>");
 		out.println("<h3>영화 뉴스</h3>");
+		out.println("<div class=row>");
+		out.println("<table class=table>");
+		out.println("<tr>");
+		out.println("<td>");
+		for(Item item:list)
+		{
+			out.println("<table class=\"table table-striped\">");
+			out.println("<tr>");
+			out.println("<td style=\"color:orange;font-size:12pt\">"+item.getTitle()+"</td>");
+			out.println("</tr>");
+			out.println("<tr>");
+			out.println("<td>"+item.getDescription()+"</td>");
+			out.println("</tr>");
+			out.println("<tr>");
+			out.println("<td class=text-right>"+item.getAuthor()+"</td>");
+			out.println("</tr>");
+			out.println("</table>");
+		}
+		out.println("</td>");
+		out.println("</tr>");
+		out.println("</table>");
+		out.println("</div>");
 		out.println("</div>");
 		out.println("</body>");
 		out.println("</html>");

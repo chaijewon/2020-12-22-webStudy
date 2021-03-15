@@ -1,4 +1,7 @@
 package com.sist.news;
+
+import javax.xml.bind.annotation.XmlElement;
+
 /*
  *      <title>영화 '신데렐라' "꿈은 현실이 된다! 릴리 제임스, 리차드 매든, 케이트 블란쳇 주연"</title>
 		<link>http://www.lecturernews.com/news/articleView.html?idxno=63032</link>
@@ -18,30 +21,36 @@ public class Item {
     public String getTitle() {
 	return title;
 	}
+    @XmlElement
 	public void setTitle(String title) {
 		this.title = title;
 	}
 	public String getLink() {
 		return link;
 	}
+	@XmlElement
 	public void setLink(String link) {
 		this.link = link;
 	}
 	public String getDescription() {
 		return description;
 	}
+	// element.text() @XmlElement, elemenent.attr() @XmlAttribute
+	@XmlElement
 	public void setDescription(String description) {
 		this.description = description;
 	}
 	public String getPubDate() {
 		return pubDate;
 	}
+	@XmlElement
 	public void setPubDate(String pubDate) {
 		this.pubDate = pubDate;
 	}
 	public String getAuthor() {
 		return author;
 	}
+	@XmlElement
 	public void setAuthor(String author) {
 		this.author = author;
 	} 

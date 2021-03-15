@@ -1,5 +1,6 @@
 package com.sist.news;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -9,7 +10,7 @@ public class Rss {
 	public Channel getChannel() {
 		return channel;
 	}
-	
+	@XmlElement
 	public void setChannel(Channel channel) {
 		this.channel = channel;
 	}
