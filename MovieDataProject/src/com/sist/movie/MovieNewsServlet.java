@@ -41,7 +41,7 @@ public class MovieNewsServlet extends HttpServlet {
 		out.println("<td>");
 		for(Item item:list)
 		{
-			out.println("<table class=\"table table-striped\">");
+			out.println("<table class=\"table\">");
 			out.println("<tr>");
 			out.println("<td style=\"color:orange;font-size:12pt\"><a href="+item.getLink()+">"+item.getTitle()+"</a></td>");
 			out.println("</tr>");

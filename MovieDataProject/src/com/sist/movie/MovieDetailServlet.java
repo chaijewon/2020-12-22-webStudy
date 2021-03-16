@@ -43,7 +43,7 @@ public class MovieDetailServlet extends HttpServlet {
 	   out.println("</td>");
 	   out.println("</tr>");
 	   out.println("</table>");
-	   out.println("<table class=\"table table-striped\">");
+	   out.println("<table class=\"table\">");
 	   out.println("<tr>");
 	   out.println("<td width=30% rowspan=9 class=text-center>");
 	   out.println("<img src="+vo.getPoster()+" width=100%>");
