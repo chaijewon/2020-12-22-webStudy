@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+/*function display()
+{
+	const name=["홍길동","심청이","박문수","춘향이","이순신"];
+	name.forEach(n=>{
+		document.write(n+"<br>");
+	})
+	name.map(n=>{
+		document.write(n+"<br>");
+	})
+}*/
+/*const display=()=>{
+	const name=["홍길동","심청이","박문수","춘향이","이순신"];
+	name.forEach(n=>{
+		document.write(n+"<br>");
+	})
+	name.map(n=>{
+		document.write(n+"<br>");
+	})
+}*/
+/*const display=()=>{
+	const name=["홍길동","심청이","박문수","춘향이","이순신"];
+	name.forEach(function(n){
+		document.write(n+"<br>");
+	})
+	name.map(function(n){
+		document.write(n+"<br>");
+	})
+}*/
+/*function display(){
+	const name=["홍길동","심청이","박문수","춘향이","이순신"];
+	for(let i=0;i<name.length;i++)
+	{
+		document.write(name[i]+"<br>");
+	}
+	document.write("<hr>");
+	for(let n of name)
+	{
+		document.write(n+"<br>");
+	}
+}*/
+const display=function(){
+	const info=[{name:'홍길동',sex:'남자'},
+		        {name:'심청이',sex:'여자'},
+		        {name:'박문수',sex:'남자'}];
+	for(let i of info)
+	{
+		document.write("이름:"+i.name+"<br>");
+		document.write("성별:"+i.sex+"<br>");
+		document.write("<hr>");
+	}
+	document.write("===== forEach ======<br>")
+	info.forEach(function(i){
+		document.write("이름:"+i.name+"<br>");
+		document.write("성별:"+i.sex+"<br>");
+		document.write("<hr>");
+	})
+	
+	document.write("===== map ======<br>")
+	info.map(function(i){
+		document.write("이름:"+i.name+"<br>");
+		document.write("성별:"+i.sex+"<br>");
+		document.write("<hr>");
+	})
+}
+const a=(a,b)=>a+b;
+display();
+console.log(a(10,20));
+</script>
+</head>
+<body>
+  
+</body>
+</html>
