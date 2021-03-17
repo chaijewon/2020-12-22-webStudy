@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+  const Person = function (firstName) {
+	  this.firstName = firstName;
+
+	  // 일반 함수
+	  this.sayName1 = function () {
+	    console.log(this.firstName);
+	  };
+
+	  // 화살표 함수
+	  this.sayName2 = () => {
+	    console.log(this.firstName);
+	  };
+	};
+
+	const john = new Person("John");
+	const dave = new Person("Dave");
+
+	john.sayName1(); // John
+
+	// 일반 함수의 this는 바뀔 수 있다. 하지만 화살표 함수에서는 바뀌지 않는다.
+	john.sayName1.call(dave); // Dave (call로 인해 this는 이제 dave 객체다)
+	john.sayName2.call(dave); // John (call을 사용했지만 this는 여전히 john 객체다)
+
+	// apply도 call을 사용한 예제와 마찬가지로 바뀌지 않는다
+	john.sayName1.apply(dave); // Dave
+	john.sayName2.apply(dave); // John
+
+	// bind를 사용해도 마찬가지로 바뀌지 않는다
+	john.sayName1.bind(dave)(); // Dave
+	john.sayName2.bind(dave)(); // John
+
+	var sayNameFromWindow1 = john.sayName1;
+	sayNameFromWindow1(); // undefined
+	// sayNameFromWindow1 변수는 전역 스쿠프에 속하며, 전역 스쿠프에서 this는 window 객체다.
+
+	var sayNameFromWindow2 = john.sayName2;
+	sayNameFromWindow2(); // John. this는 변하지 않는다.
+</script>
+</head>
+<body>
+
+</body>
+</html>
