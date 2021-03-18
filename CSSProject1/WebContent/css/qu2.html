@@ -1,0 +1,28 @@
+<html> 
+<head> 
+<title> test</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+<body>
+<script type="text/javascript"> 
+function scroll_follow( id )
+{
+  $(window).scroll(function( )  //스크롤이 움직일때마다 이벤트 발생
+  { 
+      var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
+      $( id ).stop().animate({top:position+200+"px"}, 1); //해당 오브젝트 위치값 재설정
+   });
+}
+ scroll_follow( "#scroll" );
+//스크롤이 생기도록 <br> 을 여러게 넣은 부분..
+$(document).ready(function(){ for( var i=0; i<200; i++ ) {$('#brr').html($('#brr').html() +"<br>" + i);} });
+</script> 
+<div id="scroll" style="position:absolute;right:0;top:0;"> 
+<table> 
+<tr><td>■■■■■■■■■■■</td> </tr>
+<tr><td>■■■■b1ix■■■■</td> </tr>
+<tr><td>■■■■■■■■■■■</td> </tr> 
+</table> 
+</div>
+<span id="brr"></span>
+</body> 
+</html>

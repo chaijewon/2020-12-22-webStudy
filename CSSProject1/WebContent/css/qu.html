@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style type="text/css">
+body {
+    height: 2000px;
+}
+#quick {
+    position: relative;
+    width: 100px;
+    left: 50%;
+    top: 0;
+    margin-left: 540px;
+    height: auto;
+    z-index: 20;
+}
+#quick .quick_menu {
+    margin-top: 25px;
+}
+#quick .quick_menu li a {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+    outline-style: none;
+    text-decoration: none;
+}
+</style>
+<script>
+$(function(){
+    var cssTop = parseInt($("#quick").css("top"));
+    $(window).scroll(function() {
+        var position = $(window).scrollTop();
+        
+        var total = cssTop + position + 200;
+        
+        if(total == 200){ 
+            total = 0;
+        }
+        
+        $("#quick").stop().animate({
+            "top" : total + "px"
+        }, 1000);
+    });
+})
+    
+</script>
+</head>
+<body>
+    <div id="quick">
+        <ul class="quick_menu">
+            <li>공지사항</li>
+            <li>자주묻는질문</li>
+            <li>카톡상담</li>
+            <li>상담전화계좌번호</li>
+        </ul>
+    </div>
+</body>
+</html>
