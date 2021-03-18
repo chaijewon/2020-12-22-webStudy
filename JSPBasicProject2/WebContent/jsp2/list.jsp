@@ -7,9 +7,9 @@
     for(MovieVO vo:list)
     {
     	String s=vo.getTitle();
-    	if(s.length()>15)
+    	if(s.length()>13)
     	{
-    		s=s.substring(0,15)+"...";
+    		s=s.substring(0,13)+"...";
     	}
     	vo.setTitle(s);
     }
@@ -30,6 +30,20 @@
 <script type="text/javascript">
 $(function(){
 	$('.img').css("cursor","pointer");
+	$('.img').click(function(){
+		let mno=$(this).attr("data");
+		// detail.jsp?mno=1&id=admin
+		$.ajax({
+			type:'POST',
+			url:'detail.jsp',
+			data:{"mno":mno},
+			success:function(result)
+			{
+				//alert(result);
+				$('.col-sm-4').html(result);
+			}
+		})
+	})
 });
 </script>
 </head>
@@ -62,7 +76,7 @@ $(function(){
                  <div class="panel panel-primary">
 			      <div class="panel-heading"><%=vo.getTitle() %></div>
 			      <div class="panel-body">
-			        <img src="<%=vo.getPoster() %>" width=100% class="img-rounded" class="img" 
+			        <img src="<%=vo.getPoster() %>" width=100% class="img-rounded img" 
 			        data="<%=vo.getMno()%>">
 			      </div>
 			     </div>

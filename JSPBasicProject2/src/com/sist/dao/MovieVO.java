@@ -11,4 +11,5 @@ public class MovieVO {
            genre,nation,grade,time,showUser,
            boxoffice,story,key;
    private double score;
+   private String story2;
 }

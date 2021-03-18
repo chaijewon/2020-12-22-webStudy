@@ -85,6 +85,53 @@ public class MovieDAO {
 		  }
 		  return list;
 	  }
+	  
+	  // 상세보기 
+	  public MovieVO movieDetailData(int mno)
+	  {
+		  /*
+		   *  private String poster,title,director,actor,regdate,
+                             genre,nation,grade,time,showUser,
+                             boxoffice,story,key;
+              private double score;
+		   */
+		  MovieVO vo=new MovieVO();
+		  try
+		  {
+			  getConnection();
+			  String sql="SELECT poster,title,regdate,genre,nation,grade,time,"
+					    +"showUser,boxoffice,story,key,score "
+					    +"FROM daum_movie "
+					    +"WHERE mno=?";
+			  ps=conn.prepareStatement(sql);
+			  // ? 에 값을 채운다
+			  ps.setInt(1, mno);
+			  
+			  ResultSet rs=ps.executeQuery();
+			  rs.next();// row
+			  vo.setPoster(rs.getString(1));
+			  vo.setTitle(rs.getString(2));
+			  vo.setRegdate(rs.getString(3));
+			  vo.setGenre(rs.getString(4));
+			  vo.setNation(rs.getString(5));
+			  vo.setGrade(rs.getString(6));
+			  vo.setTime(rs.getString(7));
+			  vo.setShowUser(rs.getString(8));
+			  vo.setBoxoffice(rs.getString(9));
+			  vo.setStory(rs.getString(10));
+			  vo.setKey(rs.getString(11));
+			  vo.setScore(rs.getDouble(12));
+			  rs.close();
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+		  return vo;
+	  }
 }
 
 
