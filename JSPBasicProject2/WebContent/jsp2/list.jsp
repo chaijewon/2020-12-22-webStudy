@@ -7,9 +7,9 @@
     for(MovieVO vo:list)
     {
     	String s=vo.getTitle();
-    	if(s.length()>10)
+    	if(s.length()>15)
     	{
-    		s=s.substring(0,10)+"...";
+    		s=s.substring(0,15)+"...";
     	}
     	vo.setTitle(s);
     }
@@ -26,6 +26,12 @@
    margin: 0px auto;
 }
 </style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.img').css("cursor","pointer");
+});
+</script>
 </head>
 <!-- 
   <div class="col-md-4">
@@ -56,7 +62,8 @@
                  <div class="panel panel-primary">
 			      <div class="panel-heading"><%=vo.getTitle() %></div>
 			      <div class="panel-body">
-			        <img src="<%=vo.getPoster() %>" width=100% class="img-rounded">
+			        <img src="<%=vo.getPoster() %>" width=100% class="img-rounded" class="img" 
+			        data="<%=vo.getMno()%>">
 			      </div>
 			     </div>
                </div>
