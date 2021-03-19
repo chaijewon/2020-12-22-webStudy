@@ -60,6 +60,11 @@ public class MovieDAO {
 		  {
 			  getConnection();
 			  // 인기순위(10) , 공지사항 5개...
+			  /*
+			   *    mno poster title rownum
+			   *     1   aaa    aaa    1
+			   *     2   bbb    bbb
+			   */
 			  String sql="SELECT mno,poster,title,rownum "
 					    +"FROM daum_movie "
 					    +"WHERE rownum<=20";
