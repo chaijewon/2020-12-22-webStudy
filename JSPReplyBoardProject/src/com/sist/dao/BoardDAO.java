@@ -104,7 +104,55 @@ public class BoardDAO {
 		  }
 		  return list;
 	  }
+	  // 게시물 총갯수
+	  public int boardRowCount()
+	  {
+		  int count=0;
+		  try
+		  {
+			  getConnection();
+			  String sql="SELECT COUNT(*) FROM jspReplyBoard";
+			  ps=conn.prepareStatement(sql);
+			  ResultSet rs=ps.executeQuery();
+			  rs.next();
+			  count=rs.getInt(1);
+			  rs.close();
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+		  return count;
+	  }
 	  // 글쓰기
+	  public void boardInsert(BoardVO vo)
+	  {
+		  try
+		  {
+			  getConnection();
+			  String sql="INSERT INTO jspReplyBoard(no,name,subject,content,pwd,group_id) "
+					    +"VALUES(jrb_no_seq.nextval,?,?,?,?,"
+					    +"(SELECT NVL(MAX(group_id)+1,1) FROM jspReplyBoard))";
+			  ps=conn.prepareStatement(sql);
+			  ps.setString(1, vo.getName());
+			  ps.setString(2, vo.getSubject());
+			  ps.setString(3, vo.getContent());
+			  ps.setString(4, vo.getPwd());
+			  
+			  // 실행 요청
+			  ps.executeUpdate();
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+	  }
 	  // 내용보기 => SQL:2개
 	  // 답변 => SQL:4개 
 	  // 수정

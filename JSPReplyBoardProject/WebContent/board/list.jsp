@@ -17,6 +17,10 @@
     int curpage=Integer.parseInt(strPage);
     BoardDAO dao=new BoardDAO();
     List<BoardVO> list=dao.boardListData(curpage);
+    int count=dao.boardRowCount();
+    int totalpage=(int)(Math.ceil(count/10.0));// 총페이지 
+    
+    count=count-((10*curpage)-10);
     
 %>
 <!DOCTYPE html>
@@ -30,9 +34,24 @@
    width:800px;
    margin: 0px auto;
 }
+td{
+  font-size: 9pt;
+  font-family: 맑은 고딕;
+}
 </style>
 </head>
 <body>
+  <%--
+        화면 변경 
+        <html>
+           <a href="이동할 파일명"> : GET 
+           <form action="이동할 파일명"> : GET/POST
+        <JavaScript>
+           location.href="이동할 파일" : GET
+        <Java>
+           sendRedierct("이동할 파일"): GET  sendRedierct("a.jsp?a=10")
+           forward("이동할 파일") : GET   ==> ?
+   --%>
   <div style="height:30px"></div>
   <div class="container">
    <div class="row">
@@ -40,11 +59,11 @@
     <table class="table">
       <tr>
        <td>
-        <a href="#" class="btn btn-sm btn-primary">새글</a>
+        <a href="insert.jsp" class="btn btn-sm btn-primary">새글</a>
        </td>
       </tr>
     </table>
-    <div style="height:400px">
+    <div style="height:380px">
 	    <table class="table table-hover">
 	      <tr class="info">
 	        <th class="text-center" width=10%>번호</th>
@@ -58,7 +77,7 @@
 	         {
 	      %>
 	              <tr>
-			        <td class="text-center" width=10%><%=vo.getNo() %></td>
+			        <td class="text-center" width=10%><%=count-- %></td>
 			        <td width=45%>
 			        <%--답변 표시 --%>
 			        <%
@@ -69,7 +88,7 @@
 			        		   out.println("&nbsp;&nbsp;");
 			        	   }
 			        %>
-			              <img src="re.gif">
+			              <sup><img src="re_icon.png"></sup>
 			        <%
 			           }
 			        %>
@@ -82,6 +101,7 @@
 			           {
 			        %>
 			              <sup style="color:red">new</sup>
+			              
 			        <%
 			           }
 			        %>
@@ -98,9 +118,9 @@
     <table class="table">
       <tr>
        <td class="text-right">
-        <a href="#" class="btn btn-sm btn-danger">이전</a>
-        1 page / 1 pages
-        <a href="#" class="btn btn-sm btn-warning">다음</a>
+        <a href="list.jsp?page=<%=curpage>1?curpage-1:curpage %>" class="btn btn-sm btn-danger">이전</a>
+        <%=curpage %> page / <%=totalpage %> pages
+        <a href="list.jsp?page=<%=curpage<totalpage?curpage+1:curpage %>" class="btn btn-sm btn-warning">다음</a>
        </td>
       </tr>
     </table>
