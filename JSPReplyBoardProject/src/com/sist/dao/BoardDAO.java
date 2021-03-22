@@ -343,6 +343,99 @@ public class BoardDAO {
 		  return bCheck;
 	  }
 	  // 삭제 => SQL:4개
+	  /*
+	   *   1. 비밀번호 체크 
+	   *   2. 비밀번호가 맞는 경우 : TRUE
+	   *      = depth : 0 => DELETE
+	   *      = depth > 0 => UPDATE
+	   *      = depth 1개 감소
+	   *      틀리는 경우 : Back
+	   */
+	  public boolean boardDelete(int no,String pwd)
+	  {
+		  boolean bCheck=false;
+		  try
+		  {
+			  getConnection();
+			  conn.setAutoCommit(false);
+			  // 처리
+			  // 1.비밀번호 
+			  String sql="SELECT pwd FROM jspReplyBoard "
+					    +"WHERE no=?";
+			  ps=conn.prepareStatement(sql);
+			  ps.setInt(1, no);
+			  ResultSet rs=ps.executeQuery();
+			  rs.next();
+			  String db_pwd=rs.getString(1);
+			  rs.close();
+			  
+			  if(db_pwd.equals(pwd))
+			  {
+				  bCheck=true;
+				  sql="SELECT root,depth FROM jspReplyBoard "
+					 +"WHERE no=?";
+				  ps=conn.prepareStatement(sql);
+				  ps.setInt(1, no);
+				  rs=ps.executeQuery();
+				  rs.next();
+				  int root=rs.getInt(1);
+				  int depth=rs.getInt(2);
+				  rs.close();
+				  
+				  if(depth==0)//댓글이 없는 상태
+				  {
+					  sql="DELETE FROM jspReplyBoard "
+						 +"WHERE no=?";
+					  ps=conn.prepareStatement(sql);
+					  ps.setInt(1, no);
+					  ps.executeUpdate();
+				  }
+				  else //댓글이 있는 상태 
+				  {
+					  String msg="관리자가 삭제한 게시물입니다";
+					  sql="UPDATE jspReplyBoard SET "
+					     +"subject=?,content=? "
+						 +"WHERE no=?";
+					  ps=conn.prepareStatement(sql);
+					  ps.setString(1, msg);
+					  ps.setString(2, msg);
+					  ps.setInt(3, no);
+					  
+					  ps.executeUpdate();
+				  }
+				  
+				  sql="UPDATE jspReplyBoard SET "
+					 +"depth=depth-1 "
+					 +"WHERE no=?";
+				  ps=conn.prepareStatement(sql);
+				  ps.setInt(1, root);
+				  ps.executeUpdate();
+			  }
+			  else
+			  {
+				  bCheck=false;
+			  }
+			  
+			  conn.commit();
+		  }catch(Exception ex)
+		  {
+			  try
+			  {
+				  conn.rollback();
+			  }catch(Exception e) {}
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  try
+			  {
+				  conn.setAutoCommit(true);
+			  }catch(Exception ex){}
+			  // 종료
+			  disConnection();
+		  }
+		  return bCheck;
+	  }
 	  // 찾기
 	  
 }

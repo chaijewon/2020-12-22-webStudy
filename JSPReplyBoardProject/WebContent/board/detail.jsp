@@ -25,6 +25,47 @@ td{
   font-family: 맑은 고딕;
 }
 </style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+let i=0;
+$(function(){
+	$('#delSpan').click(function(){
+		if(i==0)
+		{
+			$('#del').show();
+			$('#delSpan').text("취소");
+			i=1;
+		}
+		else
+		{
+			$('#del').hide();
+			$('#delSpan').text("삭제");
+			i=0;
+		}
+	});
+	
+    // 삭제 버튼
+    $('#delBtn').click(function(){
+    	let pwd=$('input[name=pwd]').val();
+    	if(pwd.trim()=="")
+    	{
+    		$('input[name=pwd]').focus();
+    		return;
+    	}
+    	// 데이터를 전송 (번호,비밀번호,페이지)
+    	$('#frm').submit();
+    	/*
+    	     태그의 속성 
+    	      =========
+    	       class
+    	       id
+    	      ========= CSS,JavaScript용(Front처리)
+    	       name
+    	      ========= Java에서 데이터를 받을 목적 
+    	*/
+    });
+});
+</script>
 </head>
 <body>
   <div style="height:30px"></div>
@@ -57,8 +98,18 @@ td{
         <td colspan="4" class="text-right">
          <a href="reply.jsp?no=<%=no %>&page=<%=strPage %>" class="btn btn-sm btn-danger">답변</a>
          <a href="update.jsp?no=<%=no %>&page=<%=strPage %>" class="btn btn-sm btn-success">수정</a>
-         <a href="#" class="btn btn-sm btn-warning">삭제</a>
+         <span class="btn btn-sm btn-warning" id="delSpan">삭제</span>
          <a href="list.jsp?page=<%=strPage %>" class="btn btn-sm btn-info">목록</a>
+        </td>
+      </tr>
+      <tr id="del" style="display:none">
+        <td colspan="4" class="text-right">
+          <form method=post action="delete_ok.jsp" id="frm">
+          비밀번호:<input type=password name=pwd size=10 class="input-sm">
+                <input type=hidden name=no value="<%=no %>">
+                <input type=hidden name=page value="<%=strPage%>">
+                <input type=button value="삭제" class="btn btn-sm btn-primary" id="delBtn">
+          </form>
         </td>
       </tr>
     </table>
