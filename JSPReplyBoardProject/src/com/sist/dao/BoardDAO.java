@@ -199,6 +199,65 @@ public class BoardDAO {
 	  }
 	  // 답변 => SQL:4개 
 	  // 수정
+	  /*
+	   *   라이브러리 메소드 : Callback이 있는 경우도 있다 
+	   *   Callback메소드 => 시스템에 의해서 자동으로 호출되는 메소드 
+	   *     main(),doGet(),doPost()
+	   *   사용자 정의 메소드 : Callback이 없다 => 반드시 호출후에 사용 
+	   */
+	  public boolean boardUpdate(BoardVO vo)
+	  {
+		  boolean bCheck=false;
+		  try
+		  {
+			  // 1. 연결
+			  getConnection();
+			  // 2. SQL문장 
+			  // 2-1. 비밀번호 검색
+			  String sql="SELECT pwd FROM jspReplyBoard "
+					    +"WHERE no=?";
+			  ps=conn.prepareStatement(sql);
+			  // ?에 값을 채운다 
+			  ps.setInt(1, vo.getNo());
+			  // 결과값을 가지고 온다 
+			  ResultSet rs=ps.executeQuery();
+			  rs.next();
+			  String db_pwd=rs.getString(1);
+			  rs.close();
+			  // 본인 여부 확인 
+			  if(db_pwd.equals(vo.getPwd()))
+			  {
+				  bCheck=true;
+				  // 수정하기
+				  sql="UPDATE jspReplyBoard SET "
+				     +"name=?,subject=?,content=? "
+				     +"WHERE no=?";
+				  ps=conn.prepareStatement(sql);
+				  // ?에 값을 채운다
+				  ps.setString(1, vo.getName());
+				  ps.setString(2, vo.getSubject());
+				  ps.setString(3, vo.getContent());
+				  ps.setInt(4, vo.getNo());
+				  
+				  ps.executeUpdate();
+			  }
+			  else
+			  {
+				  bCheck=false;
+			  }
+			  // 2-2. 실제 수정 
+		  }catch(Exception ex)
+		  {
+			  // 오류 체크
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  // 오라클 종료 : 오류가 있던 , 없던 무조건 종료
+			  disConnection();
+		  }
+		  return bCheck;
+	  }
 	  // 삭제 => SQL:4개
 	  // 찾기
 	  

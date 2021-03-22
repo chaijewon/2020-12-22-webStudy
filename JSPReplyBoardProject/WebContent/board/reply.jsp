@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.sist.dao.*"%>
+    pageEncoding="UTF-8"%>
 <%
-	String no=request.getParameter("no");
-	String strPage=request.getParameter("page");
-	
-	// BoardDAO에서 no에 해당되는 데이터를 받는다 
-	BoardDAO dao=new BoardDAO();
-	BoardVO vo=dao.boardOneRowData(Integer.parseInt(no), 2);
+    // detail.jsp?no=1&page=1
+    String no=request.getParameter("no");
+    String strPage=request.getParameter("page");
 %>
 <!DOCTYPE html>
 <html>
@@ -59,42 +56,43 @@ $(function(){
 		}
 		
 		// 데이터를 전송 
-		$('#frm').submit();// submit => 함수화 (action=update_ok.jsp)
+		$('#frm').submit();
 		
 	})
 })
 </script>
 </head>
-<!-- 
-      1) 화면에 출력 
-      2) 데이터를 받아서 오라클 연결 (화면에 출력하지 않는다)
-         _ok
- -->
+<%--
+                 no   gi   gs   gt  root  depth
+         AAAAA   1    1    0    0     0    1
+          =>BBBB 2    1    1    1     1    1
+           =>CCCC3    1    2    2     2    0
+ --%>
 <body>
  <div style="height:30px"></div>
   <div class="container">
    <div class="row">
     <img src="board.png" style="width:800px;height:150px">
-    <form method=post action="update_ok.jsp" id="frm" autocomplete="off">
+    <form method=post action="reply_ok.jsp" id="frm" autocomplete="off">
     <table class="table">
       <tr>
         <th class="text-right danger" width=15%>이름</th>
         <td width=85%>
-          <input type=text name=name class="input-sm" size=15 value="<%=vo.getName()%>">
-          <input type=hidden name=no value="<%=no%>">
+          <input type=text name=name class="input-sm" size=15>
+          <input type=hidden name=pno value="<%=no%>">
           <input type=hidden name=page value="<%=strPage%>">
         </td>
       </tr>
       <tr>
         <th class="text-right danger" width=15%>제목</th>
         <td width=85%>
-          <input type=text name=subject class="input-sm" size=55 value="<%=vo.getSubject()%>">
+          <input type=text name=subject class="input-sm" size=55>
         </td>
       </tr>
       <tr>
         <th class="text-right danger" width=15% valign="top">내용</th>
         <td width=85%>
-          <textarea rows="10" cols="62" name=content><%=vo.getContent() %></textarea>
+          <textarea rows="10" cols="62" name=content></textarea>
         </td>
       </tr>
       <tr>
@@ -105,7 +103,7 @@ $(function(){
       </tr>
       <tr>
         <td colspan="2" class="text-center">
-          <input type="button" value="수정하기" class="btn btn-sm btn-primary sendBtn">
+          <input type="button" value="답변" class="btn btn-sm btn-primary sendBtn">
           <input type="button" value="취소" onclick="javascript:history.back()"
         	  class="btn btn-sm btn-success"
           >
@@ -117,4 +115,3 @@ $(function(){
   </div>
 </body>
 </html>
-
