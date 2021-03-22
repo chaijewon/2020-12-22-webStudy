@@ -198,6 +198,90 @@ public class BoardDAO {
 		  return vo;
 	  }
 	  // 답변 => SQL:4개 
+	  /*
+	   *                    group_id group_step  group_tab depth
+	   *                    
+	   *    AAAAAA              1        0          0
+	   *      =>GGGGG           1        2          1
+	   *      =>DDDDD           1        3          1
+	   *      =>BBBBB           1        4          1
+	   *       =>CCCCCC         1        5          2
+	   *     
+	   *     
+	   *      
+	   */
+	  // 오라클의 단점 => ORDER BY시에 같은 값이면  INSERT가 먼저된 데이터를 먼저 출력한다 
+	  public void boardReplyInsert(int root,BoardVO vo)
+	  {
+		  try
+		  {
+			  getConnection();// 연결 
+			  // commit을 사용하지 않는다 
+			  conn.setAutoCommit(false);// 트랜잭션 프로그램 (일괄 처리)
+			  // 1. root가 가지고 있는 그룹 관련 컬럼값을 읽어 온다 SELECT 
+			  String sql="SELECT group_id,group_step,group_tab "
+					    +"FROM jspReplyBoard "
+					    +"WHERE no=?";
+			  ps=conn.prepareStatement(sql);
+			  ps.setInt(1, root);
+			  ResultSet rs=ps.executeQuery();
+			  rs.next();
+			  int gi=rs.getInt(1);
+			  int gs=rs.getInt(2);
+			  int gt=rs.getInt(3);
+			  rs.close();
+			  // 2. 전체 번호(group_step)를 증가한다 UPDATE
+			  sql="UPDATE jspReplyBoard SET "
+				 +"group_step=group_step+1 "
+				 +"WHERE group_id=? AND group_step>?";
+			  ps=conn.prepareStatement(sql);
+			  ps.setInt(1, gi);
+			  ps.setInt(2, gs);
+			  ps.executeUpdate();
+			  // 3. INSERT 
+			  sql="INSERT INTO jspReplyBoard VALUES("
+				 +"jrb_no_seq.nextval,?,?,?,?,SYSDATE,0,?,?,?,?,0)";
+			  ps=conn.prepareStatement(sql);
+			  // ?에 값을 채운다 
+			  ps.setString(1, vo.getName());
+			  ps.setString(2, vo.getSubject());
+			  ps.setString(3, vo.getContent());
+			  ps.setString(4, vo.getPwd());
+			  
+			  ps.setInt(5, gi);
+			  ps.setInt(6, gs+1);
+			  ps.setInt(7, gt+1);
+			  ps.setInt(8, root);
+			  
+			  ps.executeUpdate();
+			  // 4. root의 depth를 증가 UPDATE
+			  
+			  sql="UPDATE jspReplyBoard SET "
+				 +"depth=depth+1 "
+				 +"WHERE no=?";
+			  ps=conn.prepareStatement(sql);
+			  // ?에 값을 채운다
+			  ps.setInt(1, root);
+			  // 실행
+			  ps.executeUpdate();
+			  conn.commit();
+		  }catch(Exception ex)
+		  {
+			  try
+			  {
+				  conn.rollback();
+			  }catch(Exception e){}
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  try
+			  {
+				  conn.setAutoCommit(true);
+			  }catch(Exception ex){}
+			  disConnection();
+		  }
+	  }
 	  // 수정
 	  /*
 	   *   라이브러리 메소드 : Callback이 있는 경우도 있다 
