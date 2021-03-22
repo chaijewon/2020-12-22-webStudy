@@ -154,6 +154,49 @@ public class BoardDAO {
 		  }
 	  }
 	  // 내용보기 => SQL:2개
+	  public BoardVO boardOneRowData(int no,int type)
+	  {
+		  BoardVO vo=new BoardVO();
+		  try
+		  {
+			  getConnection();
+			  String sql="";
+			  // 상세보기에서만 적용 
+			  if(type==1)
+			  {
+				  sql="UPDATE jspReplyBoard SET "
+					 +"hit=hit+1 "
+				     +"WHERE no=?";
+				  ps=conn.prepareStatement(sql);
+				  ps.setInt(1, no);
+				  ps.executeUpdate();
+			  }
+			  
+			  // 상세보기 , 수정하기 동일하게 적용
+			  sql="SELECT no,name,subject,content,regdate,hit "
+				 +"FROM jspReplyBoard "
+			     +"WHERE no=?";
+			  ps=conn.prepareStatement(sql);
+			  ps.setInt(1, no);
+			  ResultSet rs=ps.executeQuery();
+			  rs.next();
+			  vo.setNo(rs.getInt(1));
+			  vo.setName(rs.getString(2));
+			  vo.setSubject(rs.getString(3));
+			  vo.setContent(rs.getString(4));
+			  vo.setRegdate(rs.getDate(5));
+			  vo.setHit(rs.getInt(6));
+			  rs.close();
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+		  return vo;
+	  }
 	  // 답변 => SQL:4개 
 	  // 수정
 	  // 삭제 => SQL:4개

@@ -63,7 +63,7 @@ td{
        </td>
       </tr>
     </table>
-    <div style="height:380px">
+    <div style="height:400px">
 	    <table class="table table-hover">
 	      <tr class="info">
 	        <th class="text-center" width=10%>번호</th>
@@ -92,7 +92,7 @@ td{
 			        <%
 			           }
 			        %>
-			        <%=vo.getSubject() %>
+			        <a href="detail.jsp?no=<%=vo.getNo()%>&page=<%=curpage%>"><%=vo.getSubject() %></a>
 			        &nbsp;
 			        <%
 			           String today=new SimpleDateFormat("yyyy-MM-dd").format(new Date());
