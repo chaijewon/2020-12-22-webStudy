@@ -92,9 +92,21 @@ td{
 			        <%
 			           }
 			        %>
+			        <%
+			           String msg="관리자가 삭제한 게시물입니다";
+			           if(msg.equals(vo.getSubject()))
+			           {
+			       %>
+			             <span style="color:gray"><%=vo.getSubject() %></span>
+			       <%
+			           }
+			           else
+			           {
+			        %>
 			        <a href="detail.jsp?no=<%=vo.getNo()%>&page=<%=curpage%>"><%=vo.getSubject() %></a>
 			        &nbsp;
 			        <%
+			           }
 			           String today=new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 			           String dbday=vo.getRegdate().toString();
 			           if(today.equals(dbday))

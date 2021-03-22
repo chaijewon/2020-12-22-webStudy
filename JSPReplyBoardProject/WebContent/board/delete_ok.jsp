@@ -7,6 +7,19 @@
      String strPage=request.getParameter("page");
      // 2. 오라클 연결 (DAO)
      BoardDAO dao=new BoardDAO();
-     
+     boolean bCheck=dao.boardDelete(Integer.parseInt(no), pwd);
      // 3. 이동 
+     if(bCheck==true)
+     {
+    	 response.sendRedirect("list.jsp?page="+strPage);
+     }
+     else
+     {
+%>
+         <script>
+         alert("비밀번호가 틀립니다");
+         history.back();
+         </script>
+<%
+     }
 %>
