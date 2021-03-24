@@ -1,12 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%
+    String mno=request.getParameter("mno");
 
-</body>
-</html>
+    // 쿠키전송 
+    /*
+        1. 쿠키 생성 
+        
+        2. 쿠키 저장
+        3. 쿠키를 클라이언트로 전송 
+    */
+    // 1. 쿠키 생성 : 내장객체가 아니다 
+    //int a="10";
+    Cookie cookie=new Cookie("m"+mno,mno);// 값은 문자열만 저장이 가능 
+    cookie.setMaxAge(24*60*60);
+    response.addCookie(cookie);
+    response.sendRedirect("detail.jsp?mno="+mno);
+%>
+
+
+
+

@@ -67,6 +67,58 @@ public class MovieDAO {
 	   }
 	   return list;
    }
+   // 상세보기 
+   public MovieBean movieDetailData(int mno)
+   {
+	   /*
+	    *  private int mno,cno,replyCount;
+		   private String poster,title,director,actor,regdate,
+		           genre,nation,grade,time,showUser,
+		           boxoffice,story,key;
+		   private double score;
+	    */
+	   MovieBean bean=new MovieBean();
+	   try
+	   {
+		   // 미리 생성된 Connection의 메모리 주소 얻기
+		   getConnection();
+		   // SQL 문장 전송
+		   String sql="SELECT mno,poster,title,regdate,genre,nation,grade,time,"
+				     +"showUser,boxoffice,story,key,score "
+				     +"FROM daum_movie "
+				     +"WHERE mno=?";
+		   ps=conn.prepareStatement(sql);
+		   // ?에 값을 채운다 
+		   ps.setInt(1, mno);
+		   // 실행한후 결과값 요청
+		   ResultSet rs=ps.executeQuery();
+		   rs.next(); // 커서를 데이터가 출력한 위치에 지정 
+		   bean.setMno(rs.getInt(1));
+		   bean.setPoster(rs.getString(2));
+		   bean.setTitle(rs.getString(3));
+		   bean.setRegdate(rs.getString(4));
+		   bean.setGenre(rs.getString(5));
+		   bean.setNation(rs.getString(6));
+		   bean.setGrade(rs.getString(7));
+		   bean.setTime(rs.getString(8));
+		   bean.setShowUser(rs.getString(9)); 
+		   bean.setBoxoffice(rs.getString(10));
+		   bean.setStory(rs.getString(11));
+		   bean.setKey(rs.getString(12));
+		   bean.setScore(rs.getDouble(13));
+		   rs.close();
+	   }catch(Exception ex)
+	   {
+		   // 오류 처리 
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   // 오라클수행이 끝나면 반환해라 
+		   disConnection();
+	   }
+	   return bean;
+   }
 }
 
 
