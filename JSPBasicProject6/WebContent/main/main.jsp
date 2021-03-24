@@ -19,15 +19,33 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style type="text/css">
+.row{
+  width: 960px;
+  margin: 0px auto;
+}
+</style>
 </head>
 <body>
+  <%--
+         포함하고 있는 모든 JSP는 request공유한다 
+   --%>
   <%-- <jsp:include page="header.jsp"></jsp:include> --%>
   <%@ include file="header.jsp" %>
+  <div style="height:30px"></div>
   <div class="container">
-   <h3>Navbar With Dropdown</h3>
-  <p>This example adds a dropdown menu for the "Page 1" button in the navigation bar.</p>
-</div>
+    <jsp:include page="home.jsp"></jsp:include>
+  </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
 
 

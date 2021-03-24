@@ -11,7 +11,8 @@ public class FoodDAO {
 	 {
 		 try
 		 {
-			 dm.getConnection(conn);
+			 conn=dm.getConnection();
+			 System.out.println("conn:"+conn);
 			 String sql="INSERT INTO food_category VALUES("
 					   +"(SELECT NVL(MAX(no)+1,1) FROM food_category),?,?,?,?)";
 			 ps=conn.prepareStatement(sql);
@@ -29,6 +30,60 @@ public class FoodDAO {
 		 {
 			 dm.disConnection(conn, ps);
 		 }
+	 }
+	 public List<FoodCategoryVO> foodCategoryData(int index)
+	 {
+		 List<FoodCategoryVO> list=new ArrayList<FoodCategoryVO>();
+		 try
+		 {
+			 conn=dm.getConnection();
+			 int start=0;
+			 int end=0;
+			 if(index==1)
+			 {
+				 start=1;
+				 end=12;
+			 }
+			 else if(index==2)
+			 {
+				 start=13;
+				 end=18;
+			 }
+			 else
+			 {
+				 start=19;
+				 end=30;
+				 
+			 }
+			 String sql="SELECT * FROM food_category "
+					   +"WHERE no BETWEEN ? AND ?";
+			 ps=conn.prepareStatement(sql);
+			 ps.setInt(1, start);
+			 ps.setInt(2, end);
+			 
+			 ResultSet rs=ps.executeQuery();
+			 while(rs.next())
+			 {
+				 FoodCategoryVO vo=new FoodCategoryVO();
+				 vo.setNo(rs.getInt(1));
+				 vo.setTitle(rs.getString(2));
+				 vo.setSubject(rs.getString(3));
+				 vo.setPoster(rs.getString(4));
+				 vo.setLink(rs.getString(5));
+				 
+				 list.add(vo);
+			 }
+			 rs.close();
+			 
+		 }catch(Exception ex)
+		 {
+			 ex.printStackTrace();
+		 }
+		 finally
+		 {
+			 dm.disConnection(conn, ps);
+		 }
+		 return list;
 	 }
 }
 
