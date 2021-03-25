@@ -73,8 +73,11 @@ public class FoodManager {
     			Elements link=doc.select("div.info span.title a");
     			for(int i=0;i<link.size();i++)
     			{
+    				FoodHouseVO fvo=new FoodHouseVO();
     				System.out.println("https://www.mangoplate.com"+link.get(i).attr("href"));
     				Document doc2=Jsoup.connect("https://www.mangoplate.com"+link.get(i).attr("href")).get();
+    				fvo.setCno(vo.getNo());
+    				System.out.println("Category NO:"+fvo.getCno());
     				Elements poster=doc2.select("img.center-croping");
     				String str="";
     				for(int j=0;j<poster.size();j++)
@@ -85,10 +88,14 @@ public class FoodManager {
     				// a.jpg^b.jpg^c.jpg
     				str=str.substring(0,str.lastIndexOf("^"));
     				System.out.println(str);
+    				// 이미지 출력 
+    				fvo.setPoster(str);
     				Element title=doc2.selectFirst("span.title h1.restaurant_name");
     				System.out.println("이름:"+title.text());
+    				fvo.setTitle(title.text());
     				Element score=doc2.selectFirst("strong.rate-point span");
     				System.out.println("평점:"+score.text());
+    				fvo.setScore(Double.parseDouble(score.text()));
     				Element review=doc2.selectFirst("script#reviewCountInfo");
     				//[""{"action_value":1,"count":0},{"action_value":2,"count":1},{"action_value":3,"count":35}]
     				System.out.println("리뷰:"+review.data());
@@ -109,11 +116,18 @@ public class FoodManager {
     				 *   [1,2,3,]
     				 */
     				JSONArray arr=(JSONArray)jp.parse(review.data());
+    				long[] re=new long[3];
     				for(int j=0;j<arr.size();j++)
     				{
     					 JSONObject obj=(JSONObject)arr.get(j);
     					 System.out.println(obj.get("count"));
+    					 re[j]=(Long)obj.get("count");//good,soso,bad
     				}
+    				
+    				fvo.setGood((int)re[2]);
+    				fvo.setSoso((int)re[1]);
+    				fvo.setBad((int)re[0]);
+    				
     				Elements info=doc2.select("table.info tr th");
     				Elements data=doc2.select("table.info tr td");
     				for(int j=0;j<info.size();j++)
@@ -123,32 +137,42 @@ public class FoodManager {
     					if(label.equals("주소"))
     					{
     						System.out.println("주소:"+data.get(j).text());
+    						fvo.setAddress(data.get(j).text());
     					}
     					else if(label.equals("전화번호"))
     					{
     						System.out.println("전화번호:"+data.get(j).text());
+    						fvo.setTel(data.get(j).text());
     					}
     					else if(label.equals("음식 종류"))
     					{
     						System.out.println("음식 종류:"+data.get(j).text());
+    						fvo.setType(data.get(j).text());
     					}
     					else if(label.equals("가격대"))
     					{
     						System.out.println("가격대:"+data.get(j).text());
+    						fvo.setPrice(data.get(j).text());
     					}
     					else if(label.equals("주차"))
     					{
     						System.out.println("주차:"+data.get(j).text());
+    						fvo.setParking(data.get(j).text());
     					}
     					else if(label.equals("영업시간"))
     					{
     						System.out.println("영업시간:"+data.get(j).text());
+    						fvo.setTime(data.get(j).text());
     					}
     					else if(label.equals("메뉴"))
     					{
     						System.out.println("메뉴:"+data.get(j).text());
+    						fvo.setMenu(data.get(j).text());
     					}
     				}
+    				
+    				dao.foodInsert(fvo);
+    				Thread.sleep(50);
     			}
     			System.out.println("==========="+vo.getNo()+"번 end=================");
     		}
