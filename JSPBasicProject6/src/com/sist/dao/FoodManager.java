@@ -69,10 +69,12 @@ public class FoodManager {
     		 */
     		for(FoodCategoryVO vo:list)
     		{
+    		 
     			Document doc=Jsoup.connect(vo.getLink()).get();
     			Elements link=doc.select("div.info span.title a");
     			for(int i=0;i<link.size();i++)
     			{
+    			try {
     				FoodHouseVO fvo=new FoodHouseVO();
     				System.out.println("https://www.mangoplate.com"+link.get(i).attr("href"));
     				Document doc2=Jsoup.connect("https://www.mangoplate.com"+link.get(i).attr("href")).get();
@@ -173,6 +175,7 @@ public class FoodManager {
     				
     				dao.foodInsert(fvo);
     				Thread.sleep(50);
+    			 }catch(Exception ex) {}
     			}
     			System.out.println("==========="+vo.getNo()+"번 end=================");
     		}
@@ -181,7 +184,16 @@ public class FoodManager {
     public static void main(String[] args) {
 		FoodManager fm=new FoodManager();
 		//fm.foodCategoryData();
-		fm.foodDetailData();
+		//fm.foodDetailData();
+		int[] arr={1,2,3,4,5,0,9,6,7,8};
+		for(int a:arr)
+		{
+			try
+			{
+			  System.out.println(10/a);
+			}catch(Exception ex) {}
+		}
+		
 	}
 }
 
