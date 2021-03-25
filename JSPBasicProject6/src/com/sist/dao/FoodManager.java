@@ -69,17 +69,6 @@ public class FoodManager {
     				Document doc2=Jsoup.connect("https://www.mangoplate.com"+link.get(i).attr("href")).get();
     				Elements info=doc2.select("table.info tr th");
     				Elements data=doc2.select("table.info tr td");
-    				/*
-    				 *   주소
-						전화번호
-						음식 종류
-						가격대
-						주차
-						영업시간
-						휴일
-						웹 사이트
-						메뉴
-    				 */
     				for(int j=0;j<info.size();j++)
     				{
     					//System.out.println(info.get(j).text());
