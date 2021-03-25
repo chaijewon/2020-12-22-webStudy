@@ -108,5 +108,72 @@ public class FoodDAO {
 		 }
 		 return list;
 	 }
+	 public FoodCategoryVO foodInfoData(int cno)
+	 {
+		 FoodCategoryVO vo=new FoodCategoryVO();
+		 try
+		 {
+			 getConnection();
+			 String sql="SELECT title,subject FROM food_category "
+					   +"WHERE no=?";
+			 ps=conn.prepareStatement(sql);
+			 ps.setInt(1, cno);
+			 ResultSet rs=ps.executeQuery();
+			 rs.next();
+			 vo.setTitle(rs.getString(1));
+			 vo.setSubject(rs.getString(2));
+			 rs.close();
+		 }catch(Exception ex)
+		 {
+			 ex.printStackTrace();
+		 }
+		 finally
+		 {
+			 disConnection();
+		 }
+		 return vo;
+	 }
+	 
+	 public List<FoodVO> foodCategoryFoodData(int cno)
+	 {
+		 List<FoodVO> list=new ArrayList<FoodVO>();
+		 try
+		 {
+			 getConnection();
+			 String sql="SELECT no,title,score,address,poster "
+					   +"FROM food_house "
+					   +"WHERE cno=?";
+			 ps=conn.prepareStatement(sql);
+			 ps.setInt(1, cno);
+			 ResultSet rs=ps.executeQuery();
+			 while(rs.next())
+			 {
+				 FoodVO vo=new FoodVO();
+				 vo.setNo(rs.getInt(1));
+				 vo.setTitle(rs.getString(2));
+				 vo.setScore(rs.getDouble(3));
+				 vo.setAddress(rs.getString(4));
+				 vo.setPoster(rs.getString(5));
+				 list.add(vo);
+			 }
+			 rs.close();
+		 }catch(Exception ex)
+		 {
+			 ex.printStackTrace();
+		 }
+		 finally
+		 {
+			 disConnection();
+		 }
+		 return list;
+	 }
 }
+
+
+
+
+
+
+
+
 

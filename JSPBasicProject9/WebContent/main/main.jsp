@@ -1,6 +1,13 @@
+<%@page import="com.sist.dao.JSPChange"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
 <%
+    // 화면 변경   main.jsp?page=1
+    String mode=request.getParameter("mode");
+    if(mode==null)
+    	mode="0";
+    int no=Integer.parseInt(mode);
+    String main_jsp=JSPChange.change(no);
     //세션에 저장되어 있는 데이터 읽기
     String id=(String)session.getAttribute("id"); // 없는 경우:null 
     String log_jsp="";
@@ -58,7 +65,7 @@
    <jsp:include page="<%=log_jsp %>"></jsp:include>
  </div>
  <div class="col-sm-9">
-   <jsp:include page="../food/home.jsp"></jsp:include>
+   <jsp:include page="<%=main_jsp %>"></jsp:include>
  </div>
 </div>
 </body>
