@@ -1,7 +1,11 @@
 package com.sist.dao;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.util.*;
 
@@ -59,6 +63,10 @@ public class FoodManager {
     	List<FoodCategoryVO> list=dao.foodCategoryLinkData();
     	try
     	{
+    		/*
+    		 *  <span class="title"> <h1 class="restaurant_name">온정</h1> 
+    		 *  <strong class="rate-point "> <span>4.7</span> </strong>
+    		 */
     		for(FoodCategoryVO vo:list)
     		{
     			Document doc=Jsoup.connect(vo.getLink()).get();
@@ -67,6 +75,45 @@ public class FoodManager {
     			{
     				System.out.println("https://www.mangoplate.com"+link.get(i).attr("href"));
     				Document doc2=Jsoup.connect("https://www.mangoplate.com"+link.get(i).attr("href")).get();
+    				Elements poster=doc2.select("img.center-croping");
+    				String str="";
+    				for(int j=0;j<poster.size();j++)
+    				{
+    					String s=poster.get(j).attr("src");
+    					str+=s+"^";
+    				}
+    				// a.jpg^b.jpg^c.jpg
+    				str=str.substring(0,str.lastIndexOf("^"));
+    				System.out.println(str);
+    				Element title=doc2.selectFirst("span.title h1.restaurant_name");
+    				System.out.println("이름:"+title.text());
+    				Element score=doc2.selectFirst("strong.rate-point span");
+    				System.out.println("평점:"+score.text());
+    				Element review=doc2.selectFirst("script#reviewCountInfo");
+    				//[""{"action_value":1,"count":0},{"action_value":2,"count":1},{"action_value":3,"count":35}]
+    				System.out.println("리뷰:"+review.data());
+    				// JSON파싱 
+    				/*
+    				 *   [] => 배열 JSONArray
+    				 *   {} => 객체 JSONObject
+    				 */
+    				JSONParser jp=new JSONParser();
+    				//int a=(int)10.5;
+    				/*
+    				 *   A[] arr={new A(),new A()...};
+    				 *   for(int i=0;i<arr.length;i++)
+    				 *   {
+    				 *      A a=arr[i]
+    				 *   }
+    				 *   ["",""]
+    				 *   [1,2,3,]
+    				 */
+    				JSONArray arr=(JSONArray)jp.parse(review.data());
+    				for(int j=0;j<arr.size();j++)
+    				{
+    					 JSONObject obj=(JSONObject)arr.get(j);
+    					 System.out.println(obj.get("count"));
+    				}
     				Elements info=doc2.select("table.info tr th");
     				Elements data=doc2.select("table.info tr td");
     				for(int j=0;j<info.size();j++)
