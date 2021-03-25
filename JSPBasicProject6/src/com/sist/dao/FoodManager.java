@@ -74,13 +74,14 @@ public class FoodManager {
     			Elements link=doc.select("div.info span.title a");
     			for(int i=0;i<link.size();i++)
     			{
+    				//figure class="restaurant-photos-item
     			try {
     				FoodHouseVO fvo=new FoodHouseVO();
     				System.out.println("https://www.mangoplate.com"+link.get(i).attr("href"));
     				Document doc2=Jsoup.connect("https://www.mangoplate.com"+link.get(i).attr("href")).get();
     				fvo.setCno(vo.getNo());
     				System.out.println("Category NO:"+fvo.getCno());
-    				Elements poster=doc2.select("img.center-croping");
+    				Elements poster=doc2.select("figure.restaurant-photos-item img.center-croping");
     				String str="";
     				for(int j=0;j<poster.size();j++)
     				{
@@ -184,15 +185,11 @@ public class FoodManager {
     public static void main(String[] args) {
 		FoodManager fm=new FoodManager();
 		//fm.foodCategoryData();
-		//fm.foodDetailData();
-		int[] arr={1,2,3,4,5,0,9,6,7,8};
-		for(int a:arr)
-		{
-			try
-			{
-			  System.out.println(10/a);
-			}catch(Exception ex) {}
-		}
+		fm.foodDetailData();
+		/*
+		 * int[] arr={1,2,3,4,5,0,9,6,7,8}; for(int a:arr) { try {
+		 * System.out.println(10/a); }catch(Exception ex) {} }
+		 */
 		
 	}
 }
