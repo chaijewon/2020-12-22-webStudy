@@ -1,42 +1,38 @@
 package com.sist.dao;
 import java.util.*;
 import java.sql.*;
-import com.sist.jdbc.*;
+import javax.sql.*;
+import javax.naming.*;
 // DBCP => 웹에서만 가능 
 public class FoodDAO {
-	 private DAOManager dm=new DAOManager();
 	 private Connection conn;
 	 private PreparedStatement ps;
-	 public void foodCategoryInsert(FoodCategoryVO vo)
-	 {
-		 try
-		 {
-			 conn=dm.getConnection();
-			 System.out.println("conn:"+conn);
-			 String sql="INSERT INTO food_category VALUES("
-					   +"(SELECT NVL(MAX(no)+1,1) FROM food_category),?,?,?,?)";
-			 ps=conn.prepareStatement(sql);
-			 ps.setString(1, vo.getTitle());
-			 ps.setString(2, vo.getSubject());
-			 ps.setString(3, vo.getPoster());
-			 ps.setString(4, vo.getLink());
-			 // 실행
-			 ps.executeUpdate(); // COMMIT
-		 }catch(Exception ex)
-		 {
-			 ex.printStackTrace();
-		 }
-		 finally
-		 {
-			 dm.disConnection(conn, ps);
-		 }
-	 }
+	// 미리 만들어진 객체주소를 얻어온다 (Connection)
+	   public void getConnection()
+	   {
+		   try
+		   {
+			   Context init=new InitialContext();
+			   Context c=(Context)init.lookup("java://comp/env");
+			   DataSource ds=(DataSource)c.lookup("jdbc/oracle");
+			   conn=ds.getConnection();
+		   }catch(Exception ex){}
+	   }
+	   // 반환 (풀(POOL)로 반환) => 재사용
+	   public void disConnection()
+	   {
+		   try
+		   {
+			   if(ps!=null) ps.close();
+			   if(conn!=null) conn.close();
+		   }catch(Exception ex) {}
+	   }
 	 public List<FoodCategoryVO> foodCategoryData(int index)
 	 {
 		 List<FoodCategoryVO> list=new ArrayList<FoodCategoryVO>();
 		 try
 		 {
-			 conn=dm.getConnection();
+			 getConnection();
 			 int start=0;
 			 int end=0;
 			 if(index==1)
@@ -81,7 +77,7 @@ public class FoodDAO {
 		 }
 		 finally
 		 {
-			 dm.disConnection(conn, ps);
+			 disConnection();
 		 }
 		 return list;
 	 }
@@ -90,7 +86,7 @@ public class FoodDAO {
 		 List<FoodCategoryVO> list=new ArrayList<FoodCategoryVO>();
 		 try
 		 {
-			 conn=dm.getConnection();
+			 getConnection();
 			 String sql="SELECT no,link FROM food_category ORDER BY no ASC";
 			 ps=conn.prepareStatement(sql);
 			 ResultSet rs=ps.executeQuery();
@@ -108,16 +104,9 @@ public class FoodDAO {
 		 }
 		 finally
 		 {
-			 dm.disConnection(conn, ps);
+			 disConnection();
 		 }
 		 return list;
 	 }
 }
-
-
-
-
-
-
-
 
