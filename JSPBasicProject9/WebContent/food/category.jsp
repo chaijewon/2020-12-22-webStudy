@@ -32,12 +32,12 @@
         <table class="table">
           <tr>
             <td width=30% class="text-center" rowspan="3">
-             <a href="main.jsp?mode=2&no=<%=fvo.getNo()%>">
+             <a href="main.jsp?mode=2&no=<%=fvo.getNo()%>&cno=<%=cno%>">
              <img src="<%=fvo.getPoster() %>" width=200 height=150 class="img-rounded">
              </a>
             </td>
             <td width="70%">
-             <h3><a href="main.jsp?mode=2&no=<%=fvo.getNo()%>"><%=fvo.getTitle() %></a>&nbsp;<span style="color:orange"><%=fvo.getScore() %></span></h3>
+             <h3><a href="main.jsp?mode=2&no=<%=fvo.getNo()%>&cno=<%=cno%>"><%=fvo.getTitle() %></a>&nbsp;<span style="color:orange"><%=fvo.getScore() %></span></h3>
             </td>
           </tr>
           <tr>
