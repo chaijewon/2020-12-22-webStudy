@@ -15,7 +15,7 @@
 </head>
 <body>
    <div class="row">
-    <a href="main.jsp?index=1" class="btn btn-sm btn-danger">믿고 보는 맛집 리스트</a>
+    <a href="main.jsp" class="btn btn-sm btn-danger">믿고 보는 맛집 리스트</a>
     <a href="main.jsp?index=2" class="btn btn-sm btn-success">지역별 인기 맛집</a>
     <a href="main.jsp?index=3" class="btn btn-sm btn-primary">메뉴별 인기 맛집</a>
    </div>
@@ -28,7 +28,7 @@
      
           <div class="col-md-4">
 		    <div class="thumbnail">
-		      <a href="../main/main.jsp?mode=1&cno=<%=vo.getNo()%>">
+		      <a href="main.jsp?mode=1&cno=<%=vo.getNo()%>">
 		        <img src="<%=vo.getPoster() %>" alt="Lights" style="width:100%">
 		        <div class="caption">
 		          <p><%=vo.getTitle() %></p>

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sist.dao.BoardDAO;
 
-@WebServlet("/BoardDeleteServlet")
+@WebServlet("/delete.html")
 public class BoardDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
