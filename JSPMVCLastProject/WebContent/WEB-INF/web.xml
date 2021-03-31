@@ -6,11 +6,11 @@
     <servlet-class>com.sist.controller.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>C:\webDev\webStudy\JSPMVCLastProject\WebContent\WEB-INF\applicationContext.xml</param-value>
+      <param-value>C:\Users\SIST\git\webStudy\JSPMVCLastProject\WebContent\WEB-INF\applicationContext.xml</param-value>
     </init-param>
     <init-param>
       <param-name>file_path</param-name>
-      <param-value>C:\webDev\webStudy\JSPMVCLastProject\src\</param-value>
+      <param-value>C:\Users\SIST\git\webStudy\JSPMVCLastProject\src\</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>

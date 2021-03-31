@@ -17,7 +17,7 @@ public class FileConfig {
 			 File[] files=dir.listFiles();
 			 for(File f:files)
 			 {
-				 //System.out.println(f.getName());
+				 System.out.println(f.getName());
 				 String s=f.getName();
 				 String ext=s.substring(s.lastIndexOf(".")+1);
 				 if(ext.equals("java"))

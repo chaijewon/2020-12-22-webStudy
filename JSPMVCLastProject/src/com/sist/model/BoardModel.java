@@ -13,7 +13,8 @@ public class BoardModel {
    public String board_list(HttpServletRequest request,HttpServletResponse response)
    {
 	   request.setAttribute("msg", "게시판");
+	   // include => request를 공유 
 	   request.setAttribute("main_jsp", "../board/list.jsp");
-	   return "../main/main.jsp";
+	   return "../main/main.jsp";// 화면 출력
    }
 }
