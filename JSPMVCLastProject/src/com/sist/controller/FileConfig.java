@@ -1,6 +1,9 @@
 package com.sist.controller;
 import java.util.*;
 import java.io.*;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 public class FileConfig {
   public List<String> componentScan(String path,String pack)
   {
@@ -9,6 +12,7 @@ public class FileConfig {
 	     path+=pack.replace(".", "\\");
 		 try
 		 {
+			 
 			 File dir=new File(path);
 			 File[] files=dir.listFiles();
 			 for(File f:files)

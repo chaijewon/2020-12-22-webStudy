@@ -3,6 +3,7 @@ package com.sist.controller;
 import java.io.*;
 import java.lang.reflect.Method;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,10 +40,9 @@ public class DispatcherServlet extends HttpServlet {
 		   
 	   }catch(Exception ex){}
 	   
-	   for(String ss:clsList)
-	   {
-		   System.out.println(ss);
-	   }
+	
+		 for(String ss:clsList) { System.out.println(ss); }
+		
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -58,6 +58,7 @@ public class DispatcherServlet extends HttpServlet {
 		         {
 		        	 continue;
 		         }
+		         System.out.println(cls);
 		         Object obj=clsName.getDeclaredConstructor().newInstance();
 		         // 메소드 찾기 
 		         Method[] methods=clsName.getDeclaredMethods();
@@ -71,11 +72,15 @@ public class DispatcherServlet extends HttpServlet {
 		        		 String jsp=(String)m.invoke(obj, request,response);
 		        		 if(jsp.startsWith("redirect"))// sendRedirect
 		        		 {
-		        			 
+		        			 // _ok.jsp
+		        			 String s=jsp.substring(jsp.indexOf(":")+1);
+		        			 response.sendRedirect(s);
 		        		 }
 		        		 else // forward
 		        		 {
-		        			 
+		        			 // request
+		        			 RequestDispatcher rd=request.getRequestDispatcher(jsp);
+		        			 rd.forward(request, response);
 		        		 }
 		        		 return;
 		        	 }
