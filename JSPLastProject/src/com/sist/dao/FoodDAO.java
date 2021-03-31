@@ -113,7 +113,32 @@ public class FoodDAO {
 	   }
 	   return list;
    }
-   
+   public FoodCategoryVO foodCategoryInfoData(int cno)
+   {
+	   FoodCategoryVO vo=new FoodCategoryVO();
+	   try
+	   {
+		   getConnection();
+		   String sql="SELECT title,subject "
+				     +"FROM food_category "
+				     +"WHERE no=?";
+		   ps=conn.prepareStatement(sql);
+		   ps.setInt(1, cno);
+		   ResultSet rs=ps.executeQuery();
+		   rs.next();
+		   vo.setTitle(rs.getString(1));
+		   vo.setSubject(rs.getString(2));
+		   rs.close();
+	   }catch(Exception ex)
+	   {
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+	   return vo;
+   }
 }
 
 

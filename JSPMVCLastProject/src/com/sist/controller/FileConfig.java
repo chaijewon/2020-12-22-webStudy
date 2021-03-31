@@ -9,6 +9,7 @@ public class FileConfig {
   {
 	     List<String> list=new ArrayList<String>();
 	     //String path="";
+	     //C:\Users\SIST\git\webStudy\JSPLastProject\src\com\
 	     path+=pack.replace(".", "\\");
 		 try
 		 {
