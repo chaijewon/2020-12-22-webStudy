@@ -39,10 +39,10 @@
            --%>
           <c:forEach var="vo" items="${rList }" varStatus="s">
             <c:if test="${s.index%4==0 }">
-             <li class="one_quarter first"><a href="#"><img src="${vo.poster }" title="${vo.title }"></a></li>
+             <li class="one_quarter first"><a href="#"><img src="${vo.poster }" title="${vo.title }" class="img-rounded"></a></li>
             </c:if>
             <c:if test="${s.index%4!=0 }">
-             <li class="one_quarter"><a href="#"><img src="${vo.poster }" title="${vo.title }"></a></li>
+             <li class="one_quarter"><a href="#"><img src="${vo.poster }" title="${vo.title }" class="img-rounded"></a></li>
             </c:if>
           </c:forEach>
           </ul>

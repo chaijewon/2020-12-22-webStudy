@@ -116,18 +116,20 @@
     <!-- ################################################################################################ -->
     <h2 class="sectiontitle">최근 방문 맛집</h2>
     <!-- ################################################################################################ -->
-    
-        <img class="radius-10" src="../images/100x100.gif" alt="">
-        <img class="radius-10" src="../images/100x100.gif" alt="">
-        <img class="radius-10" src="../images/100x100.gif" alt="">
-        <img class="radius-10" src="../images/100x100.gif" alt=""> 
-        <img class="radius-10" src="../images/100x100.gif" alt="">
-        <img class="radius-10" src="../images/100x100.gif" alt=""> 
-        <img class="radius-10" src="../images/100x100.gif" alt="">
-        <img class="radius-10" src="../images/100x100.gif" alt=""> 
-        <img class="radius-10" src="../images/100x100.gif" alt="">
+      <%--
+            for(int i=0;i<list.size();i++)
+            {
+                MovieVO vo=list.get(i);
+            }
+       --%>
+      <c:forEach var="fvo" items="${fList }" varStatus="s">
+        <c:if test="${s.index<9 }">
+         <a href="../food/food_detail.do?no=${fvo.no }">
+         <img class="radius-10" src="${fvo.poster }" title="${fvo.title }" style="width:100px;height:100px"></a>
+        </c:if>
+      </c:forEach>
         
-    
+        
     <!-- ################################################################################################ --> 
     <!-- / main body -->
     <div class="clear"></div>
@@ -135,3 +137,10 @@
 </div>
 </body>
 </html>
+
+
+
+
+
+
+

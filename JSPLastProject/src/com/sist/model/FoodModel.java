@@ -1,5 +1,6 @@
 package com.sist.model;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -45,7 +46,27 @@ public class FoodModel {
 	  request.setAttribute("main_jsp", "../food/food_category.jsp");
 	  return "../main/main.jsp";
   }
-  
+  @RequestMapping("food/detail_before.do")
+  public String detail_before(HttpServletRequest request,HttpServletResponse response)
+  {
+	  String no=request.getParameter("no");
+	  System.out.println(no);
+	  Cookie cookie=new Cookie("m"+no, no);// 문자열만 저장이 가능 
+	  cookie.setMaxAge(60*60);
+	  cookie.setPath("/");
+	  response.addCookie(cookie);
+	  return "redirect:../food/food_detail.do?no="+no;
+  }
+  @RequestMapping("food/food_detail.do")
+  public String food_detail(HttpServletRequest request,HttpServletResponse response)
+  {
+	  String no=request.getParameter("no");
+	  // DAO연결 
+	  FoodDAO dao=FoodDAO.newInstance();
+	  
+	  request.setAttribute("main_jsp", "../food/food_detail.jsp");
+	  return "../main/main.jsp";
+  }
   
 }
 

@@ -139,6 +139,37 @@ public class FoodDAO {
 	   }
 	   return vo;
    }
+   
+   // food => cookie에 출력할 데이터 
+   public FoodVO foodCookiePrintData(int no)
+   {
+	   FoodVO vo=new FoodVO();
+	   try
+	   {
+		   getConnection();
+		   String sql="SELECT no,poster,title "
+				     +"FROM food_house "
+				     +"WHERE no=?";
+		   ps=conn.prepareStatement(sql);
+		   ps.setInt(1, no);
+		   // 실행
+		   ResultSet rs=ps.executeQuery();
+		   rs.next();
+		   vo.setNo(rs.getInt(1));
+		   String s=rs.getString(2);
+		   vo.setPoster(s.substring(0,s.indexOf("^")));
+		   vo.setTitle(rs.getString(3));
+		   rs.close();
+	   }catch(Exception ex)
+	   {
+		   ex.printStackTrace();
+	   }
+	   finally
+	   {
+		   disConnection();
+	   }
+	   return vo;
+   }
 }
 
 

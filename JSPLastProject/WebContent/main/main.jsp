@@ -203,5 +203,6 @@ input:focus {
 <script src="../js/jquery.backtotop.js"></script> 
 <script src="../js/jquery.mobilemenu.js"></script> 
 <script src="../js/jquery.flexslider-min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=db0485ed4f0d0ece879a4510ed7f48e6&libraries=services"></script>
 </body>
 </html>
