@@ -69,6 +69,12 @@ public class DispatcherServlet extends HttpServlet {
 		        	 {
 		        		 // public String boardList(HttpServletRequest requst,reponse)
 		        		 // return "redirect:list.do"
+		        		 /*
+		        		  *   if(cmd.equals("list.do"))
+		        		  *      m.invoke(obj, request)
+		        		  *    else if(cmd.equals("upload.do")
+		        		  *      m.invoke(obj, request,response);
+		        		  */
 		        		 String jsp=(String)m.invoke(obj, request,response);
 		        		 if(jsp.startsWith("redirect"))// sendRedirect
 		        		 {

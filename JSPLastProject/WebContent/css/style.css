@@ -13,7 +13,7 @@
 }
 
 /* Image on the left side */
-.thumbnail {
+.card .thumbnail {
   float: left;
   position: relative;
   left: 30px;
@@ -28,7 +28,7 @@
 
 /*object-fit: cover;*/
 /*object-position: center;*/
-img.left {
+.card img.left {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -40,36 +40,36 @@ img.left {
 }
 
 /* Right side of the card */
-.right {
+.card .right {
   margin-left: 590px;
   margin-right: 20px;
 }
 
-h1 {
+.card h1 {
   padding-top: 15px;
   font-size: 1.6rem;
   color: #4B4B4B;
 }
 
-.author {
+.card .author {
   background-color: #9ECAFF;
   height: 35px;
   width: 280px;
   border-radius: 20px;
 }
 
-h2 {
+.card h2 {
   padding-top: 8px;
   margin-right: 6px;
   text-align: left;
   font-size: 0.8rem;
 }
-.separator {
+.card .separator {
   margin-top: 10px;
   border: 1px solid #C3C3C3;
 }
 
-p {
+.card p {
   text-align: justify;
   padding-top: 10px;
   font-size: 0.95rem;
@@ -78,7 +78,7 @@ p {
 }
 
 /* DATE of release*/
-h5 {
+.card h5 {
   position: absolute;
   left: 30px;
   bottom: -120px;
@@ -86,7 +86,7 @@ h5 {
   color: #C3C3C3;
 }
 
-h6 {
+.card h6 {
   position: absolute;
   left: 30px;
   bottom: -55px;
@@ -95,18 +95,18 @@ h6 {
 }
 
 /* Those futur buttons */
-ul {
+.card ul {
   margin-left: 250px;
 }
 
-li {
+.card li {
   display: inline;
   list-style: none;
   padding-right: 40px;
 }
 
 /* Floating action button */
-.fab {
+.card .fab {
   position: absolute;
   right: 50px;
   bottom: -40px;

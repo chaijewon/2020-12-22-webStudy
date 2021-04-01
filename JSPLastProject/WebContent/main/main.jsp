@@ -135,7 +135,7 @@ input:focus {
       </li>
       <li><a class="drop" href="#">레시피</a>
         <ul>
-          <li><a href="#">레시피</a></li>
+          <li><a href="../recipe/recipe_list.do">레시피</a></li>
           <li><a href="#">쉐프</a></li>
           <li><a href="#">오늘의 레시피</a></li>
           <li><a href="#">오늘의 쉐프</a></li>

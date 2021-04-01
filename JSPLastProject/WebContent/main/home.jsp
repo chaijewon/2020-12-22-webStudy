@@ -118,7 +118,15 @@
     <!-- ################################################################################################ -->
     
         <img class="radius-10" src="../images/100x100.gif" alt="">
-        <img class="radius-10" src="../images/100x100.gif" alt="">  
+        <img class="radius-10" src="../images/100x100.gif" alt="">
+        <img class="radius-10" src="../images/100x100.gif" alt="">
+        <img class="radius-10" src="../images/100x100.gif" alt=""> 
+        <img class="radius-10" src="../images/100x100.gif" alt="">
+        <img class="radius-10" src="../images/100x100.gif" alt=""> 
+        <img class="radius-10" src="../images/100x100.gif" alt="">
+        <img class="radius-10" src="../images/100x100.gif" alt=""> 
+        <img class="radius-10" src="../images/100x100.gif" alt="">
+        
     
     <!-- ################################################################################################ --> 
     <!-- / main body -->
