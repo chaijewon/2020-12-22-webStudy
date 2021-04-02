@@ -12,6 +12,31 @@
    margin: 0px auto;
 }
 </style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#findBtn').click(function(){
+		let dong=$('#dong').val();
+		if(dong.trim()=="")
+		{
+			$('#check').text("동/읍/면을 입력하세요");
+			$('#dong').focus();
+			return;
+		}
+		$('#check').text("");
+		$.ajax({
+			type:'post',
+			url:'../member/post_result.do',
+			data:{"dong":dong},
+			success:function(result)
+			{
+				$('#print').html(result);
+			}
+		})
+		
+	})
+})
+</script>
 </head>
 <body>
    <div style="height: 20px"></div>
@@ -20,9 +45,17 @@
        <table class="table">
         <tr>
          <td>
-          입력:<input type=text name="dong" size=10 class="input-sm">
-           <input type=button value="검색" class="btn btn-sm btn-primary">
+         <%--
+            posstfind.do?dong=
+          --%>
+          입력:<input type=text name="dong" size=10 class="input-sm" id="dong">
+           <input type=button value="검색" class="btn btn-sm btn-primary" id="findBtn">
          </td>
+        </tr>
+        <tr>
+          <td>
+            <span style="color:red" id="check"></span>
+          </td>
         </tr>
        </table>
        <div class="print"></div>

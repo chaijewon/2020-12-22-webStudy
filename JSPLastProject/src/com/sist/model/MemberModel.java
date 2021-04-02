@@ -14,4 +14,18 @@ public class MemberModel {
 	  request.setAttribute("main_jsp", "../member/join.jsp");
 	  return "../main/main.jsp";
   }
+  @RequestMapping("member/post_result.do")
+  public String member_post(HttpServletRequest request,HttpServletResponse response)
+  {
+	  return "../member/post_result.jsp";
+  }
+  
 }
+
+
+
+
+
+
+
+
