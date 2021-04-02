@@ -80,6 +80,30 @@ public class MemberDAO {
 		   return list;
 	   }
 	   // 아이디 중복체크
+	   public int idcheck(String id)
+	   {
+		   int count=0;
+		   try
+		   {
+			   getConnection();
+			   String sql="SELECT COUNT(*) FROM project_member "
+					     +"WHERE id=?";
+			   ps=conn.prepareStatement(sql);
+			   ps.setString(1, id);
+			   ResultSet rs=ps.executeQuery();
+			   rs.next();
+			   count=rs.getInt(1);
+			   rs.close();
+		   }catch(Exception ex)
+		   {
+			   ex.printStackTrace();
+		   }
+		   finally
+		   {
+			   disConnection();
+		   }
+		   return count;
+	   }
 	   // 회원가입
 	   // 회원수정 
 	   // 아이디 찾기

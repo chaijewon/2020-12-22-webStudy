@@ -103,6 +103,15 @@ $(function(){
 			height:450
 		})
 	})
+	$('#checkBtn').click(function(){
+		Shadowbox.open({
+			content:'../member/idcheck.jsp',
+			player:'iframe',
+			title:'아이디중복체크',
+			width:340,
+			height:200
+		})
+	})
 });
 </script>
 </head>

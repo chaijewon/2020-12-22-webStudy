@@ -26,7 +26,7 @@ $(function(){
 		$('#check').text("");
 		$.ajax({
 			type:'post',
-			url:'../member/post_result.do',
+			url:'../member/post_result.do',//post_result.do/dong/값
 			data:{"dong":dong},
 			success:function(result)
 			{

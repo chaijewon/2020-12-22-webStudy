@@ -34,6 +34,16 @@ public class MemberModel {
 	  return "../member/post_result.jsp";
   }
   
+  @RequestMapping("member/idcheck_result.do")
+  public String idcheck(HttpServletRequest request,HttpServletResponse response)
+  {
+	  String id=request.getParameter("id");
+	  MemberDAO dao=MemberDAO.newInstance();
+	  int count=dao.idcheck(id);
+	  request.setAttribute("count", count);
+	  return "../member/idcheck_result.jsp";
+  }
+  
 }
 
 
