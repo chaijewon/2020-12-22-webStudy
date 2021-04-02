@@ -9,7 +9,7 @@
 <link href="../css/layout.css" rel="stylesheet" type="text/css" media="all">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="../shadow/css/shadowbox.css">
-<style type="text/css">
+<!-- <style type="text/css">
 .search-container {
   overflow: hidden !important;
   float: right !important;
@@ -77,7 +77,7 @@ input:focus {
   border: 0 !important !important;
   text-shadow: 0 0 0 !important;
 }
-</style>
+</style> -->
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript" src="../shadow/js/shadowbox.js"></script>
 <script type="text/javascript">
@@ -92,6 +92,15 @@ $(function(){
 			title:'로그인',
 			width:340,
 			height:200
+		})
+	})
+	$('#postBtn').click(function(){
+		Shadowbox.open({
+			content:'../member/postfind.jsp',
+			player:'iframe',
+			title:'우편번호검색',
+			width:540,
+			height:450
 		})
 	})
 });
@@ -134,7 +143,7 @@ $(function(){
       <li><a href="#" id="login">로그인</a></li>
       <li><a class="drop" href="#">회원가입</a>
         <ul>
-          <li><a href="pages/gallery.html">회원가입</a></li>
+          <li><a href="../member/join.do">회원가입</a></li>
           <li><a href="pages/full-width.html">아이디찾기</a></li>
           <li><a href="pages/sidebar-left.html">비밀번호찾기</a></li>
         </ul>
