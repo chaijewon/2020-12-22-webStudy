@@ -30,7 +30,7 @@ $(function(){
 			data:{"dong":dong},
 			success:function(result)
 			{
-				$('#print').html(result);
+				$('.print').html(result);
 			}
 		})
 		

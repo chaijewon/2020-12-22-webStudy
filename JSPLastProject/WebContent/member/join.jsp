@@ -15,6 +15,7 @@
 <body>
   <div class="wrapper row3 join_row">
   <h2 class="sectiontitle">회원가입</h2>
+  <form method=post action="../member/join_ok.do" name="join_frm">
   <table class="table">
     <tr>
      <th width=20% class="text-right">ID</th>
@@ -109,6 +110,7 @@
     </tr>
     
   </table>
+  </form>
   </div>
 </body>
 </html>
