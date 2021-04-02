@@ -102,6 +102,7 @@
     </div>
     <div class="col-sm-6">
       <div id="map" style="width:100%;height:350px;"></div>
+      <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=db0485ed4f0d0ece879a4510ed7f48e6&libraries=services"></script>
       <script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = {

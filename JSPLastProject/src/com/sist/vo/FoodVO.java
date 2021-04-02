@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /*
- *   NO      NOT NULL NUMBER         
+ *  NO      NOT NULL NUMBER         
 	CNO              NUMBER         
 	POSTER  NOT NULL VARCHAR2(4000) 
 	TITLE   NOT NULL VARCHAR2(200)  

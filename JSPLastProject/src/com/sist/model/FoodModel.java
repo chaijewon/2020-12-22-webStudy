@@ -63,7 +63,10 @@ public class FoodModel {
 	  String no=request.getParameter("no");
 	  // DAO연결 
 	  FoodDAO dao=FoodDAO.newInstance();
-	  
+	  FoodVO vo=dao.foodDetailData(Integer.parseInt(no));
+	  List<RecipeVO> list=dao.foodSameRecipeData(vo.getType());
+	  request.setAttribute("list", list);
+	  request.setAttribute("vo", vo);
 	  request.setAttribute("main_jsp", "../food/food_detail.jsp");
 	  return "../main/main.jsp";
   }
