@@ -105,6 +105,53 @@ public class MemberDAO {
 		   return count;
 	   }
 	   // 회원가입
+	   public void memberJoin(MemberVO vo)
+	   {
+		   /*
+		    *  ID       NOT NULL VARCHAR2(20)  
+			PWD      NOT NULL VARCHAR2(10)  
+			NAME     NOT NULL VARCHAR2(34)  
+			SEX               VARCHAR2(10)  
+			BIRTHDAY NOT NULL VARCHAR2(20)  
+			EMAIL             VARCHAR2(100) 
+			POST     NOT NULL VARCHAR2(10)  
+			ADDR1    NOT NULL VARCHAR2(200) 
+			ADDR2             VARCHAR2(200) 
+			TEL               VARCHAR2(20)  
+			CONTENT           CLOB          
+			ADMIN             CHAR(1) 
+		    */
+		   try
+		   {
+			   getConnection();
+			   String sql="INSERT INTO project_member VALUES(?,?,?,?,?,?,?,?,?,?,?,'n')";
+			   ps=conn.prepareStatement(sql);
+			   //?에 값을 채운다 
+			   ps.setString(1, vo.getId());
+			   ps.setString(2, vo.getPwd());
+			   ps.setString(3, vo.getName());
+			   ps.setString(4, vo.getSex());
+			   ps.setString(5, vo.getBirthday());
+			   
+			   ps.setString(6, vo.getEmail());
+			   ps.setString(7, vo.getPost());
+			   ps.setString(8, vo.getAddr1());
+			   ps.setString(9, vo.getAddr2());
+			   ps.setString(10, vo.getTel());
+			   
+			   ps.setString(11, vo.getContent());
+			   
+			   ps.executeUpdate();
+		   }catch(Exception ex) 
+		   {
+			   ex.printStackTrace();
+		   }
+		   finally
+		   {
+			   disConnection();
+		   }
+		   
+	   }
 	   // 회원수정 
 	   // 아이디 찾기
 	   // 비밀번호 찾기 

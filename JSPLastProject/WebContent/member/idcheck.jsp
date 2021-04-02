@@ -34,7 +34,7 @@ $(function(){
 				if(count==0)
 				{
 					$('#result').html('<font color="blue">'+id+"는(은) 사용 가능합니다"+'</font>');
-					$('#check').html('<input type=button value=확인 class="btn btn-sm btn-success">')
+					$('#check').html('<input type=button value=확인 class="btn btn-sm btn-success" onclick="ok()">')
 				}
 				else
 				{
@@ -45,6 +45,11 @@ $(function(){
 		});
 	})
 })
+function ok()
+{
+	parent.join_frm.id.value=$('#id').val();
+	parent.Shadowbox.close();
+}
 </script>
 </head>
 <body>
