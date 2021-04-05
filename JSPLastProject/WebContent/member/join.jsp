@@ -11,6 +11,7 @@
   margin: 0px auto;
 }
 </style>
+
 </head>
 <body>
   <div class="wrapper row3 join_row">

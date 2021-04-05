@@ -103,6 +103,16 @@ public class MemberModel {
 	  return "redirect:../main/main.do";
 	  //return "../main/main.jsp";
   }
+  @RequestMapping("member/login.do")
+  public String member_login(HttpServletRequest request,HttpServletResponse response)
+  {
+	  // id,pwd
+	  String id=request.getParameter("id");
+	  String pwd=request.getParameter("pwd");
+	  // id와 pwd가 오라클에 존재하는 확인 
+	  MemberDAO dao=MemberDAO.newInstance();
+	  return "../member/login_ok.jsp";
+  }
   
 }
 

@@ -79,6 +79,7 @@ input:focus {
 }
 </style> -->
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="../shadow/js/shadowbox.js"></script>
 <script type="text/javascript">
 Shadowbox.init({
@@ -95,13 +96,20 @@ $(function(){
 		})
 	})
 	$('#postBtn').click(function(){
-		Shadowbox.open({
+		/*Shadowbox.open({
 			content:'../member/postfind.jsp',
 			player:'iframe',
 			title:'우편번호검색',
 			width:540,
 			height:450
-		})
+		})*/
+		new daum.Postcode({
+			oncomplete:function(data)
+			{
+				$('#post').val(data.zonecode);
+				$('#addr1').val(data.address);
+			}
+		}).open();
 	})
 	$('#checkBtn').click(function(){
 		Shadowbox.open({
@@ -114,6 +122,12 @@ $(function(){
 	})
 });
 </script>
+<style type="text/css">
+.food_row{
+   width:960px;
+   margin: 0px auto;
+}
+</style>
 </head>
 <body id="top">
 <!-- ################################################################################################ --> 
@@ -202,7 +216,9 @@ $(function(){
   
 </div>
 
-
+<div class="wrapper food_row">
+  <div class="text-right">홍길동(관리자) 로그인중입니다</div>
+</div>
 <!-- 내용이 들어가는 위치 -->
    <jsp:include page="${main_jsp }"></jsp:include>
 <!-- ################################################################################################ --> 

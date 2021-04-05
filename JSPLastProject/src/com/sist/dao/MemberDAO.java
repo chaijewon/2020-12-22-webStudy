@@ -152,6 +152,23 @@ public class MemberDAO {
 		   }
 		   
 	   }
+	   // 로그인 처리
+	   public String isLogin(String id,String pwd)
+	   {
+		   String result="";
+		   try
+		   {
+			   
+		   }catch(Exception ex)
+		   {
+			   
+		   }
+		   finally
+		   {
+			   
+		   }
+		   return result;
+	   }
 	   // 회원수정 
 	   // 아이디 찾기
 	   // 비밀번호 찾기 

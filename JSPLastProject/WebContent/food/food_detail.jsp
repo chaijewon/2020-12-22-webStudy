@@ -131,6 +131,27 @@
        </tr>
        </c:if>
       </table>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+      <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['선호도', '댓글'],
+          ['좋아요',     <c:out value="${vo.good}"/>],
+          ['괜찮다',      <c:out value="${vo.soso}"/>],
+          ['별로',  <c:out value="${vo.bad}"/>]
+        ]);
+        var options = {
+          title: '댓글 분석',
+          is3D:true
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+      }
+      </script>
+      <div id="piechart"></div>
       <div id="comments">
         <h2>Comments</h2>
         <ul>
