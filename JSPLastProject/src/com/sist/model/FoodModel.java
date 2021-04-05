@@ -3,6 +3,7 @@ package com.sist.model;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sist.controller.Controller;
 /*
@@ -65,10 +66,36 @@ public class FoodModel {
 	  FoodDAO dao=FoodDAO.newInstance();
 	  FoodVO vo=dao.foodDetailData(Integer.parseInt(no));
 	  List<RecipeVO> list=dao.foodSameRecipeData(vo.getType());
+	  List<FoodReplyVO> rList=dao.foodReplyReadData(Integer.parseInt(no));
+	  request.setAttribute("rList", rList);
 	  request.setAttribute("list", list);
 	  request.setAttribute("vo", vo);
 	  request.setAttribute("main_jsp", "../food/food_detail.jsp");
 	  return "../main/main.jsp";
+  }
+  
+  @RequestMapping("food/food_reply_insert.do")
+  public String food_reply_insert(HttpServletRequest request,HttpServletResponse response)
+  {
+	  // 댓글 데이터 받기 
+	  try
+	  {
+		  request.setCharacterEncoding("UTF-8");
+	  }catch(Exception ex) {}
+	  String cno=request.getParameter("cno");
+	  String msg=request.getParameter("msg");
+	  HttpSession session=request.getSession();
+	  String id=(String)session.getAttribute("id");
+	  String name=(String)session.getAttribute("name");
+	  FoodReplyVO vo=new FoodReplyVO();
+	  vo.setName(name);
+	  vo.setMsg(msg);
+	  vo.setId(id);
+	  vo.setCno(Integer.parseInt(cno));
+	  //DAO연결 
+	  FoodDAO dao=FoodDAO.newInstance();
+	  dao.foodReplyInsert(vo);
+	  return "redirect:../food/food_detail.do?no="+cno;
   }
   
 }

@@ -3,6 +3,7 @@ import java.util.*;
 import javax.sql.*;
 
 import com.sist.vo.FoodCategoryVO;
+import com.sist.vo.FoodReplyVO;
 import com.sist.vo.FoodVO;
 import com.sist.vo.RecipeVO;
 
@@ -269,6 +270,69 @@ public class FoodDAO {
     	 }
     	 return list;
      }
+     
+     // 댓글 읽기
+     public List<FoodReplyVO> foodReplyReadData(int cno)
+     {
+    	 List<FoodReplyVO> list=new ArrayList<FoodReplyVO>();
+    	 try
+    	 {
+    		 // 연결
+    		 getConnection();
+    		 String sql="SELECT no,id,name,msg,TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS') "
+    				   +"FROM project_reply "
+    				   +"WHERE cno=?";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setInt(1, cno);
+    		 ResultSet rs=ps.executeQuery();
+    		 while(rs.next())
+    		 {
+    			 FoodReplyVO vo=new FoodReplyVO();
+    			 vo.setNo(rs.getInt(1));
+    			 vo.setId(rs.getString(2));
+    			 vo.setName(rs.getString(3));
+    			 vo.setMsg(rs.getString(4));
+    			 vo.setDbday(rs.getString(5));
+    			 list.add(vo);
+    		 }
+    		 rs.close();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+    	 return list;
+     }
+     // 댓글 올리기
+     public void foodReplyInsert(FoodReplyVO vo)
+     {
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="INSERT INTO project_reply VALUES("
+    				   +"pr_no_seq.nextval,?,?,?,?,SYSDATE)";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setInt(1, vo.getCno());
+    		 ps.setString(2, vo.getId());
+    		 ps.setString(3, vo.getName());
+    		 ps.setString(4, vo.getMsg());
+    		 
+    		 // 실행
+    		 ps.executeUpdate();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+     }
+     // 댓글 수정
+     // 댓글 삭제
 }
 
 

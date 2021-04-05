@@ -7,6 +7,19 @@ package com.sist.vo;
 	MSG     NOT NULL CLOB         
 	REGDATE          DATE 
  */
-public class FoodReplyVO {
 
+import java.util.Date;
+
+import lombok.Getter;
+import lombok.Setter;
+@Getter
+@Setter
+public class FoodReplyVO {
+	private int no;
+	private int cno;
+	private String id;
+	private String name;
+	private String msg;
+	private Date regdate;
+	private String dbday;
 }
