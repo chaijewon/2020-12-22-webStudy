@@ -62,6 +62,7 @@ $(function(){
 			data:{"id":id,"pwd":pwd},
 			success:function(result)
 			{
+				
 				let s=result.trim();
 				if(s=="NOID")
 				{

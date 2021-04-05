@@ -3,6 +3,7 @@ import java.util.*;
 import javax.sql.*;
 
 import com.sist.vo.FoodCategoryVO;
+import com.sist.vo.FoodJjimVO;
 import com.sist.vo.FoodReplyVO;
 import com.sist.vo.FoodVO;
 import com.sist.vo.RecipeVO;
@@ -332,6 +333,28 @@ public class FoodDAO {
     	 }
      }
      // 댓글 수정
+     public void foodReplyUpdate(FoodReplyVO vo)
+     {
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="UPDATE project_reply SET "
+    				   +"msg=? "
+    				   +"WHERE no=?";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setString(1, vo.getMsg());
+    		 ps.setInt(2, vo.getNo());
+    		 
+    		 ps.executeUpdate();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+     }
      // 댓글 삭제
      public void foodReplyDelete(int no)
      {
@@ -351,6 +374,85 @@ public class FoodDAO {
     	 {
     		 disConnection();
     	 }
+     }
+     // 찜하기
+     public void foodJjimInsert(int no,String id)
+     {
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="INSERT INTO project_jjim VALUES("
+    				   +"pj_no_seq.nextval,?,?)";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setInt(2, no);
+    		 ps.setString(1, id);
+    		 
+    		 ps.executeUpdate();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+     }
+     // 찜하기 체크
+     public int foodJjimCheck(int cno,String id)
+     {
+    	 int count=0;
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="SELECT COUNT(*) FROM project_jjim "
+    				   +"WHERE cno=? AND id=?";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setInt(1, cno);
+    		 ps.setString(2, id);
+    		 ResultSet rs=ps.executeQuery();
+    		 rs.next();
+    		 count=rs.getInt(1);
+    		 rs.close();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+    	 return count;
+     }
+     // 찜 목록 
+     public List<FoodJjimVO> foodJjimListData(String id)
+     {
+    	 List<FoodJjimVO> list=new ArrayList<FoodJjimVO>();
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="SELECT no,cno "
+    				   +"FROM project_jjim "
+    				   +"WHERE id=?";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setString(1, id);
+    		 ResultSet rs=ps.executeQuery();
+    		 while(rs.next())
+    		 {
+    			 FoodJjimVO vo=new FoodJjimVO();
+    			 vo.setNo(rs.getInt(1));
+    			 vo.setCno(rs.getInt(2));
+    			 list.add(vo);
+    		 }
+    		 rs.close();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+    	 return list;
      }
 }
 

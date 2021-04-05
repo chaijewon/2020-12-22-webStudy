@@ -71,6 +71,11 @@ public class FoodModel {
 	  request.setAttribute("list", list);
 	  request.setAttribute("vo", vo);
 	  request.setAttribute("main_jsp", "../food/food_detail.jsp");
+	  
+	  HttpSession session=request.getSession();
+	  String id=(String)session.getAttribute("id");
+	  int count=dao.foodJjimCheck(Integer.parseInt(no), id);
+	  request.setAttribute("count", count);
 	  return "../main/main.jsp";
   }
   
@@ -107,6 +112,63 @@ public class FoodModel {
 	  //DB연동 
 	  dao.foodReplyDelete(Integer.parseInt(no));
 	  return "redirect:../food/food_detail.do?no="+cno;
+  }
+  // http://localhost/JSPLastProject/food/food_detail.do?no=2
+  // 댓글 수정 
+  @RequestMapping("food/food_reply_update.do")
+  public String food_reply_update(HttpServletRequest request,HttpServletResponse response)
+  {
+	  try
+	  {
+		  request.setCharacterEncoding("UTF-8");
+	  }catch(Exception ex) {}
+	  String msg=request.getParameter("msg");
+	  String no=request.getParameter("no");
+	  String cno=request.getParameter("cno");
+	  FoodReplyVO vo=new FoodReplyVO();
+	  vo.setNo(Integer.parseInt(no));
+	  vo.setMsg(msg);
+	  FoodDAO dao=FoodDAO.newInstance();
+	  dao.foodReplyUpdate(vo);
+	  return "redirect:../food/food_detail.do?no="+cno;
+  }
+  // 찜하기 
+  @RequestMapping("food/jjim.do")
+  public String food_jjim(HttpServletRequest request,HttpServletResponse response)
+  {
+	  String no=request.getParameter("no");
+	  HttpSession session=request.getSession();
+	  String id=(String)session.getAttribute("id");
+	  
+	  FoodDAO dao=FoodDAO.newInstance();
+	  // 저장 
+	  dao.foodJjimInsert(Integer.parseInt(no), id);
+	  return "redirect:../food/food_detail.do?no="+no;
+  }
+  // 마이페이지 설정 
+  @RequestMapping("food/mypage.do")
+  public String food_mypage(HttpServletRequest request,HttpServletResponse response)
+  {
+	  HttpSession session=request.getSession();
+	  String id=(String)session.getAttribute("id");
+	  // DB연동 
+	  FoodDAO dao=FoodDAO.newInstance();
+	  // 1. 찜하기 목록
+	  List<FoodJjimVO> jList=dao.foodJjimListData(id);
+	  List<FoodVO> fList=new ArrayList<FoodVO>();
+	  for(FoodJjimVO vo:jList)
+	  {
+		  FoodVO fvo=dao.foodDetailData(vo.getCno());
+		  String poster=fvo.getPoster();
+		  poster=poster.substring(0,poster.indexOf("^"));
+		  fvo.setPoster(poster);
+		  fList.add(fvo);
+	  }
+	  request.setAttribute("fList", fList);
+	  request.setAttribute("jList", jList);
+	  // 2. 예약 목록 
+	  request.setAttribute("main_jsp", "../food/mypage.jsp");
+	  return "../main/main.jsp";
   }
   
 }

@@ -72,13 +72,13 @@ $(function(){
 		if(i==0)
 		{
 			$(this).text("취소");
-			$('#m'+no).show();
+			$('#m'+no).show("slow");
 			i=1;
 		}
 		else
 		{
 			$(this).text("수정");
-			$('#m'+no).hide();
+			$('#m'+no).hide("slow");
 			i=0;
 		}
 		
@@ -160,6 +160,19 @@ $(function(){
          </td>
        </tr>
        </c:if>
+       <tr>
+         <td colspan="2" class="text-right">
+          <c:if test="${sessionScope.id!=null }">
+           <c:if test="${count==0 }">
+             <a href="../food/jjim.do?no=${vo.no }" class="btn btn-sm btn-primary">찜하기</a>
+           </c:if>
+           <c:if test="${count!=0 }">
+             <span class="btn btn-sm btn-active">찜하기</span>
+           </c:if>
+          </c:if>
+          <a href="../main/main.do" class="btn btn-sm btn-danger">목록</a>
+         </td>
+       </tr>
       </table>
       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
       <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
