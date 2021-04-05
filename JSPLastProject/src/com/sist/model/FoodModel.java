@@ -97,6 +97,17 @@ public class FoodModel {
 	  dao.foodReplyInsert(vo);
 	  return "redirect:../food/food_detail.do?no="+cno;
   }
+  // 댓글 삭제
+  @RequestMapping("food/food_reply_delete.do")
+  public String food_reply_delete(HttpServletRequest request,HttpServletResponse response)
+  {
+	  String no=request.getParameter("no");
+	  String cno=request.getParameter("cno");
+	  FoodDAO dao=FoodDAO.newInstance();
+	  //DB연동 
+	  dao.foodReplyDelete(Integer.parseInt(no));
+	  return "redirect:../food/food_detail.do?no="+cno;
+  }
   
 }
 

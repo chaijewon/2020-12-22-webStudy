@@ -55,6 +55,36 @@
   max-width: 150px;
 }
 </style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+let i=0;
+$(function(){
+	$('.delBtn').click(function(){
+		let no=$(this).attr("data-no");
+		let cno=$(this).attr("data-cno");
+		location.href="../food/food_reply_delete.do?no="+no+"&cno="+cno;
+	});
+	
+	$('.updateBtn').click(function(){
+		$('.updateli').hide();
+		$('.updateBtn').text("수정");
+		let no=$(this).attr("data-no");
+		if(i==0)
+		{
+			$(this).text("취소");
+			$('#m'+no).show();
+			i=1;
+		}
+		else
+		{
+			$(this).text("수정");
+			$('#m'+no).hide();
+			i=0;
+		}
+		
+	});
+});
+</script>
 </head>
 <body>
 <div class="wrapper row3">
@@ -162,8 +192,8 @@
 	              <header>
 	                <figure class="avatar">
 	                 <c:if test="${sessionScope.id==rvo.id }">
-	                  <span class="btn btn-xs btn-success">수정</span>
-	                  <span class="btn btn-xs btn-danger">삭제</span>
+	                  <span class="btn btn-xs btn-success updateBtn" data-no="${rvo.no }">수정</span>
+	                  <span class="btn btn-xs btn-danger delBtn" data-no="${rvo.no }" data-cno="${vo.no }">삭제</span>
 	                 </c:if>
 	                </figure>
 	                <address>
@@ -175,6 +205,20 @@
 	                <pre style="white-space: pre-wrap;border:none;background-color:white;">${rvo.msg }</pre>
 	              </div>
 	            </article>
+	          </li>
+	          <li style="display:none" id="m${rvo.no }" class="updateli">
+	            <form action="../food/food_reply_update.do" method="post">
+		          <table class="table">
+		            <tr>
+		             <td>
+		              <textarea rows="7" cols="30" name="msg">${rvo.msg }</textarea>
+		              <input type="hidden" name=cno value="${vo.no }">
+		              <input type="hidden" name=no value="${rvo.no }">
+		              <input type="submit" value="댓글수정" class="btn btn-sm btn-danger">
+		             </td>
+		            </tr>
+		          </table>
+		        </form>
 	          </li>
           </c:forEach>
         </ul>

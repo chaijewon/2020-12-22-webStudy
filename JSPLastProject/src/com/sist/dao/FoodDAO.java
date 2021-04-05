@@ -333,6 +333,25 @@ public class FoodDAO {
      }
      // 댓글 수정
      // 댓글 삭제
+     public void foodReplyDelete(int no)
+     {
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="DELETE FROM project_reply "
+    				   +"WHERE no=?";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setInt(1, no);
+    		 ps.executeUpdate();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+     }
 }
 
 
