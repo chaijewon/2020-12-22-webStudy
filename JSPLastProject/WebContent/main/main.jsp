@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -163,26 +164,40 @@ $(function(){
     <!-- ################################################################################################ -->
     <ul class="clear">
       <li class="active"><a href="../main/main.do">Home</a></li>
-      <li><a href="#" id="login">로그인</a></li>
-      <li><a class="drop" href="#">회원가입</a>
-        <ul>
-          <li><a href="../member/join.do">회원가입</a></li>
-          <li><a href="pages/full-width.html">아이디찾기</a></li>
-          <li><a href="pages/sidebar-left.html">비밀번호찾기</a></li>
-        </ul>
-      </li>
-      <!--<li><a class="drop" href="#">회원수정</a>
-        <ul>
-          <li><a href="pages/gallery.html">회원수정</a></li>
-          <li><a href="pages/full-width.html">비밀번호변경</a></li>
-          <li><a href="pages/sidebar-left.html">회원탈퇴</a></li>
-        </ul>
-      </li>-->
+      
+      <c:if test="${sessionScope.id==null }">
+        <li><a href="#" id="login">로그인</a></li>
+      </c:if>
+      <c:if test="${sessionScope.id!=null }">
+        <li><a href="../member/logout.do">로그아웃</a></li>
+      </c:if>
+      
+      
+      <c:if test="${sessionScope.id==null }">
+	      <li><a class="drop" href="#">회원가입</a>
+	        <ul>
+	          <li><a href="../member/join.do">회원가입</a></li>
+	          <li><a href="pages/full-width.html">아이디찾기</a></li>
+	          <li><a href="pages/sidebar-left.html">비밀번호찾기</a></li>
+	        </ul>
+	      </li>
+      </c:if>
+      <c:if test="${sessionScope.id!=null }">
+	      <li><a class="drop" href="#">회원수정</a>
+	        <ul>
+	          <li><a href="pages/gallery.html">회원수정</a></li>
+	          <li><a href="pages/full-width.html">비밀번호변경</a></li>
+	          <li><a href="pages/sidebar-left.html">회원탈퇴</a></li>
+	        </ul>
+	      </li>
+      </c:if>
       <li><a class="drop" href="#">맛집</a>
         <ul>
           <li><a href="#">지역별맛집</a></li>
-          <li><a href="#">맛집추천</a></li>
-          <li><a href="#">맛집예약</a></li>
+          <c:if test="${sessionScope.id!=null }">
+	          <li><a href="#">맛집추천</a></li>
+	          <li><a href="#">맛집예약</a></li>
+          </c:if>
         </ul>
       </li>
       <li><a class="drop" href="#">레시피</a>
@@ -208,17 +223,31 @@ $(function(){
           <li><a href="#">전체뉴스</a></li>
         </ul>
       </li>
-      <li><a href="#">마이페이지</a></li>
-      <!-- <li><a href="#">관리자페이지</a></li>-->
+       <c:if test="${sessionScope.id!=null }">
+         <c:if test="${sessionScope.admin=='n' }">
+          <li><a href="#">마이페이지</a></li>
+         </c:if>
+         
+         <c:if test="${sessionScope.admin=='y' }">
+          <li><a href="#">관리자페이지</a></li>
+         </c:if>
+       </c:if>
     </ul>
     <!-- ################################################################################################ --> 
   </nav>
   
 </div>
-
-<div class="wrapper food_row">
-  <div class="text-right">홍길동(관리자) 로그인중입니다</div>
-</div>
+  <%--
+      ${sessionScope.id!=null } => session에 저장 (로그인 처리 완료)
+      session.setAttribute("id",id) : 저장
+      session.getAttribute("id") : 저장된 값 읽기
+      => EL => ${sessionScope.id}
+   --%>
+  <c:if test="${sessionScope.id!=null }">
+	<div class="wrapper food_row">
+	  <div class="text-right">${sessionScope.name}(${sessionScope.admin=='y'?"관리자":"일반사용자" })님 로그인중입니다</div>
+	</div>
+  </c:if>
 <!-- 내용이 들어가는 위치 -->
    <jsp:include page="${main_jsp }"></jsp:include>
 <!-- ################################################################################################ --> 

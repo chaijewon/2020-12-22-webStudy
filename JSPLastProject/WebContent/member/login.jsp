@@ -79,7 +79,7 @@ $(function(){
 				else
 				{
 					// 이동 => main.do로 이동 
-					location.href="../main/main.do";
+					parent.location.href="../main/main.do";
 				}
 			}
 		});
