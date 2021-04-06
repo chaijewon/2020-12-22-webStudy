@@ -170,6 +170,8 @@ public class FoodModel {
 	  request.setAttribute("fList", fList);
 	  request.setAttribute("jList", jList);
 	  // 2. 예약 목록 
+	  List<ReserveVO> rList=dao.mypage_data(id);
+	  request.setAttribute("rList", rList);
 	  request.setAttribute("main_jsp", "../food/mypage.jsp");
 	  return "../main/main.jsp";
   }
@@ -338,6 +340,33 @@ public class FoodModel {
   public String food_inwon(HttpServletRequest request,HttpServletResponse response) 
   {
 	  return "../food/inwon.jsp";
+  }
+  
+  @RequestMapping("food/reserve_save.do")
+  public String reserve_save(HttpServletRequest request,HttpServletResponse response) 
+  {
+	  try
+	  {
+		  request.setCharacterEncoding("UTF-8");
+	  }catch(Exception ex) {}
+	  String title=request.getParameter("title");
+	  String day=request.getParameter("day");
+	  String time=request.getParameter("time");
+	  String inwon=request.getParameter("inwon");
+	  HttpSession session=request.getSession();
+	  String id=(String)session.getAttribute("id");
+	  
+	  ReserveVO vo=new ReserveVO();
+	  vo.setId(id);
+	  vo.setTitle(title);
+	  vo.setDay(day);
+	  vo.setTime(time);
+	  vo.setInwon(inwon);
+	  
+	  FoodDAO dao=FoodDAO.newInstance();
+	  dao.foodReserveSave(vo);
+	  
+	  return "redirect:../food/mypage.do";
   }
 }
 

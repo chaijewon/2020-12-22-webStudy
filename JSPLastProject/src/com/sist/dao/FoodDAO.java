@@ -7,6 +7,7 @@ import com.sist.vo.FoodJjimVO;
 import com.sist.vo.FoodReplyVO;
 import com.sist.vo.FoodVO;
 import com.sist.vo.RecipeVO;
+import com.sist.vo.ReserveVO;
 
 import java.sql.*;
 import javax.naming.*;
@@ -593,6 +594,125 @@ public class FoodDAO {
     		 disConnection();
     	 }
     	 return time;
+     }
+     
+     // 예약저장 
+     public void foodReserveSave(ReserveVO vo)
+     {
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="INSERT INTO project_reserve VALUES("
+    				   +"(SELECT NVL(MAX(no)+1,1) FROM project_reserve),?,?,?,?,?,"
+    				   +"0,SYSDATE)";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setString(1, vo.getId());
+    		 ps.setString(2, vo.getTitle());
+    		 ps.setString(3, vo.getDay());
+    		 ps.setString(4, vo.getTime());
+    		 ps.setString(5, vo.getInwon());
+    		 ps.executeUpdate();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+     }
+     public void reserve_ok(int no)
+     {
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="UPDATE project_reserve SET "
+    				   +"state=1 "
+    				   +"WHERE no=?";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setInt(1, no);
+    		 ps.executeUpdate();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+     }
+     
+     public List<ReserveVO> mypage_data(String id)
+     {
+    	 List<ReserveVO> list=new ArrayList<ReserveVO>();
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="SELECT no,title,day,time,inwon,state,TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS') "
+    				   +"FROM project_reserve "
+    				   +"WHERE id=? "
+    				   +"ORDER BY no DESC";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setString(1, id);
+    		 ResultSet rs=ps.executeQuery();
+    		 while(rs.next())
+    		 {
+    			 ReserveVO vo=new ReserveVO();
+    			 vo.setNo(rs.getInt(1));
+    			 vo.setTitle(rs.getString(2));
+    			 vo.setDay(rs.getString(3));
+    			 vo.setTime(rs.getString(4));
+    			 vo.setInwon(rs.getString(5));
+    			 vo.setState(rs.getInt(6));
+    			 vo.setDbday(rs.getString(7));
+    			 list.add(vo);
+    		 }
+    		 rs.close();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+    	 return list;
+     }
+     
+     public List<ReserveVO> adminpage_data()
+     {
+    	 List<ReserveVO> list=new ArrayList<ReserveVO>();
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="SELECT no,title,day,time,inwon,state,TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS'),id "
+    				   +"FROM project_reserve "
+    				   +"ORDER BY no DESC";
+    		 ps=conn.prepareStatement(sql);
+    		 ResultSet rs=ps.executeQuery();
+    		 while(rs.next())
+    		 {
+    			 ReserveVO vo=new ReserveVO();
+    			 vo.setNo(rs.getInt(1));
+    			 vo.setTitle(rs.getString(2));
+    			 vo.setDay(rs.getString(3));
+    			 vo.setTime(rs.getString(4));
+    			 vo.setInwon(rs.getString(5));
+    			 vo.setState(rs.getInt(6));
+    			 vo.setDbday(rs.getString(7));
+    			 vo.setId(rs.getString(8));
+    			 list.add(vo);
+    		 }
+    		 rs.close();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+    	 return list;
      }
 }
 

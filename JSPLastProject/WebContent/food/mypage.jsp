@@ -39,7 +39,27 @@
    </table>
   </div>
   <h2 class="sectiontitle">예약 목록</h2>
-  <div style="height: 300px">
+  <div style="height: 300px;width:600px;margin:0px auto;overflow-y:auto">
+    <table class="table">
+      <tr>
+       <th>예약번호</th>
+       <th>업체명</th>
+       <th>예약일</th>
+       <th>시간</th>
+       <th>인원</th>
+       <th>상태</th>
+      </tr>
+      <c:forEach var="vo" items="${rList }">
+        <tr>
+	       <td>${vo.no }</td>
+	       <td>${vo.title }</td>
+	       <td>${vo.day }</td>
+	       <td>${vo.time }</td>
+	       <td>${vo.inwon }</td>
+	       <td>${vo.state==0?"예약대기":"예약완료" }</td>
+	      </tr>
+      </c:forEach>
+    </table>
   </div>
 </div>
 </body>

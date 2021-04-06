@@ -22,6 +22,23 @@ $(function(){
 			$('#food_house').html(result);
 		}
 	});
+	
+	$('#rBtn').click(function(){
+		let title=$('#reserve_title').text();
+		let day=$('#reserve_day').text();
+		let time=$('#reserve_time1').text();
+		let inwon=$('#reserve_inwon1').text();
+		
+		$.ajax({
+			type:'post',
+			url:'../food/reserve_save.do',
+			data:{"title":title,"day":day,"time":time,"inwon":inwon},
+			success:function(result)
+			{
+				location.href="../food/mypage.do";
+			}
+		})
+	});
 });
 </script>
 </head>
@@ -79,7 +96,9 @@ $(function(){
           </tr>
           <tr style="display:none" id="reserveBtn">
             <td colspan="2" class="text-center">
-             <input type="submit" value="예약하기" class="btn btn-lg btn-danger">
+             
+              <input type="button" value="예약하기" class="btn btn-lg btn-danger" id="rBtn">
+             
             </td>
           </tr>
          </table>
