@@ -23,8 +23,11 @@
 </head>
 <body>
   <ul>
-    <c:forEach var="name" items="${list1 }" varStatus="s">
-      <li>${name }(${list2[s.index] })</li>
+    <c:set var="i" value="0"/>
+    <c:set var="j" value="0"/>
+    <c:set var="k" value="0"/>
+    <c:forEach var="vo" begin="0" end="2">
+      <li>${name }</li>
     </c:forEach>
   </ul>
 </body>

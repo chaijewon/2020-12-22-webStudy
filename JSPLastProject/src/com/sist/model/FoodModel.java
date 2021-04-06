@@ -14,6 +14,8 @@ import com.sist.controller.Controller;
  */
 import com.sist.controller.RequestMapping;
 import com.sist.dao.FoodDAO;
+
+import java.text.SimpleDateFormat;
 import java.util.*;
 import com.sist.vo.*;
 /*
@@ -170,7 +172,121 @@ public class FoodModel {
 	  request.setAttribute("main_jsp", "../food/mypage.jsp");
 	  return "../main/main.jsp";
   }
-  
+  @RequestMapping("food/reserve.do")
+  public String food_reserve(HttpServletRequest request,HttpServletResponse response)
+  {
+	  request.setAttribute("main_jsp", "../food/reserve.jsp");
+	  return "../main/main.jsp";
+  }
+  @RequestMapping("food/date.do")
+  public String movie_date(HttpServletRequest request,HttpServletResponse response)
+  {
+	   String strYear=request.getParameter("year");
+	   String strMonth=request.getParameter("month");
+	   
+	   String reserve_date=request.getParameter("rdate");
+	   
+	   String today=new SimpleDateFormat("yyyy-M-d").format(new Date());
+	   StringTokenizer st=new StringTokenizer(today,"-");
+	   
+	   String sy=st.nextToken();
+	   String sm=st.nextToken();
+	   String sd=st.nextToken();
+	   
+	   if(strYear==null)
+		   strYear=sy;
+	   if(strMonth==null)
+		   strMonth=sm;
+	   
+	   int year=Integer.parseInt(strYear);
+	   int month=Integer.parseInt(strMonth);
+	   int day=Integer.parseInt(sd);
+	   
+	   
+	   String[] strWeek={"일","월","화","수","목","금","토"};
+	   
+	   int total=(year-1)*365
+			    +(year-1)/4
+			    -(year-1)/100
+			    +(year-1)/400;
+	   
+	   int[] lastDay={31,28,31,30,31,30,
+			          31,31,30,31,30,31};
+	   
+	   if((year%4==0 && year%100!=0)||(year%400==0))
+		   lastDay[1]=29;
+	   else
+		   lastDay[1]=28;
+		
+	   for(int i=0;i<month-1;i++)
+	   {
+		   total+=lastDay[i];
+	   }
+	   
+	   total++;
+	   
+	   int week=total%7;
+	   
+	   /*int[] days=new int[31];
+	   if(reserve_date!=null)
+	   {
+		   // 1,2,3,7,8,10...
+		   StringTokenizer st1=new StringTokenizer(reserve_date,",");
+		   while(st1.hasMoreTokens())
+		   {
+			  int p=Integer.parseInt(st1.nextToken());// 31
+			  if(p>=day)
+			  {
+			     days[p-1]=p;
+			  }
+		   }
+	   }
+	   request.setAttribute("days", days);*/
+	   request.setAttribute("lastday", lastDay[month-1]);
+	   request.setAttribute("week", week);
+	   request.setAttribute("year", year);
+	   request.setAttribute("month", month);
+	   request.setAttribute("day", day);
+	   request.setAttribute("strWeek", strWeek);
+	   
+	   return "../food/date.jsp";
+  }
+  @RequestMapping("food/location.do")
+  public String food_location(HttpServletRequest request,HttpServletResponse response)
+  {
+	  request.setAttribute("main_jsp", "../food/location.jsp");
+	  return "../main/main.jsp";
+  }
+  @RequestMapping("food/location_result.do")
+  public String food_location_result(HttpServletRequest request,HttpServletResponse response)
+  {
+	  String[] guList_1 = { "전체", "강서구", "양천구", "구로구", "마포구", "영등포구", "금천구",
+			    "은평구", "서대문구", "동작구", "관악구", "종로구", "중구", "용산구", "서초구", "강북구",
+			    "성북구", "도봉구", "동대문구", "성동구", "강남구", "노원구", "중랑구", "광진구", "송파구",
+			    "강동구" };
+	  String no=request.getParameter("no");
+	  String gu=guList_1[Integer.parseInt(no)];
+	  System.out.println(gu);
+	  FoodDAO dao=FoodDAO.newInstance();
+	  List<FoodVO> list=dao.foodLocationFind(gu);
+	  /*
+	   *   list.add("1")  
+	   *   list.add("2") 
+	   *   list.add("3") 
+	   *   
+	   *   => for(String s:list)
+	   *        s=1,2,3  => s=1
+	   *        s=2,3,4  => s=2
+	   */
+	  for(FoodVO vo:list)
+	  {
+		  String s=vo.getPoster();
+		  s=s.substring(0,s.indexOf("^"));
+		  vo.setPoster(s);
+	  }
+	  request.setAttribute("list", list);
+	  return "../food/location_result.jsp";
+  }
 }
 
 

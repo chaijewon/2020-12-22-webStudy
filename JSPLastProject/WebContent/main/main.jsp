@@ -193,10 +193,10 @@ $(function(){
       </c:if>
       <li><a class="drop" href="#">맛집</a>
         <ul>
-          <li><a href="#">지역별맛집</a></li>
+          <li><a href="../food/location.do">지역별맛집</a></li>
           <c:if test="${sessionScope.id!=null }">
 	          <li><a href="#">맛집추천</a></li>
-	          <li><a href="#">맛집예약</a></li>
+	          <li><a href="../food/reserve.do">맛집예약</a></li>
           </c:if>
         </ul>
       </li>
