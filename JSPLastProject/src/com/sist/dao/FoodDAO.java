@@ -485,6 +485,65 @@ public class FoodDAO {
     	 }
     	 return list;
      }
+     
+     public List<FoodVO> foodReserveAllData()
+     {
+    	 List<FoodVO> list=new ArrayList<FoodVO>();
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="SELECT no,title,poster,tel "
+    				   +"FROM food_house "
+    				   +"ORDER BY no ASC";
+    		 ps=conn.prepareStatement(sql);
+    		 ResultSet rs=ps.executeQuery();
+    		 while(rs.next())
+    		 {
+    			 FoodVO vo=new FoodVO();
+    			 vo.setNo(rs.getInt(1));
+    			 vo.setTitle(rs.getString(2));
+    			 String s=rs.getString(3);
+    			 s=s.substring(0,s.indexOf("^"));
+    			 vo.setPoster(s);
+    			 vo.setTel(rs.getString(4));
+    			 list.add(vo);
+    		 }
+    		 rs.close();
+    	 }catch(Exception ex) 
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+    	 return list;
+     }
+     
+     public String foodReserveDate(int no)
+     {
+    	 String rday="";
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="SELECT rdays FROM food_house "
+    				   +"WHERE no=?";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setInt(1, no);
+    		 ResultSet rs=ps.executeQuery();
+    		 rs.next();
+    		 rday=rs.getString(1);
+    		 rs.close();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+    	 return rday;
+     }
 }
 
 

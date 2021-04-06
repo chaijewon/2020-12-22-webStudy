@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
 public class DAOManager {
-	private Connection conn;
+	  private Connection conn;
 	  private PreparedStatement ps;
 	  private final String URL="jdbc:oracle:thin:@localhost:1521:XE";
 	  public DAOManager()

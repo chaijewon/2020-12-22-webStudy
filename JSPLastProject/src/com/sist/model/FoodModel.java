@@ -184,8 +184,6 @@ public class FoodModel {
 	   String strYear=request.getParameter("year");
 	   String strMonth=request.getParameter("month");
 	   
-	   String reserve_date=request.getParameter("rdate");
-	   
 	   String today=new SimpleDateFormat("yyyy-M-d").format(new Date());
 	   StringTokenizer st=new StringTokenizer(today,"-");
 	   
@@ -226,6 +224,9 @@ public class FoodModel {
 	   total++;
 	   
 	   int week=total%7;
+	   
+	   String no=request.getParameter("no");
+	   
 	   
 	   /*int[] days=new int[31];
 	   if(reserve_date!=null)
@@ -286,6 +287,14 @@ public class FoodModel {
 	  }
 	  request.setAttribute("list", list);
 	  return "../food/location_result.jsp";
+  }
+  @RequestMapping("food/reserve_foodhouse.do")
+  public String reserve_foodhouse(HttpServletRequest request,HttpServletResponse response)
+  {
+	  FoodDAO dao=FoodDAO.newInstance();
+	  List<FoodVO> list=dao.foodReserveAllData();
+	  request.setAttribute("list", list);
+	  return "../food/reserve_foodhouse.jsp";
   }
 }
 

@@ -8,7 +8,7 @@
 <style type="text/css">
 .mypage_row{
   margin: 0px auto;
-  width:960px;
+  width:1200px;
 }
 </style>
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
@@ -16,10 +16,10 @@
 $(function(){
 	$.ajax({
 		type:'POST',
-		url:'../food/date.do',
+		url:'../food/reserve_foodhouse.do',
 		success:function(result)
 		{
-			$('#food_date').html(result);
+			$('#food_house').html(result);
 		}
 	});
 });
@@ -34,6 +34,12 @@ $(function(){
        <div style="height: 500px">
          <table class="table">
           <caption>맛집정보</caption>
+          <tr>
+           <td>
+             <div style="height: 400px;overflow-y:auto" id="food_house">
+             </div>
+           </td>
+          </tr>
          </table>
        </div>
      </td>
@@ -48,8 +54,17 @@ $(function(){
        </div>
      </td>
      <td width=30% rowspan=2>
-       <table class="table">
+         <table class="table">
           <caption>예약정보</caption>
+          <tr>
+            <td colspan="2" class="text-center">
+             <img id="reserve_poster" style="height:150px;width:250px">
+            </td>
+          </tr>
+          <tr>
+            <th class="text-right" width="20%">업체명</th>
+            <td width="80%"><span id="reserve_title"></span></td>
+          </tr>
          </table>
      </td>
    </tr>
