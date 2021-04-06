@@ -15,6 +15,7 @@ import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 import com.sist.dao.FoodDAO;
 
+import java.net.http.HttpResponse;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import com.sist.vo.*;
@@ -226,13 +227,29 @@ public class FoodModel {
 	   int week=total%7;
 	   
 	   String no=request.getParameter("no");
+	   FoodDAO dao=FoodDAO.newInstance();
+	   String rday=dao.foodReserveDate(Integer.parseInt(no));
+	   /*
+	    *    1,2,3,4,5,6,7,8,10
+	    *    int[] arr=new int[10];
+	    *    
+	    *    arr[0]=11
+	    *    arr[1]=21
+	    *    arr[2]=31
+	    *    --
+	    *    arr[9]=10
+	    *    
+	    *    int[] arr={1,2,3,4,5,6,7}
+	    *    int[] arr1={0,2,0,0,5,0,0}
+	    *    
+	    *    arr[i]==arr1[i] 2,5
+	    */
 	   
-	   
-	   /*int[] days=new int[31];
-	   if(reserve_date!=null)
+	   int[] days=new int[31];
+	   if(rday!=null)
 	   {
 		   // 1,2,3,7,8,10...
-		   StringTokenizer st1=new StringTokenizer(reserve_date,",");
+		   StringTokenizer st1=new StringTokenizer(rday,",");
 		   while(st1.hasMoreTokens())
 		   {
 			  int p=Integer.parseInt(st1.nextToken());// 31
@@ -242,7 +259,7 @@ public class FoodModel {
 			  }
 		   }
 	   }
-	   request.setAttribute("days", days);*/
+	   request.setAttribute("days", days);
 	   request.setAttribute("lastday", lastDay[month-1]);
 	   request.setAttribute("week", week);
 	   request.setAttribute("year", year);
@@ -295,6 +312,32 @@ public class FoodModel {
 	  List<FoodVO> list=dao.foodReserveAllData();
 	  request.setAttribute("list", list);
 	  return "../food/reserve_foodhouse.jsp";
+  }
+  @RequestMapping("food/time.do")
+  public String food_time(HttpServletRequest request,HttpServletResponse response) 
+  {
+	  String day=request.getParameter("day");
+	  // 시간을 읽어 온다 => 오라클 
+	  FoodDAO dao=FoodDAO.newInstance();
+	  String tno=dao.foodReserveTimeData(Integer.parseInt(day));
+	  // 1="09:00",2,3,9,11
+	  List<String> list=new ArrayList<String>();
+	  StringTokenizer st=new StringTokenizer(tno,",");
+	  while(st.hasMoreTokens())
+	  {
+		  String t=st.nextToken();
+		  int i=Integer.parseInt(t);
+		  String time=dao.foodReserveGetTime(i);
+		  list.add(time);
+	  }
+	  
+	  request.setAttribute("list", list);
+	  return "../food/time.jsp";
+  }
+  @RequestMapping("food/inwon.do")
+  public String food_inwon(HttpServletRequest request,HttpServletResponse response) 
+  {
+	  return "../food/inwon.jsp";
   }
 }
 

@@ -8,17 +8,17 @@ public class MainClass {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ReserveDAO dao=new ReserveDAO();
-		for(int i=1;i<=290;i++)
+		for(int i=1;i<=31;i++)
 		{
 			String s=getReserveData();
-			dao.foodReserveDate(i, s);
+			dao.rdayInsert(i, s);
 		}
         //getReserveData();
 	}
 	public static String getReserveData()
 	{
 		String result="";
-		int rand=(int)(Math.random()*6)+10;
+		int rand=(int)(Math.random()*5)+3;
 		System.out.println("rand:"+rand);
 		int[] com=new int[rand];// 10~15
 		int su=0;
@@ -28,7 +28,7 @@ public class MainClass {
 			bCheck=true;
 			while(bCheck)
 			{
-				su=(int)(Math.random()*31)+1;
+				su=(int)(Math.random()*12)+1;
 				bCheck=false;
 				for(int j=0;j<i;j++)
 				{

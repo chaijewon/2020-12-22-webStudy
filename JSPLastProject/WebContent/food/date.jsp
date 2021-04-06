@@ -40,7 +40,30 @@ $(function(){
 		})
 	})
 	
+	$('.rdate').hover(function(){
+		$(this).css("cursor","pointer");
+	},function(){
+		$(this).css("cursor","");
+	});
 	
+	$('.rdate').click(function(){
+		let day=$(this).text();
+		let year=$('#year').val();
+		let month=$('#month').val();
+		//alert("년도:"+year+",월:"+month+",일:"+day)
+		let rday=year+"년도 "+month+"월 "+day+"일"
+		$('#reserve_day').text(rday)
+		// ../food/time.do => Model호출 => DB처리 => 해당 JSP로 전송 
+		$.ajax({
+			type:'post',
+			url:'../food/time.do',
+			data:{"day":day},
+			success:function(result)
+			{
+				$('#reserve_time').html(result);
+			}
+		});
+	});
 	
 });
 </script>

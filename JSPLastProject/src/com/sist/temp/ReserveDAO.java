@@ -50,6 +50,26 @@ public class ReserveDAO {
 			  disConnection();
 		  }
 	  }
+	  
+	  public void rdayInsert(int no,String time)
+	  {
+		  try
+		  {
+			  getConnection();
+			  String sql="INSERT INTO rday VALUES(?,?)";
+			  ps=conn.prepareStatement(sql);
+			  ps.setInt(1, no);
+			  ps.setString(2, time);
+			  ps.executeUpdate();
+		  }catch(Exception ex)
+		  {
+			  ex.printStackTrace();
+		  }
+		  finally
+		  {
+			  disConnection();
+		  }
+	  }
 }
 
 

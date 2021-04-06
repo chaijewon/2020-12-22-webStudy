@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 public class FoodReplyVO {
 	private int no;
-	private int cno;
+	private int cno;//foodVo => no
 	private String id;
 	private String name;
 	private String msg;

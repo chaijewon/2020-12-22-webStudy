@@ -544,6 +544,56 @@ public class FoodDAO {
     	 }
     	 return rday;
      }
+     
+     public String foodReserveTimeData(int day)
+     {
+    	 String time="";
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="SELECT tno FROM rday "
+    				   +"WHERE no=?";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setInt(1, day);
+    		 ResultSet rs=ps.executeQuery();
+    		 rs.next();
+    		 time=rs.getString(1);
+    		 rs.close();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+    	 return time;
+     }
+     
+     public String foodReserveGetTime(int no)
+     {
+    	 String time="";
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="SELECT time FROM rtime "
+    				   +"WHERE no=?";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setInt(1, no);
+    		 ResultSet rs=ps.executeQuery();
+    		 rs.next();
+    		 time=rs.getString(1);
+    		 rs.close();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+    	 return time;
+     }
 }
 
 

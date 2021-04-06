@@ -65,6 +65,23 @@ $(function(){
             <th class="text-right" width="20%">업체명</th>
             <td width="80%"><span id="reserve_title"></span></td>
           </tr>
+          <tr>
+            <th class="text-right" width="20%">예약일</th>
+            <td width="80%"><span id="reserve_day"></span></td>
+          </tr>
+          <tr>
+            <th class="text-right" width="20%">시간</th>
+            <td width="80%"><span id="reserve_time1"></span></td>
+          </tr>
+          <tr>
+            <th class="text-right" width="20%">인원</th>
+            <td width="80%"><span id="reserve_inwon1"></span></td>
+          </tr>
+          <tr style="display:none" id="reserveBtn">
+            <td colspan="2" class="text-center">
+             <input type="submit" value="예약하기" class="btn btn-lg btn-danger">
+            </td>
+          </tr>
          </table>
      </td>
    </tr>
@@ -73,6 +90,9 @@ $(function(){
        <div style="height: 100px">
          <table class="table">
           <caption>시간정보</caption>
+          <tr>
+            <td id="reserve_time"></td>
+          </tr>
          </table>
        </div>
      </td>
@@ -80,10 +100,14 @@ $(function(){
        <div style="height: 100px">
          <table class="table">
           <caption>인원정보</caption>
+          <tr>
+            <td id="reserve_inwon"></td>
+          </tr>
          </table>
        </div>
      </td> 
    </tr>
+   
   </table>
   </div>
 </body>
