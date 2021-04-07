@@ -368,6 +368,23 @@ public class FoodModel {
 	  
 	  return "redirect:../food/mypage.do";
   }
+  @RequestMapping("food/adminpage.do")
+  public String food_adminpage(HttpServletRequest request,HttpServletResponse response)
+  {
+	  FoodDAO dao=FoodDAO.newInstance();
+	  List<ReserveVO> list=dao.adminpage_data();
+	  request.setAttribute("list", list);
+	  request.setAttribute("main_jsp", "../food/adminpage.jsp");
+	  return "../main/main.jsp";
+  }
+  @RequestMapping("food/reserve_ok.do")
+  public String food_reserve_ok(HttpServletRequest request,HttpServletResponse response)
+  {
+	  String no=request.getParameter("no");
+	  FoodDAO dao=FoodDAO.newInstance();
+	  dao.reserve_ok(Integer.parseInt(no));
+	  return "redirect:../food/adminpage.do";
+  }
 }
 
 

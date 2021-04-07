@@ -195,7 +195,7 @@ $(function(){
         <ul>
           <li><a href="../food/location.do">지역별맛집</a></li>
           <c:if test="${sessionScope.id!=null }">
-	          <li><a href="#">맛집추천</a></li>
+	          <li><a href="../recommand/recommand.do">맛집추천</a></li>
 	          <li><a href="../food/reserve.do">맛집예약</a></li>
           </c:if>
         </ul>
@@ -204,16 +204,13 @@ $(function(){
         <ul>
           <li><a href="../recipe/recipe_list.do">레시피</a></li>
           <li><a href="#">쉐프</a></li>
-          <li><a href="#">오늘의 레시피</a></li>
-          <li><a href="#">오늘의 쉐프</a></li>
-          <li><a href="#">인기 레시피</a></li>
         </ul>
       </li>
       <li><a class="drop" href="#">커뮤니티</a>
         <ul>
           <li><a href="#">자유게시판</a></li>
           <li><a href="#">묻고답하기</a></li>
-          <li><a href="#">후기게시판</a></li>
+          <li><a href="../databoard/list.do">자료실</a></li>
         </ul>
       </li>
       <li><a class="drop" href="#">뉴스</a>
@@ -229,7 +226,7 @@ $(function(){
          </c:if>
          
          <c:if test="${sessionScope.admin=='y' }">
-          <li><a href="#">관리자페이지</a></li>
+          <li><a href="../food/adminpage.do">관리자페이지</a></li>
          </c:if>
        </c:if>
     </ul>
