@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.sist.dao.*;
 import com.sist.vo.*;
 import java.io.*;
+import java.net.URLEncoder;
 @Controller
 public class DataBoardModel {
   @RequestMapping("databoard/list.do")
@@ -81,6 +82,40 @@ public class DataBoardModel {
 		  dao.databoardInsert(vo);
 	  }catch(Exception ex){}
 	  return "redirect:../databoard/list.do";
+  }
+  @RequestMapping("databoard/detail.do")
+  public String databoard_detail(HttpServletRequest request,HttpServletResponse response)
+  {
+	  String no=request.getParameter("no");
+	  DataBoardDAO dao=DataBoardDAO.newInstance();
+	  DataBoardVO vo=dao.databoardDetailData(Integer.parseInt(no));
+	  request.setAttribute("vo", vo);
+	  request.setAttribute("main_jsp", "../databoard/detail.jsp");
+	  return "../main/main.jsp";
+  }
+  @RequestMapping("databoard/download.do")
+  public void databoard_download(HttpServletRequest request,HttpServletResponse response)
+  {
+	  try
+	  {
+		  request.setCharacterEncoding("UTF-8");
+		  String fn=request.getParameter("fn");
+		  // 다운로드 창을 연다 
+		  File file=new File("c:\\upload\\"+fn);
+		  response.setContentLength((int)file.length());
+		  response.setHeader("Content-Disposition", "attachment;filename="
+		                      +URLEncoder.encode(fn, "UTF-8"));
+		  BufferedInputStream bis=new BufferedInputStream(new FileInputStream(file));
+		  BufferedOutputStream bos=new BufferedOutputStream(response.getOutputStream());
+		  int i=0;
+		  byte[] buffer=new byte[1024];
+		  while((i=bis.read(buffer, 0, 1024))!=-1)
+		  {
+			  bos.write(buffer, 0, i);
+		  }
+		  bis.close();
+		  bos.close();
+	  }catch(Exception ex){}
   }
 }
 
