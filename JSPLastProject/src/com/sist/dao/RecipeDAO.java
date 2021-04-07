@@ -246,6 +246,41 @@ public class RecipeDAO {
 	   public List<RecipeVO> recipeChefMakeData(String chef,int page)
 	   {
 		   List<RecipeVO> list=new ArrayList<RecipeVO>();
+		   try
+		   {
+			   getConnection();
+			   String sql="SELECT no,poster,title,chef,hit,num "
+					     +"FROM (SELECT no,poster,title,chef,hit,rownum as num "
+					     +"FROM (SELECT no,poster,title,chef,hit "
+					     +"FROM recipe WHERE chef=? ORDER BY no ASC)) "
+					     +"WHERE num BETWEEN ? AND ?";
+			   ps=conn.prepareStatement(sql);
+			   int rowSize=12;
+			   int start=(rowSize*page)-(rowSize-1);
+			   int end=rowSize*page;
+			   ps.setString(1, chef);
+			   ps.setInt(2, start);
+			   ps.setInt(3, end);
+			   ResultSet rs=ps.executeQuery();
+			   while(rs.next())
+			   {
+				   RecipeVO vo=new RecipeVO();
+				   vo.setNo(rs.getInt(1));
+				   vo.setPoster(rs.getString(2));
+				   vo.setTitle(rs.getString(3));
+				   vo.setChef(rs.getString(4));
+				   vo.setHit(rs.getString(5));
+				   list.add(vo);
+			   }
+			   rs.close();
+		   }catch(Exception ex)
+		   {
+			   ex.printStackTrace();
+		   }
+		   finally
+		   {
+			   disConnection();
+		   }
 		   return list;
 	   }
 	   public int recipeChefMakePage(String chef)

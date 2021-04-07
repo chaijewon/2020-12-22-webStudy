@@ -89,7 +89,12 @@ public class RecipeModel {
 	   int curpage=Integer.parseInt(page);
 	   // DAO연동
 	   RecipeDAO dao=RecipeDAO.newInstance();
-	   
+	   List<RecipeVO> list=dao.recipeChefMakeData(chef_name, curpage);
+	   int totalpage=dao.recipeChefMakePage(chef_name);
+	   request.setAttribute("curpage", curpage);
+	   request.setAttribute("totalpage", totalpage);
+	   request.setAttribute("list", list);
+	   request.setAttribute("chef", chef_name);
 	   request.setAttribute("main_jsp", "../recipe/chef_find.jsp");
 	   return "../main/main.jsp";
    }
