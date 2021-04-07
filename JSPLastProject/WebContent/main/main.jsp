@@ -203,7 +203,7 @@ $(function(){
       <li><a class="drop" href="#">레시피</a>
         <ul>
           <li><a href="../recipe/recipe_list.do">레시피</a></li>
-          <li><a href="#">쉐프</a></li>
+          <li><a href="../recipe/chef_list.do">쉐프</a></li>
         </ul>
       </li>
       <li><a class="drop" href="#">커뮤니티</a>
