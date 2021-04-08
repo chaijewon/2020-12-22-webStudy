@@ -70,6 +70,7 @@ public class DataBoardModel {
 			  vo.setFilename("");
 			  vo.setFilesize(0);
 		  }
+		  // <img src="../upload/${img}">
 		  else
 		  {
 			  File file=new File(path+filename);

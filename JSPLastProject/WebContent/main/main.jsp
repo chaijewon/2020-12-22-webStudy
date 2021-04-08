@@ -209,15 +209,15 @@ $(function(){
       <li><a class="drop" href="#">커뮤니티</a>
         <ul>
           <li><a href="#">자유게시판</a></li>
-          <li><a href="#">묻고답하기</a></li>
+          <li><a href="../boardreply/list.do">묻고답하기</a></li>
           <li><a href="../databoard/list.do">자료실</a></li>
         </ul>
       </li>
       <li><a class="drop" href="#">뉴스</a>
         <ul>
-          <li><a href="#">맛집뉴스</a></li>
-          <li><a href="#">레시피뉴스</a></li>
-          <li><a href="#">전체뉴스</a></li>
+          <li><a href="../news/news_food.do">맛집뉴스</a></li>
+          <li><a href="../news/news_recipe.do">레시피뉴스</a></li>
+          <li><a href="../news/news_total.do">전체뉴스</a></li>
         </ul>
       </li>
        <c:if test="${sessionScope.id!=null }">
