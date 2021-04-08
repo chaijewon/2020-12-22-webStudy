@@ -177,8 +177,8 @@ $(function(){
 	      <li><a class="drop" href="#">회원가입</a>
 	        <ul>
 	          <li><a href="../member/join.do">회원가입</a></li>
-	          <li><a href="pages/full-width.html">아이디찾기</a></li>
-	          <li><a href="pages/sidebar-left.html">비밀번호찾기</a></li>
+	          <li><a href="../member/idfind.do">아이디찾기</a></li>
+	          <li><a href="../member/passwordfind.do">비밀번호찾기</a></li>
 	        </ul>
 	      </li>
       </c:if>
@@ -204,6 +204,7 @@ $(function(){
         <ul>
           <li><a href="../recipe/recipe_list.do">레시피</a></li>
           <li><a href="../recipe/chef_list.do">쉐프</a></li>
+          <li><a href="../recipe/recipe_my_make.do">냉장고 레시피</a></li>
         </ul>
       </li>
       <li><a class="drop" href="#">커뮤니티</a>
@@ -280,7 +281,8 @@ $(function(){
 <!-- ################################################################################################ --> 
 <a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a> 
 <!-- JAVASCRIPTS --> 
-<script src="../js/jquery.min.js"></script> 
+<script src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="../js/jquery.backtotop.js"></script> 
 <script src="../js/jquery.mobilemenu.js"></script> 
 <script src="../js/jquery.flexslider-min.js"></script>

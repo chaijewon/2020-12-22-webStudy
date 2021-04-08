@@ -309,6 +309,38 @@ public class RecipeDAO {
 		   return total;
 	   }
 	   
+	   public List<RecipeVO> recipeMakeResult(String ss)
+	   {
+		   List<RecipeVO> list=new ArrayList<RecipeVO>();
+		   try
+		   {
+			   getConnection();
+			   String sql="SELECT no,poster,title,rownum "
+					     +"FROM recipe "
+					     +"WHERE REGEXP_LIKE(title,?) AND rownum<=20";
+			   ps=conn.prepareStatement(sql);
+			   ps.setString(1, ss);
+			   ResultSet rs=ps.executeQuery();
+			   while(rs.next())
+			   {
+				   RecipeVO vo=new RecipeVO();
+				   vo.setNo(rs.getInt(1));
+				   vo.setPoster(rs.getString(2));
+				   vo.setTitle(rs.getString(3));
+				   list.add(vo);
+			   }
+			   rs.close();
+		   }catch(Exception ex)
+		   {
+			   ex.printStackTrace();
+		   }
+		   finally
+		   {
+			   disConnection();
+		   }
+		   return list;
+	   }
+	   
 	   
 }
 

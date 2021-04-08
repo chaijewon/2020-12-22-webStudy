@@ -714,6 +714,58 @@ public class FoodDAO {
     	 }
     	 return list;
      }
+     public List<String> foodHouseGetTitle()
+     {
+    	 List<String> list=new ArrayList();
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="SELECT DISTINCT title FROM food_house";
+    		 ps=conn.prepareStatement(sql);
+    		 ResultSet rs=ps.executeQuery();
+    		 while(rs.next())
+    		 {
+    			 String title=rs.getString(1);
+    			 list.add(title);
+    		 }
+    		 rs.close();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+    	 return list;
+     }
+     public FoodVO recommandFindResultData(String title)
+     {
+    	 FoodVO vo=new FoodVO();
+    	 try
+    	 {
+    		 getConnection();
+    		 String sql="SELECT no,title,poster,rownum "
+    				   +"FROM food_house "
+    				   +"WHERE title=? AND rownum=1";
+    		 ps=conn.prepareStatement(sql);
+    		 ps.setString(1, title);
+    		 ResultSet rs=ps.executeQuery();
+    		 rs.next();
+    		 vo.setNo(rs.getInt(1));
+    		 vo.setTitle(rs.getString(2));
+    		 vo.setPoster(rs.getString(3));
+    		 rs.close();
+    	 }catch(Exception ex)
+    	 {
+    		 ex.printStackTrace();
+    	 }
+    	 finally
+    	 {
+    		 disConnection();
+    	 }
+    	 return vo;
+     }
 }
 
 

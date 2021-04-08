@@ -16,6 +16,9 @@ import java.util.*;
 봄 여름 가을 겨울 맑은날 추운날 흐린날 비오는날 더운날 안개낀날 눈오는날
  */
 import com.sist.controller.RequestMapping;
+import com.sist.dao.FoodDAO;
+import com.sist.recommand.NaverBlogManager;
+import com.sist.vo.FoodVO;
 @Controller
 public class RecommandModel {
    @RequestMapping("recommand/recommand.do")
@@ -54,6 +57,43 @@ public class RecommandModel {
 	    }
 	    request.setAttribute("list", list);
 	    return "../recommand/recommand_sub.jsp";
+   }
+   @RequestMapping("recommand/recommand_result.do")
+   public String recommand_result(HttpServletRequest request,HttpServletResponse response)
+   {
+	   try
+	   {
+		   request.setCharacterEncoding("UTF-8");
+	   }catch(Exception ex) {}
+	   String fd=request.getParameter("fd");
+	   System.out.println("fd="+fd);
+	   NaverBlogManager nb=new NaverBlogManager();
+	   String xml=nb.naverFindData(fd);
+	   //System.out.println(xml);
+	   String[] arr=xml.split("\n");
+	   FoodDAO dao=FoodDAO.newInstance();
+	   List<String> list=dao.foodHouseGetTitle();
+	   List<FoodVO> fList=new ArrayList<FoodVO>();
+	   for(String s:arr)
+	   {
+		   for(String title:list)
+		   {
+			   if(s.contains(title))
+			   {
+				   System.out.println(title);
+				   FoodVO vo=dao.recommandFindResultData(title);
+				   fList.add(vo);
+			   }
+		   }
+	   }
+	   for(FoodVO vo:fList)
+	   {
+		   String p=vo.getPoster();
+		   p=p.substring(0, p.indexOf("^"));
+		   vo.setPoster(p);
+	   }
+	   request.setAttribute("fList", fList);
+	   return "../recommand/recommand_result.jsp";
    }
 }
 

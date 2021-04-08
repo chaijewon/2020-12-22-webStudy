@@ -14,6 +14,7 @@ import com.sist.controller.Controller;
  */
 import com.sist.controller.RequestMapping;
 import com.sist.dao.FoodDAO;
+import com.sist.dao.RecipeDAO;
 
 import java.net.http.HttpResponse;
 import java.text.SimpleDateFormat;
@@ -55,10 +56,10 @@ public class FoodModel {
   {
 	  String no=request.getParameter("no");
 	  System.out.println(no);
-	  Cookie cookie=new Cookie("m"+no, no);// 문자열만 저장이 가능 
-	  cookie.setMaxAge(60*60);
-	  cookie.setPath("/");
-	  response.addCookie(cookie);
+	  Cookie c=new Cookie("m"+no, no);// 문자열만 저장이 가능 
+	  c.setMaxAge(60*60);
+	  c.setPath("/");
+	  response.addCookie(c);
 	  return "redirect:../food/food_detail.do?no="+no;
   }
   @RequestMapping("food/food_detail.do")
@@ -383,7 +384,38 @@ public class FoodModel {
 	  String no=request.getParameter("no");
 	  FoodDAO dao=FoodDAO.newInstance();
 	  dao.reserve_ok(Integer.parseInt(no));
+	  
 	  return "redirect:../food/adminpage.do";
+  }
+  @RequestMapping("recipe/recipe_my_make.do")
+  public String food_make(HttpServletRequest request,HttpServletResponse response)
+  {
+	  request.setAttribute("main_jsp", "../food/food_make.jsp");
+	  return "../main/main.jsp";
+  }
+  @RequestMapping("recipe/recipe_make_result.do")
+  public String food_make_result(HttpServletRequest request,HttpServletResponse response)
+  {
+	  String[] data= {
+			  "밑반찬","메인반찬","국|탕","찌개","초스피드","손님접대","밥|죽|떡","술안주","면|만두",
+			  "일상","빵","다이어트","디저트","샐러드","양식","김치|젓갈|장류","도시락","간식",
+			  "돼지고기","영양식","과자","양념|소스|잼","차|음료|술","닭고기","야식","채소류","볶음",
+			  "스프","소고기","해물류","푸드스타일링","육류","달걀|유제품","부침","조림","이유식",
+			  "무침","해장","명절","버섯류","가공식품류","과일류","튀김","끓이기","찜","비빔",
+			  "밀가루","건어물류","절임","굽기","삶기","회","쌀","콩|견과류","곡류","데치기","퓨전"  
+	  };
+	  String food=request.getParameter("food");
+	  StringTokenizer st=new StringTokenizer(food,",");
+	  String ss="";
+	  while(st.hasMoreTokens())
+	  {
+		  ss+=data[Integer.parseInt(st.nextToken())]+"|";
+	  }
+	  ss=ss.substring(0,ss.lastIndexOf("|"));
+	  RecipeDAO dao=RecipeDAO.newInstance();
+	  List<RecipeVO> list=dao.recipeMakeResult(ss);
+	  request.setAttribute("list", list);
+	  return "../food/food_make_result.jsp";
   }
 }
 
